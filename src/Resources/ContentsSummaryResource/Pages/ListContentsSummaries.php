@@ -52,17 +52,18 @@ class ListContentsSummaries extends ListRecords
                     
                     if ($response && $response->successful()) {
                         $summaryData = $response->json();
-                        // Here you would typically save the summary to your database
-                        // For example:
-                        // ContentSummary::create($summaryData);
                         
                         Notification::make()
                             ->title('Summary generated successfully')
                             ->success()
                             ->send();
+
+                        // 여기에 추가적인 성공 처리 로직을 넣을 수 있습니다.
+                        // 예: 데이터베이스에 요약 저장, 페이지 새로고침 등
                     } else {
                         Notification::make()
                             ->title('Failed to generate summary')
+                            ->body('Please check the logs for more information.')
                             ->danger()
                             ->send();
                     }
@@ -80,13 +81,10 @@ class ListContentsSummaries extends ListRecords
 
         try {
             if ($url) {
-                return Http::post($endpoint, ['url' => $url]);
+                \Log::info('Sending URL for summarization', ['url' => $url, 'type' => $type]);
+                $response = Http::post($endpoint, ['url' => $url]);
             } elseif ($file) {
-                \Log::info('File upload information', [
-                    'file' => $file,
-                    'disk' => 'public',
-                    'directory' => 'uploads',
-                ]);
+                \Log::info('Processing file for summarization', ['file' => $file, 'type' => $type]);
 
                 $filePath = Storage::disk('public')->path($file);
                 
@@ -95,35 +93,42 @@ class ListContentsSummaries extends ListRecords
                     throw new \Exception("File not found: {$filePath}");
                 }
 
-                \Log::info('File exists', ['filePath' => $filePath]);
-
-                // 파일을 UploadedFile 객체로 변환
                 $uploadedFile = new UploadedFile($filePath, basename($file));
 
-                // multipart/form-data 형식으로 파일 전송
-                return Http::attach(
-                    'file',  // 'file'로 변경
+                $response = Http::attach(
+                    'file',
                     $uploadedFile->getContent(),
                     $uploadedFile->getClientOriginalName(),
                     ['Content-Type' => $uploadedFile->getMimeType()]
                 )->post($endpoint);
+            } else {
+                throw new \Exception("Invalid input: Neither URL nor file provided");
+            }
+
+            if ($response->successful()) {
+                \Log::info('Summary generated successfully', ['type' => $type]);
+                return $response;
+            } else {
+                \Log::error('Failed to generate summary', [
+                    'type' => $type,
+                    'status' => $response->status(),
+                    'body' => $response->body()
+                ]);
+                throw new \Exception("Failed to generate summary: " . $response->body());
             }
         } catch (\Exception $e) {
+            \Log::error('Error in summarizeContent', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
             Notification::make()
-                ->title('Error processing file')
+                ->title('Error processing request')
                 ->body($e->getMessage())
                 ->danger()
                 ->send();
 
-            \Log::error('File processing error', [
-                'error' => $e->getMessage(),
-                'file' => $file,
-                'filePath' => $filePath ?? null
-            ]);
-
             return null;
         }
-
-        return null;
     }
 }
