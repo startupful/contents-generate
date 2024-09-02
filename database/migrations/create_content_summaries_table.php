@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('type');
+            $table->string('status')->default('pending');
+            $table->text('error_message')->nullable();
+            $table->timestamp('processed_at')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('favicon')->nullable();
             $table->string('brand')->nullable();

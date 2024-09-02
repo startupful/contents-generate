@@ -102,16 +102,7 @@ class ListContentsSummaries extends ListRecords
             }
 
             if ($response->successful()) {
-                $summaryData = $response->json();
-        
-                Notification::make()
-                    ->title('Summary generated successfully')
-                    ->success()
-                    ->send();
-        
-                // 리다이렉션 대신 현재 페이지에서 데이터 표시
-                $this->refreshList();
-                return;
+                return $response;
             } else {
                 \Log::error('Failed to generate summary', [
                     'type' => $type,

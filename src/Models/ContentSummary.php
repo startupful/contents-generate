@@ -13,7 +13,8 @@ class ContentSummary extends Model
 
     protected $fillable = [
         'uuid', 'title', 'content', 'type', 'thumbnail', 'favicon',
-        'brand', 'author', 'published_date', 'original_url', 'user_id'
+        'brand', 'author', 'published_date', 'original_url', 'user_id',
+        'status',
     ];
 
     public function user()

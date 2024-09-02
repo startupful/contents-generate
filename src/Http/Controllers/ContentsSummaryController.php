@@ -34,11 +34,15 @@ class ContentsSummaryController extends Controller
     public function summarize(Request $request, $type)
     {   
         try {
-            $url = $request->input('video_id');
+            $url = $request->input('video_id'); // 'url' 대신 'video_id'를 사용
             $existingSummary = ContentSummary::where('original_url', $url)->first();
             
             if ($existingSummary) {
-                return redirect()->route('contents-summary.show', $existingSummary->uuid);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Summary already exists',
+                    'summary' => $existingSummary
+                ]);
             }
 
             switch ($type) {
@@ -65,10 +69,16 @@ class ContentsSummaryController extends Controller
             if (!($summary instanceof ContentSummary)) {
                 throw new \Exception("Invalid return type from summarize method");
             }
-    
-            return redirect()->route('contents-summary.show', $summary->uuid);
+
+            return response()->json([
+                'status' => 'success',
+                'summary' => $summary
+            ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to create summary. Please try again.');
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to create summary. Please try again.'
+            ], 500);
         }
     }
 
