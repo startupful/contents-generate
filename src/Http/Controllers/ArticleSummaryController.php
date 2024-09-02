@@ -23,15 +23,10 @@ class ArticleSummaryController extends Controller
     public function summarize(Request $request)
     {
         try {
-            Log::info('Entering ArticleSummaryController summarize method', ['url' => $request->input('url')]);
-
             $url = $request->input('url');
             $content = $this->fetchContent($url);
             $summaryData = $this->generateSummary($content);
             $metadata = $this->getMetadata($url);
-
-            Log::info('Summary data generated', ['title' => $summaryData['title']]);
-            Log::info('Metadata retrieved', $metadata);  // 로그 추가
 
             $contentSummary = ContentSummary::create([
                 'uuid' => Str::uuid(),
@@ -47,17 +42,8 @@ class ArticleSummaryController extends Controller
                 'published_date' => now()->format('Y-m-d'),
             ]);
 
-            Log::info('ContentSummary created', [
-                'id' => $contentSummary->id,
-                'uuid' => $contentSummary->uuid,
-                'thumbnail' => $contentSummary->thumbnail,
-                'favicon' => $contentSummary->favicon,
-                'brand' => $contentSummary->brand,
-            ]);
-
             return $contentSummary;
         } catch (\Exception $e) {
-            Log::error('Failed to create article summary', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             throw $e;
         }
     }
@@ -65,39 +51,30 @@ class ArticleSummaryController extends Controller
     private function fetchContent($url)
     {
         try {
-            // Guzzle HTTP 클라이언트 인스턴스 생성
             $client = new Client();
 
-            // URL로 GET 요청 보내기
             $response = $client->get($url);
 
-            // 응답 본문 가져오기
             $html = $response->getBody()->getContents();
 
-            // DOM 파서 생성
             $dom = new DOMDocument();
             @$dom->loadHTML($html);
 
-            // XPath 객체 생성
             $xpath = new DOMXPath($dom);
 
-            // 본문 내용 추출 (예: <article> 태그 내용)
             $articleNodes = $xpath->query('//article');
             if ($articleNodes->length > 0) {
                 $content = $articleNodes->item(0)->textContent;
             } else {
-                // <article> 태그가 없는 경우, <body> 태그 내용 사용
                 $bodyNodes = $xpath->query('//body');
                 $content = $bodyNodes->item(0)->textContent;
             }
 
-            // 불필요한 공백 제거 및 텍스트 정리
             $content = preg_replace('/\s+/', ' ', $content);
             $content = trim($content);
 
             return $content;
         } catch (RequestException $e) {
-            // 요청 실패 시 예외 처리
             throw new \Exception("Failed to fetch content from URL: " . $e->getMessage());
         }
     }

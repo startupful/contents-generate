@@ -81,15 +81,11 @@ class ListContentsSummaries extends ListRecords
 
         try {
             if ($url) {
-                \Log::info('Sending URL for summarization', ['url' => $url, 'type' => $type]);
                 $response = Http::post($endpoint, ['url' => $url]);
             } elseif ($file) {
-                \Log::info('Processing file for summarization', ['file' => $file, 'type' => $type]);
-
                 $filePath = Storage::disk('public')->path($file);
                 
                 if (!file_exists($filePath)) {
-                    \Log::error('File does not exist', ['filePath' => $filePath]);
                     throw new \Exception("File not found: {$filePath}");
                 }
 
@@ -106,8 +102,16 @@ class ListContentsSummaries extends ListRecords
             }
 
             if ($response->successful()) {
-                \Log::info('Summary generated successfully', ['type' => $type]);
-                return $response;
+                $summaryData = $response->json();
+        
+                Notification::make()
+                    ->title('Summary generated successfully')
+                    ->success()
+                    ->send();
+        
+                // 리다이렉션 대신 현재 페이지에서 데이터 표시
+                $this->refreshList();
+                return;
             } else {
                 \Log::error('Failed to generate summary', [
                     'type' => $type,
@@ -117,11 +121,6 @@ class ListContentsSummaries extends ListRecords
                 throw new \Exception("Failed to generate summary: " . $response->body());
             }
         } catch (\Exception $e) {
-            \Log::error('Error in summarizeContent', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
             Notification::make()
                 ->title('Error processing request')
                 ->body($e->getMessage())

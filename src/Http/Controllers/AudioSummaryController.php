@@ -23,22 +23,16 @@ class AudioSummaryController extends Controller
     
         $audioFile = $request->file('audio');
     
-        // FFprobe를 사용하여 파일 형식 확인
         $ffprobe = FFProbe::create();
         if (!$ffprobe->isValid($audioFile->getPathname())) {
             return back()->withErrors(['audio' => 'Invalid audio file.']);
         }
 
         try {
-            Log::info('Audio summarization started', ['filename' => $audioFile->getClientOriginalName()]);
-
-            // 음성을 텍스트로 변환 (OpenAI의 Whisper API 사용)
             $transcription = $this->transcribeAudio($audioFile);
 
-            // 변환된 텍스트 요약
             $summaryData = $this->generateSummary($transcription);
 
-            // 메타데이터 생성
             $metadata = $this->getMetadata($audioFile);
 
             $contentSummary = ContentSummary::create([
@@ -56,29 +50,14 @@ class AudioSummaryController extends Controller
                 'author_icon' => null, // 저자 아이콘 없음
             ]);
 
-            Log::info('ContentSummary created', [
-                'id' => $contentSummary->id,
-                'uuid' => $contentSummary->uuid,
-                'favicon' => $contentSummary->favicon,
-            ]);
-
             return $contentSummary;
         } catch (\Exception $e) {
-            Log::error('Audio summarization failed', [
-                'file' => $audioFile->getClientOriginalName(),
-                'mime' => $audioFile->getMimeType(),
-                'size' => $audioFile->getSize(),
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
             throw $e;
         }
     }
 
     private function transcribeAudio($audioFile)
     {
-        Log::info('Transcribing audio', ['filename' => $audioFile->getClientOriginalName()]);
-
         $ffmpeg = FFMpeg::create();
         $audio = $ffmpeg->open($audioFile->getPathname());
 
@@ -100,20 +79,12 @@ class AudioSummaryController extends Controller
             // 임시 파일 삭제
             unlink($tempFile);
 
-            Log::info('Audio transcription completed', ['length' => strlen($response->text)]);
-
             return $response->text;
         } catch (\Exception $e) {
             // 임시 파일이 존재하면 삭제
             if (file_exists($tempFile)) {
                 unlink($tempFile);
             }
-
-            Log::error('Transcription failed', [
-                'file' => $audioFile->getClientOriginalName(),
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
             throw $e;
         }
     }
@@ -181,8 +152,6 @@ class AudioSummaryController extends Controller
 
     private function getMetadata($audioFile)
     {
-        Log::info('Getting metadata', ['filename' => $audioFile->getClientOriginalName()]);
-
         $brand = 'Audio';
 
         $metadata = [
@@ -191,8 +160,6 @@ class AudioSummaryController extends Controller
             'author' => 'Unknown', // 음성 파일에서 작성자 정보를 추출하기 어려울 수 있습니다.
             'date' => now()->format('Y-m-d'), // 현재 날짜를 사용합니다. 필요하다면 파일 생성 날짜를 사용할 수 있습니다.
         ];
-
-        Log::info('Metadata retrieved', ['metadata' => $metadata]);
 
         return $metadata;
     }

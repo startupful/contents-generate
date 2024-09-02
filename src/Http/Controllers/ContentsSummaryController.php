@@ -20,9 +20,7 @@ class ContentsSummaryController extends Controller
 
     public function index()
     {
-        Log::info('Entering index method');
         $recentSummaries = ContentSummary::latest()->take(5)->get();
-        Log::info('Recent summaries fetched', ['count' => $recentSummaries->count()]);
 
         return view('contents-summary::index', compact('recentSummaries'));
     }
@@ -34,16 +32,12 @@ class ContentsSummaryController extends Controller
     }
 
     public function summarize(Request $request, $type)
-    {
-        Log::info('Entering summarize method', ['type' => $type, 'request' => $request->all()]);
-        
+    {   
         try {
-            // URL이 이미 요약되어 있는지 확인
-            $url = $request->input('video_id'); // 'url' 대신 'video_id'를 사용
+            $url = $request->input('video_id');
             $existingSummary = ContentSummary::where('original_url', $url)->first();
             
             if ($existingSummary) {
-                Log::info('Existing summary found, redirecting', ['uuid' => $existingSummary->uuid]);
                 return redirect()->route('contents-summary.show', $existingSummary->uuid);
             }
 
@@ -72,10 +66,8 @@ class ContentsSummaryController extends Controller
                 throw new \Exception("Invalid return type from summarize method");
             }
     
-            Log::info('Summary created, redirecting', ['uuid' => $summary->uuid]);
             return redirect()->route('contents-summary.show', $summary->uuid);
         } catch (\Exception $e) {
-            Log::error('Failed to summarize content', ['type' => $type, 'error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return redirect()->back()->with('error', 'Failed to create summary. Please try again.');
         }
     }
@@ -84,10 +76,8 @@ class ContentsSummaryController extends Controller
     {
         try {
             $content_summaries = ContentSummary::where('uuid', $uuid)->firstOrFail();
-            Log::info('Summary found', ['id' => $content_summaries->id, 'uuid' => $content_summaries->uuid]);
             return view('contents-summary::summary', compact('content_summaries'));
         } catch (\Exception $e) {
-            Log::error('Failed to find summary', ['uuid' => $uuid, 'error' => $e->getMessage()]);
             abort(404);
         }
     }
@@ -96,13 +86,10 @@ class ContentsSummaryController extends Controller
     {
         try {
             $content_summaries = ContentSummary::where('uuid', $uuid)->firstOrFail();
-            Log::info('Partial summary found', ['id' => $content_summaries->id, 'uuid' => $content_summaries->uuid]);
-            
-            // main 태그 내용만 포함하는 부분 뷰 반환
+
             return view('contents-summary::summary-partial', compact('content_summaries'))
                 ->renderSections()['content'];
         } catch (\Exception $e) {
-            Log::error('Failed to find partial summary', ['uuid' => $uuid, 'error' => $e->getMessage()]);
             return response()->json(['error' => 'Summary not found'], 404);
         }
     }
@@ -115,21 +102,16 @@ class ContentsSummaryController extends Controller
             $summary = ContentSummary::where('uuid', $uuid)->firstOrFail();
             $summary->user_id = Auth::id();
             $summary->save();
-            Log::info('Summary saved successfully', ['id' => $summary->id, 'uuid' => $summary->uuid]);
 
             return redirect()->back()->with('success', 'Summary saved successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to save summary', ['uuid' => $uuid, 'error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Failed to save summary');
         }
     }
 
     public function userSummaries()
     {
-        Log::info('Entering userSummaries method');
-        
         $summaries = ContentSummary::where('user_id', Auth::id())->paginate(10);
-        Log::info('User summaries fetched', ['count' => $summaries->count()]);
 
         return view('contents-summary::user_summaries', compact('summaries'));
     }
