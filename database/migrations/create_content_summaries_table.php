@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('type');
-            $table->string('thumbnail')->nullable()->after('type');
+            $table->string('thumbnail')->nullable();
             $table->string('favicon')->nullable();
             $table->string('brand')->nullable();
             $table->string('author_icon')->nullable();
