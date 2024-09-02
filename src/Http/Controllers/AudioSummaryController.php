@@ -184,10 +184,9 @@ class AudioSummaryController extends Controller
         Log::info('Getting metadata', ['filename' => $audioFile->getClientOriginalName()]);
 
         $brand = 'Audio';
-        $faviconFilename = Str::slug($brand) . '.png';
 
         $metadata = [
-            'favicon' => $this->saveImage(asset('images/audio-icon.png'), 'favicons', $faviconFilename),
+            'favicon' => null, // 파비콘을 null로 설정
             'brand' => $brand,
             'author' => 'Unknown', // 음성 파일에서 작성자 정보를 추출하기 어려울 수 있습니다.
             'date' => now()->format('Y-m-d'), // 현재 날짜를 사용합니다. 필요하다면 파일 생성 날짜를 사용할 수 있습니다.
@@ -198,31 +197,8 @@ class AudioSummaryController extends Controller
         return $metadata;
     }
 
-    private function saveImage($url, $directory, $filename)
-    {
-        if (empty($url)) {
-            Log::info('Empty image URL', ['directory' => $directory, 'filename' => $filename]);
-            return null;
-        }
-
-        $path = $directory . '/' . $filename;
-
-        if (Storage::disk('public')->exists($path)) {
-            Log::info('Image already exists', ['path' => $path]);
-            return Storage::url($path);
-        }
-
-        try {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->get($url);
-            $imageContent = $response->getBody()->getContents();
-            
-            Storage::disk('public')->put($path, $imageContent);
-            Log::info('Image saved successfully', ['path' => $path]);
-            return Storage::url($path);
-        } catch (\Exception $e) {
-            Log::error('Failed to save image', ['url' => $url, 'error' => $e->getMessage()]);
-            return null;
-        }
-    }
+    // private function saveImage($url, $directory, $filename)
+    // {
+    //     // 이미지 저장 로직을 주석 처리
+    // }
 }

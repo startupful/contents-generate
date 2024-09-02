@@ -208,108 +208,31 @@ class PptSummaryController extends Controller
         $ppt = IOFactory::load($pptFile->getPathname());
         $properties = $ppt->getDocumentProperties();
 
-        $thumbnail = $this->extractFirstSlideImage($pptFile);
-        
-        if (!$thumbnail) {
-            $thumbnail = asset('images/default-ppt-thumbnail.jpg');
-        }
+        // 썸네일 추출 로직을 주석 처리하고 기본 이미지 URL 사용
+        // $thumbnail = $this->extractFirstSlideImage($pptFile);
+        $thumbnail = asset('images/default-ppt-thumbnail.jpg');
 
         $brand = 'PowerPoint';
-        $faviconFilename = Str::slug($brand) . '.png';
 
         return [
             'thumbnail' => $thumbnail,
-            'favicon' => $this->saveImage(asset('images/powerpoint-icon.png'), 'favicons', $faviconFilename),
+            'favicon' => null, // 파비콘을 null로 설정
             'brand' => $brand,
             'author' => $properties->getCreator() ?? 'Unknown',
             'date' => $this->formatDate($properties->getCreated()),
-            'author_icon' => null, // PPT 파일에는 일반적으로 저자 아이콘이 없습니다
+            'author_icon' => null,
         ];
     }
 
-    private function saveImage($url, $directory, $filename)
-    {
-        if (empty($url)) {
-            Log::info('Empty image URL', ['directory' => $directory, 'filename' => $filename]);
-            return null;
-        }
+    // private function saveImage($url, $directory, $filename)
+    // {
+    //     // 이미지 저장 로직을 주석 처리
+    // }
 
-        $path = $directory . '/' . $filename;
-
-        if (Storage::disk('public')->exists($path)) {
-            Log::info('Image already exists', ['path' => $path]);
-            return Storage::url($path);
-        }
-
-        try {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->get($url);
-            $imageContent = $response->getBody()->getContents();
-            
-            Storage::disk('public')->put($path, $imageContent);
-            Log::info('Image saved successfully', ['path' => $path]);
-            return Storage::url($path);
-        } catch (\Exception $e) {
-            Log::error('Failed to save image', ['url' => $url, 'error' => $e->getMessage()]);
-            return null;
-        }
-    }
-
-    private function extractFirstSlideImage($pptFile)
-    {
-        try {
-            $ppt = IOFactory::load($pptFile->getPathname());
-            
-            // 첫 번째 슬라이드만 남기고 나머지 제거
-            while ($ppt->getSlideCount() > 1) {
-                $ppt->removeSlideByIndex($ppt->getSlideCount() - 1);
-            }
-
-            $imagePath = 'ppt_thumbnails/' . md5($pptFile->getClientOriginalName()) . '.png';
-            $fullPath = storage_path('app/public/' . $imagePath);
-
-            if (!file_exists(dirname($fullPath))) {
-                mkdir(dirname($fullPath), 0755, true);
-            }
-
-            // 슬라이드를 PPTX로 저장
-            $writer = IOFactory::createWriter($ppt, 'PowerPoint2007');
-            $tempPptxPath = $fullPath . '.pptx';
-            $writer->save($tempPptxPath);
-
-            // LibreOffice를 사용하여 PPTX를 PNG로 변환
-            $command = sprintf(
-                'libreoffice --headless --convert-to png --outdir %s %s -env:UserInstallation=file:///tmp/LibreOffice_Conversion_${USER}',
-                escapeshellarg(dirname($fullPath)),
-                escapeshellarg($tempPptxPath)
-            );
-            
-            exec($command, $output, $returnVar);
-
-            if ($returnVar !== 0) {
-                throw new \Exception("LibreOffice conversion failed");
-            }
-
-            // 변환된 PNG 파일명 찾기 (LibreOffice는 파일 확장자를 변경합니다)
-            $pngFileName = pathinfo($tempPptxPath, PATHINFO_FILENAME) . '.png';
-            $convertedPngPath = dirname($fullPath) . '/' . $pngFileName;
-
-            // 변환된 PNG 파일을 원하는 위치로 이동
-            if (file_exists($convertedPngPath)) {
-                rename($convertedPngPath, $fullPath);
-            } else {
-                throw new \Exception("Converted PNG file not found");
-            }
-
-            // 임시 PPTX 파일 삭제
-            unlink($tempPptxPath);
-
-            return Storage::url($imagePath);
-        } catch (\Exception $e) {
-            \Log::error('Error extracting first slide image: ' . $e->getMessage());
-            return asset('images/default-ppt-thumbnail.jpg');
-        }
-    }
+    // private function extractFirstSlideImage($pptFile)
+    // {
+    //     // 첫 번째 슬라이드 이미지 추출 로직을 주석 처리
+    // }
 
     private function formatDate($date)
     {

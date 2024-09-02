@@ -18,28 +18,19 @@ class YoutubeSummaryController extends Controller
 {
     public function summarize(Request $request)
     {
-        Log::info('YouTube summarization started', ['input' => $request->all()]);
-
         $url = $request->input('url'); 
         
         if (empty($url)) {
-            Log::error('Empty URL provided');
             throw new Exception('Empty URL provided');
         }
 
         $videoId = $this->extractVideoId($url);
 
-        Log::info('Extracted video ID', ['videoId' => $videoId]);
-
         try {
             $videoInfo = $this->fetchVideoInfo($videoId);
-            Log::info('Fetched video info', ['videoInfo' => $videoInfo]);
 
             $summaryData = $this->generateSummary($videoInfo);
-            Log::info('Generated summary', ['summaryLength' => strlen($summaryData['summary'])]);
-
             $metadata = $this->getMetadata($videoInfo);
-            Log::info('Got metadata', ['metadata' => $metadata]);
 
             $contentSummary = ContentSummary::create([
                 'uuid' => Str::uuid(),
@@ -56,20 +47,8 @@ class YoutubeSummaryController extends Controller
                 'author_icon' => $metadata['author_icon'],
             ]);
 
-            Log::info('ContentSummary created', [
-                'id' => $contentSummary->id,
-                'uuid' => $contentSummary->uuid,
-                'thumbnail' => $contentSummary->thumbnail,
-                'favicon' => $contentSummary->favicon,
-                'author_icon' => $contentSummary->author_icon,
-            ]);
-
             return $contentSummary;
         } catch (Exception $e) {
-            Log::error('YouTube summarization failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
             throw $e;
         }
     }
@@ -88,20 +67,16 @@ class YoutubeSummaryController extends Controller
 
     private function fetchVideoInfo($videoId)
     {
-        Log::info('Fetching video info', ['videoId' => $videoId]);
-
-        $apiKey = config('services.youtube.api_key');
-        Log::info('Using API key', ['apiKey' => substr($apiKey, 0, 5) . '...']); // API 키의 일부만 로그에 기록
+        $apiKey = env('YOUTUBE_API_KEY');
 
         $client = new Google_Client();
-        $client->setDeveloperKey(config('services.youtube.api_key'));
+        $client->setDeveloperKey($apiKey);
         $youtube = new Google_Service_YouTube($client);
 
         try {
             $response = $youtube->videos->listVideos('snippet,statistics', ['id' => $videoId]);
 
             if (empty($response->items)) {
-                Log::warning('Video not found', ['videoId' => $videoId]);
                 throw new Exception('Video not found');
             }
 
@@ -120,14 +95,8 @@ class YoutubeSummaryController extends Controller
                 'commentCount' => $statistics->commentCount,
             ];
 
-            Log::info('Video info fetched successfully', ['videoInfo' => $videoInfo]);
             return $videoInfo;
         } catch (Exception $e) {
-            Log::error('Failed to fetch video info', [
-                'videoId' => $videoId,
-                'error' => $e->getMessage(),
-                'apiKey' => substr($apiKey, 0, 5) . '...'
-            ]);
             throw $e;
         }
     }
@@ -135,14 +104,13 @@ class YoutubeSummaryController extends Controller
     private function fetchChannelInfo($channelId)
     {
         $client = new Google_Client();
-        $client->setDeveloperKey(config('services.youtube.api_key'));
+        $client->setDeveloperKey(env('YOUTUBE_API_KEY'));
         $youtube = new Google_Service_YouTube($client);
 
         try {
             $response = $youtube->channels->listChannels('snippet', ['id' => $channelId]);
 
             if (empty($response->items)) {
-                Log::warning('Channel not found', ['channelId' => $channelId]);
                 return null;
             }
 
@@ -152,10 +120,6 @@ class YoutubeSummaryController extends Controller
                 'profileIcon' => $channelDetails->thumbnails->default->url,
             ];
         } catch (Exception $e) {
-            Log::error('Failed to fetch channel info', [
-                'channelId' => $channelId,
-                'error' => $e->getMessage(),
-            ]);
             return null;
         }
     }
@@ -174,8 +138,6 @@ class YoutubeSummaryController extends Controller
 
     private function generateSummary($videoInfo)
     {
-        Log::info('Generating summary', ['videoTitle' => $videoInfo['title']]);
-
         $content = "Title: {$videoInfo['title']}\n\n";
         $content .= "Description: {$videoInfo['description']}\n\n";
         $content .= "Channel: {$videoInfo['channelTitle']}\n";
@@ -251,14 +213,11 @@ class YoutubeSummaryController extends Controller
 
     private function getMetadata($videoInfo)
     {
-        Log::info('Getting metadata', ['videoTitle' => $videoInfo['title'], 'videoId' => $videoInfo['id']]);
-
         $thumbnailUrl = "https://img.youtube.com/vi/{$videoInfo['id']}/hqdefault.jpg";
         
         // 썸네일 URL이 유효한지 확인
         $headers = get_headers($thumbnailUrl);
         if(!$headers || strpos($headers[0], '404') !== false) {
-            Log::warning('Thumbnail not found, using default image', ['videoId' => $videoInfo['id']]);
             $thumbnailUrl = asset('images/default-thumbnail.jpg');
         }
 
@@ -266,47 +225,42 @@ class YoutubeSummaryController extends Controller
         $channelInfo = $this->fetchChannelInfo($videoInfo['channelId']);
 
         $brand = 'YouTube';
-        $faviconFilename = Str::slug($brand) . '.png';
-        $authorIconFilename = Str::slug($videoInfo['channelTitle']) . '.png';
+        $faviconUrl = "https://www.youtube.com/favicon.ico";
+        $authorIconUrl = $channelInfo['profileIcon'] ?? null;
 
         $metadata = [
-            'thumbnail' => $this->saveImage($thumbnailUrl, 'thumbnails', md5($videoInfo['id'])),
-            'favicon' => $this->saveImage("https://www.youtube.com/favicon.ico", 'favicons', $faviconFilename),
+            'thumbnail' => $thumbnailUrl,
+            'favicon' => $faviconUrl,
             'brand' => $brand,
             'author' => $videoInfo['channelTitle'],
             'date' => date('Y-m-d', strtotime($videoInfo['publishedAt'])),
-            'author_icon' => $this->saveImage($channelInfo['profileIcon'], 'author_icons', $authorIconFilename),
+            'author_icon' => $authorIconUrl,
         ];
 
-        Log::info('Metadata retrieved', ['metadata' => $metadata]);
         return $metadata;
     }
 
-    private function saveImage($url, $directory, $filename)
-    {
-        if (empty($url)) {
-            Log::info('Empty image URL', ['directory' => $directory, 'filename' => $filename]);
-            return null;
-        }
+    // private function saveImage($url, $directory, $filename)
+    // {
+    //     if (empty($url)) {
+    //         return null;
+    //     }
 
-        $path = $directory . '/' . $filename;
+    //     $path = $directory . '/' . $filename;
 
-        if (Storage::disk('public')->exists($path)) {
-            Log::info('Image already exists', ['path' => $path]);
-            return Storage::url($path);
-        }
+    //     if (Storage::disk('public')->exists($path)) {
+    //         return Storage::url($path);
+    //     }
 
-        try {
-            $client = new Client();
-            $response = $client->get($url);
-            $imageContent = $response->getBody()->getContents();
+    //     try {
+    //         $client = new Client();
+    //         $response = $client->get($url);
+    //         $imageContent = $response->getBody()->getContents();
             
-            Storage::disk('public')->put($path, $imageContent);
-            Log::info('Image saved successfully', ['path' => $path]);
-            return Storage::url($path);
-        } catch (\Exception $e) {
-            Log::error('Failed to save image', ['url' => $url, 'error' => $e->getMessage()]);
-            return null;
-        }
-    }
+    //         Storage::disk('public')->put($path, $imageContent);
+    //         return Storage::url($path);
+    //     } catch (\Exception $e) {
+    //         return null;
+    //     }
+    // }
 }

@@ -169,13 +169,10 @@ class ArticleSummaryController extends Controller
             $info = Embed::create($url);
 
             $brand = $info->providerName ?: $this->getFallbackBrand($url);
-            $faviconFilename = Str::slug($brand) . '.png';  // 파일 확장자를 .png로 고정
-            $favicon = $this->saveImage($info->favicon ?: $this->getFallbackFavicon($url), 'favicons', $faviconFilename);
-            $thumbnail = $this->saveImage($info->image, 'thumbnails', md5($url));
 
             return [
-                'thumbnail' => $thumbnail,
-                'favicon' => $favicon,
+                'thumbnail' => null, // 썸네일 null 처리
+                'favicon' => null, // 파비콘 null 처리
                 'brand' => $brand,
                 'author' => $this->getAuthor($info, $url),
             ];
@@ -185,76 +182,20 @@ class ArticleSummaryController extends Controller
         }
     }
 
-    private function saveImage($url, $directory, $filename)
-    {
-        if (empty($url)) {
-            Log::info('Empty image URL', ['directory' => $directory, 'filename' => $filename]);
-            return null;
-        }
-
-        $path = $directory . '/' . $filename;
-
-        if (Storage::disk('public')->exists($path)) {
-            Log::info('Image already exists', ['path' => $path]);
-            return Storage::url($path);
-        }
-
-        try {
-            $client = new Client();
-            $response = $client->get($url);
-            $imageContent = $response->getBody()->getContents();
-            
-            Storage::disk('public')->put($path, $imageContent);
-            Log::info('Image saved successfully', ['path' => $path]);
-            return Storage::url($path);
-        } catch (\Exception $e) {
-            Log::error('Failed to save image', ['url' => $url, 'error' => $e->getMessage()]);
-            return null;
-        }
-    }
+    // private function saveImage($url, $directory, $filename)
+    // {
+    //     // 이미지 저장 로직을 주석 처리
+    // }
 
     private function getFallbackImage($url)
     {
-        $parsedUrl = parse_url($url);
-        $domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-        
-        // 일반적인 OG 이미지 경로 시도
-        $possiblePaths = [
-            '/og-image.jpg',
-            '/images/og-image.png',
-            '/assets/images/og-image.jpg',
-        ];
-        
-        foreach ($possiblePaths as $path) {
-            $imageUrl = $domain . $path;
-            if ($this->urlExists($imageUrl)) {
-                return $imageUrl;
-            }
-        }
-        
-        // 기본 이미지 반환
+        // 기본 이미지 URL 반환
         return asset('images/default-thumbnail.jpg');
     }
 
     private function getFallbackFavicon($url)
     {
-        $parsedUrl = parse_url($url);
-        $domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-        
-        $possibleFavicons = [
-            '/favicon.ico',
-            '/favicon.png',
-            '/assets/favicon.ico',
-        ];
-        
-        foreach ($possibleFavicons as $favicon) {
-            $faviconUrl = $domain . $favicon;
-            if ($this->urlExists($faviconUrl)) {
-                return $faviconUrl;
-            }
-        }
-        
-        // 기본 파비콘 반환
+        // 기본 파비콘 URL 반환
         return asset('images/default-favicon.ico');
     }
 
@@ -289,9 +230,10 @@ class ArticleSummaryController extends Controller
     {
         // 기본적인 메타데이터 반환
         return [
-            'thumbnail' => $this->getFallbackImage($url),
-            'favicon' => $this->getFallbackFavicon($url),
+            'thumbnail' => null,
+            'favicon' => null,
             'brand' => $this->getFallbackBrand($url),
+            'author' => 'Unknown',
         ];
     }
 

@@ -143,22 +143,19 @@ class PdfSummaryController extends Controller
         $pdf = $parser->parseFile($pdfFile->getPathname());
         $details = $pdf->getDetails();
 
-        $thumbnail = $this->extractFirstImage($pdfFile);
-        
-        if (!$thumbnail) {
-            $thumbnail = asset('images/default-pdf-thumbnail.jpg');
-        }
+        // 썸네일 추출 로직을 주석 처리하고 기본 이미지 URL 사용
+        // $thumbnail = $this->extractFirstImage($pdfFile);
+        $thumbnail = asset('images/default-pdf-thumbnail.jpg');
 
         $brand = 'PDF';
-        $faviconFilename = Str::slug($brand) . '.png';
 
         $metadata = [
             'thumbnail' => $thumbnail,
-            'favicon' => $this->saveImage(asset('images/pdf-icon.png'), 'favicons', $faviconFilename),
+            'favicon' => null, // 파비콘을 null로 설정
             'brand' => $brand,
             'author' => $details['Author'] ?? 'Unknown',
             'date' => $this->formatDate($details['CreationDate'] ?? now()),
-            'author_icon' => null, // PDF 파일에는 일반적으로 저자 아이콘이 없습니다
+            'author_icon' => null,
         ];
 
         Log::info('Metadata retrieved', ['metadata' => $metadata]);
@@ -166,55 +163,15 @@ class PdfSummaryController extends Controller
         return $metadata;
     }
 
-    private function extractFirstImage($pdfFile)
-    {
-        Log::info('Extracting first image from PDF', ['filename' => $pdfFile->getClientOriginalName()]);
+    // private function extractFirstImage($pdfFile)
+    // {
+    //     // 첫 번째 이미지 추출 로직을 주석 처리
+    // }
 
-        $outputPath = 'pdf_thumbnails/' . md5($pdfFile->getClientOriginalName()) . '.png';
-        $fullOutputPath = storage_path('app/public/' . $outputPath);
-
-        $gs = new Ghostscript();
-        $gs->setDevice('png')
-            ->setInputFile($pdfFile->getPathname())
-            ->setOutputFile($fullOutputPath)
-            ->setResolution(300);
-
-        if ($gs->render()) {
-            Log::info('First image extracted successfully', ['path' => $outputPath]);
-            return Storage::url($outputPath);
-        }
-        
-        Log::warning('Failed to extract first image from PDF', ['filename' => $pdfFile->getClientOriginalName()]);
-        return null;
-    }
-
-    private function saveImage($url, $directory, $filename)
-    {
-        if (empty($url)) {
-            Log::info('Empty image URL', ['directory' => $directory, 'filename' => $filename]);
-            return null;
-        }
-
-        $path = $directory . '/' . $filename;
-
-        if (Storage::disk('public')->exists($path)) {
-            Log::info('Image already exists', ['path' => $path]);
-            return Storage::url($path);
-        }
-
-        try {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->get($url);
-            $imageContent = $response->getBody()->getContents();
-            
-            Storage::disk('public')->put($path, $imageContent);
-            Log::info('Image saved successfully', ['path' => $path]);
-            return Storage::url($path);
-        } catch (\Exception $e) {
-            Log::error('Failed to save image', ['url' => $url, 'error' => $e->getMessage()]);
-            return null;
-        }
-    }
+    // private function saveImage($url, $directory, $filename)
+    // {
+    //     // 이미지 저장 로직을 주석 처리
+    // }
 
     private function formatDate($date)
     {
