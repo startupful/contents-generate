@@ -1,6 +1,6 @@
 {
     "name": "startupful/contents-summary",
-    "description": "A package for summarizing contents",
+    "description": "You can manage the contents of various media by summarizing them.",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -33,6 +33,9 @@
             "providers": [
                 "Startupful\\ContentsSummary\\ContentsSummaryServiceProvider"
             ]
-        }
+        },
+        "migrations": [
+            "database/migrations"
+        ]
     }
 }

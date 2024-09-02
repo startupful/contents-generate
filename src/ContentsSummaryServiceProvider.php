@@ -6,6 +6,18 @@ use Illuminate\Support\ServiceProvider;
 
 class ContentsSummaryServiceProvider extends ServiceProvider
 {
+    public static string $name = 'contents-summary';
+
+    public function configurePackage(Package $package): void
+    {
+        $package
+            ->name(static::$name)
+            ->hasMigrations([
+                'create_content_summaries_table',
+            ])
+            ->runsMigrations();
+    }
+
     public function register()
     {
         //
