@@ -23,6 +23,8 @@ return new class extends Migration
             $table->text('audio_text')->nullable();
             $table->string('audio_model')->nullable();
             $table->string('audio_voice')->nullable();
+            $table->string('file_path')->nullable();
+            $table->string('file_name')->nullable();
             $table->timestamps();
         });
     }
