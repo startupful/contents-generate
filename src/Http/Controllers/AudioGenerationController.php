@@ -95,7 +95,7 @@ class AudioGenerationController extends BaseController
     {
         try {
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . config('services.openai.api_key'),
+                'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
                 'Content-Type' => 'application/json',
             ])->post('https://api.openai.com/v1/audio/speech', [
                 'model' => $model,
