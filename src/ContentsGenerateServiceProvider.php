@@ -18,10 +18,10 @@ class ContentsGenerateServiceProvider extends ServiceProvider
         $package
             ->name(static::$name)
             ->hasMigrations([
-                'create_content_generates_table',
-                'create_content_generates_logic_table',
-                'add_audio_columns_to_content_generates',
-                'add_file_fields_to_content_generate_table',
+                '1.create_content_generates_table',
+                '2.create_content_generates_logic_table',
+                '3.add_audio_columns_to_content_generates',
+                '4.add_file_fields_to_content_generate_table',
             ])
             ->runsMigrations();
     }

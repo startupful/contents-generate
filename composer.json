@@ -1,6 +1,6 @@
 {
     "name": "startupful/contents-generate",
-    "description": "You can manage the contents of various media by generating them.",
+    "description": "Anyone can easily design logic to create generated ai content.",
     "type": "library",
     "license": "MIT",
     "autoload": {
