@@ -18,6 +18,11 @@ return new class extends Migration
             $table->text('content');
             $table->string('type');
             $table->string('status')->default('pending');
+            $table->timestamp('published_date')->nullable();
+            $table->longText('audio_content')->nullable();
+            $table->text('audio_text')->nullable();
+            $table->string('audio_model')->nullable();
+            $table->string('audio_voice')->nullable();
             $table->timestamps();
         });
     }
