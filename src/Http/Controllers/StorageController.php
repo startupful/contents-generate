@@ -55,6 +55,10 @@ class StorageController extends BaseController
             $contentGenerate->file_path = $resultData['file_path'] ?? null;
             $contentGenerate->file_name = $resultData['file_name'] ?? null;
             $contentGenerate->content = json_encode($resultData);
+        } elseif ($lastStepType === 'content_integration') {
+            $content = is_string($resultData) ? $resultData : ($resultData['result'] ?? json_encode($resultData));
+            // 줄바꿈 보존
+            $contentGenerate->content = str_replace(["\r\n", "\r", "\n"], "\\n", $content);
         } else {
             $contentGenerate->content = $this->prepareContentForStorage($lastStep);
         }
@@ -137,6 +141,8 @@ class StorageController extends BaseController
         switch ($stepType) {
             case 'generate_text':
                 return 'text';
+            case 'content_integration':
+                return 'integration';
             case 'generate_ui_ux':
                 return 'code';
             case 'generate_audio':

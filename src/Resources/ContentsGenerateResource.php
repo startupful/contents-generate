@@ -21,9 +21,15 @@ class ContentsGenerateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
-    protected static ?string $navigationLabel = 'Contents Archive';
+    public static function getNavigationLabel(): string
+    {
+        return __('startupful-plugin.contents_archive');
+    }
 
-    protected static ?string $pluralModelLabel = 'Contents Archive';
+    public static function getPluralModelLabel(): string
+    {
+        return __('startupful-plugin.contents_archive');
+    }
 
     public static function getNavigationGroup(): ?string
     {
@@ -117,6 +123,7 @@ class ContentsGenerateResource extends Resource
             'code' => 'warning',
             'audio' => 'danger',
             'excel' => 'primary',
+            'integration' => '',
             default => 'gray',
         };
     }
@@ -129,6 +136,7 @@ class ContentsGenerateResource extends Resource
             'code' => 'heroicon-o-code-bracket',
             'audio' => 'heroicon-o-musical-note',
             'excel' => 'heroicon-o-table-cells',
+            'integration' => 'heroicon-o-squares-plus',
             default => 'heroicon-o-question-mark-circle',
         };
     }

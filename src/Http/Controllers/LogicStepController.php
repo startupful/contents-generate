@@ -31,6 +31,7 @@ class LogicStepController extends BaseController
             'generate_excel' => App::make(ExcelGenerationController::class)->generateExcel($step, $inputData, $previousResults),
             'generate_ui_ux' => App::make(CodeGenerationController::class)->generateCode($step, $inputData, $previousResults),
             'generate_audio' => App::make(AudioGenerationController::class)->generateAudio($step, $inputData, $previousResults),
+            'content_integration' => $this->processContentIntegration($step, $previousResults),
             default => throw new \Exception("Unsupported step type: {$step['type']}"),
         };
 
@@ -84,5 +85,28 @@ class LogicStepController extends BaseController
     {
         Log::debug('Processing file input', ['filePath' => $filePath]);
         return $this->fileManagerController->processFileInput($filePath);
+    }
+
+    private function processContentIntegration($step, $previousResults)
+    {
+        Log::info('Processing content integration', ['step' => $this->jsonHelper->safeJsonEncode($step)]);
+
+        $contentTemplate = $step['content_template'] ?? '';
+        $integratedContent = $this->utilityController->replacePlaceholders($contentTemplate, [], $previousResults);
+
+        Log::info('Content integration completed', ['integratedContent' => $this->truncateForLog($integratedContent)]);
+
+        return [
+            'type' => 'content_integration',
+            'result' => $integratedContent
+        ];
+    }
+
+    private function truncateForLog($text, $length = 100)
+    {
+        if (is_string($text) && strlen($text) > $length) {
+            return substr($text, 0, $length) . '...';
+        }
+        return $text;
     }
 }

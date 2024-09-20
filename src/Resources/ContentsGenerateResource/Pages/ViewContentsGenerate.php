@@ -67,6 +67,11 @@ class ViewContentsGenerate extends ViewRecord
                         }
                         return null;
                     }),
+
+                ViewEntry::make('integration_content')
+                    ->view('contents-generate::pages.integration-content')
+                    ->visible(fn ($record) => $record->type === 'integration')
+                    ->columnSpanFull(),
             ]);
     }
 

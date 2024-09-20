@@ -17,14 +17,14 @@ class EditLogic extends EditRecord
         return [
             Actions\ViewAction::make(),
             Actions\Action::make('saveNow')
-                ->label('Save Now')
+                ->label(__('startupful-plugin.save'))
                 ->action(function () {
                     $this->save();
                 })
                 ->requiresConfirmation(false)
                 ->color('primary'),
             Actions\Action::make('duplicate')
-                ->label('Duplicate')
+                ->label(__('startupful-plugin.duplicate'))
                 ->action(function (Model $record) {
                     $newRecord = $record->replicate();
                     $newRecord->name = $newRecord->name . ' (Copy)';

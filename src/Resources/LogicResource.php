@@ -30,16 +30,16 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Radio;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Enums\FiltersLayout;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Grouping\Group;
 
 class LogicResource extends Resource
 {
     protected static ?string $model = Logic::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
-
-    protected static ?string $navigationLabel = 'Contents Generate';
-
-    protected static ?string $pluralModelLabel = 'Contents Generate';
 
     public static function getNavigationGroup(): ?string
     {
@@ -51,50 +51,61 @@ class LogicResource extends Resource
         return static::getModel()::count();
     }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('startupful-plugin.content_creation');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('startupful-plugin.content_creation');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Grid::make(['default' => 1, 'lg' => 4])
                     ->schema([
-                        Forms\Components\Section::make('Logic Info')
+                        Forms\Components\Section::make(__('startupful-plugin.logic_info'))
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                     ->required()
                                     ->maxLength(255)
                                     ->columnSpanFull()
-                                    ->label('Logic Name')
-                                    ->helperText('Enter a unique name for this logic. This will be used to identify the logic in the system.'),
+                                    ->label(__('startupful-plugin.logic_name'))
+                                    ->helperText(__('startupful-plugin.logic_name_help')),
                                 Forms\Components\TextInput::make('description')
                                     ->maxLength(255)
                                     ->columnSpanFull()
-                                    ->label('Description')
-                                    ->helperText('Provide a brief description of what this logic does. This helps others understand the purpose of this logic.'),
+                                    ->label(__('startupful-plugin.description'))
+                                    ->helperText(__('startupful-plugin.logic_description_help')),
                                 TagsInput::make('tags')
                                     ->reorderable()
                                     ->nestedRecursiveRules([
                                         'min:3',
                                         'max:255',
                                     ])
-                                    ->label('Tags')
-                                    ->helperText('Add relevant tags to categorize this logic. Tags help in organizing and searching for logic later.')
+                                    ->label(__('startupful-plugin.tags'))
+                                    ->helperText(__('startupful-plugin.tags_help'))
                             ])
                             ->columnSpan(['lg' => 1]),
 
-                        Forms\Components\Section::make('Logic Steps')
+                        Forms\Components\Section::make(__('startupful-plugin.logic_steps'))
                             ->schema([
                                 Forms\Components\Repeater::make('steps')
                                     ->label('')
                                     ->schema([
                                         ToggleButtons::make('type')
                                             ->options([
-                                                'input' => 'Input',
-                                                'scrap_webpage' => 'Scrap Webpage',
-                                                'generate_text' => 'Generate Text',
-                                                'generate_image' => 'Generate Image',
-                                                'generate_ui_ux' => 'Generate UI/UX',
-                                                'generate_audio' => 'Generate Audio',
-                                                'generate_excel' => 'Generate Excel',
+                                                'input' => __('startupful-plugin.input'),
+                                                'scrap_webpage' => __('startupful-plugin.web_scrap'),
+                                                'generate_text' => __('startupful-plugin.text_generation'),
+                                                'generate_image' => __('startupful-plugin.image_generation'),
+                                                'generate_ui_ux' => __('startupful-plugin.uiux_generation'),
+                                                'generate_audio' => __('startupful-plugin.audio_generation'),
+                                                'generate_excel' => __('startupful-plugin.excel_generation'),
+                                                'content_integration' => __('startupful-plugin.content_integration'),
                                             ])
                                             ->icons([
                                                 'input' => 'heroicon-o-cursor-arrow-rays',
@@ -104,9 +115,11 @@ class LogicResource extends Resource
                                                 'generate_ui_ux' => 'heroicon-o-paint-brush',
                                                 'generate_audio' => 'heroicon-o-speaker-wave',
                                                 'generate_excel' => 'heroicon-o-table-cells',
+                                                'content_integration' => 'heroicon-o-squares-plus',
                                             ])
                                             ->default('input')
                                             ->inline()
+                                            ->label(__('startupful-plugin.type'))
                                             ->required()
                                             ->reactive()
                                             ->afterStateUpdated(function (Forms\Set $set, $state) {
@@ -126,19 +139,21 @@ class LogicResource extends Resource
                                         
                                         // Input type fields
                                         Forms\Components\Repeater::make('input_fields')
+                                            ->label(__('startupful-plugin.input_fields'))
                                             ->schema([
                                                 // 1행: 타입 선택
                                                 Select::make('type')
                                                     ->options([
-                                                        'text' => 'Text Input',
-                                                        'textarea' => 'Text Area',
-                                                        'select' => 'Select',
-                                                        'radio' => 'Radio Button',
-                                                        'multiselect' => 'Multi Select',
-                                                        'file' => 'File Upload',
+                                                        'text' => __('startupful-plugin.short_text'),
+                                                        'textarea' => __('startupful-plugin.long_text'),
+                                                        'select' => __('startupful-plugin.select'),
+                                                        'radio' => __('startupful-plugin.radio_button'),
+                                                        'multiselect' => __('startupful-plugin.multi_select'),
+                                                        'file' => __('startupful-plugin.file_upload'),
                                                     ])
                                                     ->required()
                                                     ->reactive()
+                                                    ->label(__('startupful-plugin.type'))
                                                     ->afterStateUpdated(fn (callable $set) => $set('options', null))
                                                     ->columnSpan('full'),
 
@@ -147,34 +162,37 @@ class LogicResource extends Resource
                                                     ->schema([
                                                         Forms\Components\TextInput::make('label')
                                                             ->live(onBlur: true)
+                                                            ->label(__('startupful-plugin.label'))
                                                             ->required(),
-                                                        Forms\Components\TextInput::make('description'),
+                                                        Forms\Components\TextInput::make('description')
+                                                            ->label(__('startupful-plugin.description')),
                                                     ])
                                                     ->columnSpan('full'),
 
                                                 // 3행: 옵션 및 파일 유형 선택
                                                 TextInput::make('options')
                                                     ->visible(fn (callable $get) => in_array($get('type'), ['select', 'multiselect', 'radio']))
-                                                    ->helperText('Type an option and press Enter to add')
+                                                    ->helperText('각 옵션은 쉼표(,)로 구분하여 항목을 추가하세요. 예: 옵션1, 옵션2, 옵션3')
+                                                    ->label(__('startupful-plugin.option'))
                                                     ->columnSpan('full'),
 
                                                 Radio::make('file_type')
                                                     ->options([
-                                                        'image' => 'Image',
-                                                        'document' => 'Document(docs, pdf..)',
+                                                        'image' => __('startupful-plugin.image'),
+                                                        'document' => __('startupful-plugin.document'),
                                                         'spreadsheet' => 'Spreadsheet(Excel)',
-                                                        'presentation' => 'Presentation(PPT)',
-                                                        'audio' => 'Aduio',
-                                                        'video' => 'Video',
-                                                        'any' => 'Any File',
+                                                        'presentation' => __('startupful-plugin.presentation'),
+                                                        'audio' => __('startupful-plugin.audio'),
+                                                        'video' => __('startupful-plugin.video'),
                                                     ])
                                                     ->inline()
+                                                    ->label(__('startupful-plugin.file_type'))
                                                     ->inlineLabel(false)
                                                     ->visible(fn (callable $get) => $get('type') === 'file')
                                                     ->columnSpan('full'),
                                             ])
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'input')
-                                            ->createItemButtonLabel('Add Input Field')
+                                            ->createItemButtonLabel(__('startupful-plugin.add_input'))
                                             ->columns(1)
                                             ->required()
                                             ->cloneable()
@@ -189,10 +207,11 @@ class LogicResource extends Resource
                                         // Scrap Webpage type fields
                                         Forms\Components\Select::make('url_source')
                                             ->options([
-                                                'user_input' => 'User Input',
-                                                'fixed' => 'Fixed URL',
+                                                'user_input' => __('startupful-plugin.apply_input'),
+                                                'fixed' => __('startupful-plugin.apply_directly'),
                                             ])
                                             ->required()
+                                            ->label(__('startupful-plugin.url_source'))
                                             ->default('user_input')
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['scrap_webpage', 'scrap_youtube']))
                                             ->reactive(),
@@ -201,10 +220,11 @@ class LogicResource extends Resource
                                             ->visible(fn (Forms\Get $get) =>  in_array($get('type'), ['scrap_webpage', 'scrap_youtube']) && $get('url_source') === 'fixed'),
                                         Forms\Components\Select::make('extraction_type')
                                             ->options([
-                                                'text_only' => 'Text Only',
-                                                'html' => 'HTML',
+                                                'text_only' => __('startupful-plugin.text_only'),
+                                                'html' => __('startupful-plugin.html'),
                                             ])
                                             ->default('text_only')
+                                            ->label(__('startupful-plugin.extraction_type'))
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'scrap_webpage'),
 
@@ -252,13 +272,17 @@ class LogicResource extends Resource
                                         // Generate Text type fields
                                         Forms\Components\Textarea::make('prompt')
                                             ->required()
+                                            ->label(__('startupful-plugin.prompt'))
+                                            ->helperText(__('startupful-plugin.prompt_help'))
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['generate_text', 'generate_image', 'generate_excel', 'generate_ppt', 'generate_ui_ux'])),
                                         Forms\Components\Textarea::make('background_information')
                                             ->required()
+                                            ->helperText(__('startupful-plugin.background_info_help'))
+                                            ->label(__('startupful-plugin.background_info'))
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['generate_text', 'generate_image', 'generate_excel', 'generate_ppt', 'generate_ui_ux'])),
                                         Forms\Components\TextInput::make('reference_file')
-                                            ->label('Reference File (Optional)')
-                                            ->helperText('Enter the placeholder for the reference file (e.g., {{reference_file}})')
+                                            ->label(__('startupful-plugin.reference_file_optional'))
+                                            ->helperText(__('startupful-plugin.reference_file_help'))
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['generate_text', 'generate_image', 'generate_excel', 'generate_ppt', 'generate_ui_ux'])),
                                         Forms\Components\Select::make('ai_provider')
                                             ->options([
@@ -266,6 +290,7 @@ class LogicResource extends Resource
                                                 'openai' => 'OpenAI',
                                                 'gemini' => 'Gemini',
                                             ])
+                                            ->label(__('startupful-plugin.ai_service'))
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['generate_text', 'generate_excel', 'generate_ppt', 'generate_ui_ux']))
                                             ->reactive()
@@ -274,15 +299,17 @@ class LogicResource extends Resource
                                             ->options(fn (Forms\Get $get): array => self::getAIModelOptions($get('ai_provider')))
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['generate_text', 'generate_excel', 'generate_ppt', 'generate_ui_ux']))
                                             ->required()
+                                            ->label(__('startupful-plugin.ai_model'))
                                             ->reactive(),
                                         Forms\Components\TextInput::make('temperature')
                                             ->numeric()
                                             ->minValue(0)
+                                            ->label(__('startupful-plugin.temperature'))
                                             ->maxValue(1)
                                             ->step(0.1)
                                             ->default(0.7)
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['generate_text', 'generate_excel', 'generate_ppt', 'generate_ui_ux']))
-                                            ->helperText('Temperature (0.0 to 1.0)'),
+                                            ->helperText('온도 설정 (0.0 ~ 1.0). 낮은 값 (0에 가까움)은 더 일관된 출력을, 높은 값 (1에 가까움)은 더 다양하고 창의적인 출력을 생성합니다. 기본값 0.7은 균형 잡힌 결과를 제공합니다.'),
 
                                             // Hidden fields for Generate Image
                                         Forms\Components\Hidden::make('ai_provider')
@@ -295,8 +322,8 @@ class LogicResource extends Resource
                                         Forms\Components\TextInput::make('audio_text')
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'generate_audio')
-                                            ->label('Text to Convert')
-                                            ->helperText('Enter the text you want to convert to audio.'),
+                                            ->label(__('startupful-plugin.text_to_convert'))
+                                            ->helperText(__('startupful-plugin.reference_file_help')),
                                         Forms\Components\Select::make('audio_model')
                                             ->options([
                                                 'tts-1' => 'TTS-1',
@@ -304,7 +331,7 @@ class LogicResource extends Resource
                                             ])
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'generate_audio')
-                                            ->label('Audio Model'),
+                                            ->label(__('startupful-plugin.audio_model')),
                                         Forms\Components\Select::make('voice')
                                             ->options([
                                                 'alloy' => 'Alloy',
@@ -316,37 +343,39 @@ class LogicResource extends Resource
                                             ])
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'generate_audio')
-                                            ->label('Voice'),
+                                            ->label(__('startupful-plugin.voice')),
 
                                         // Generate Excel type fields
                                         Forms\Components\Repeater::make('excel_columns')
                                             ->schema([
                                                 TextInput::make('sheet_name')
                                                     ->default('Sheet1')
+                                                    ->label(__('startupful-plugin.sheet_name'))
                                                     ->required(),
                                                 Forms\Components\Fieldset::make('Global Header Settings')
+                                                    ->label(__('startupful-plugin.global_header_settings'))
                                                     ->schema([
                                                         Grid::make(2)
                                                             ->schema([
                                                                 ColorPicker::make('global_header_background')
-                                                                    ->label('Header Background Color')
+                                                                    ->label(__('startupful-plugin.header_background_color'))
                                                                     ->format('#hex'),
                                                                 ColorPicker::make('global_header_text_color')
-                                                                    ->label('Header Text Color')
+                                                                    ->label(__('startupful-plugin.header_text_color'))
                                                                     ->format('#hex'),
                                                             ]),
                                                         Grid::make(2)
                                                             ->schema([
                                                                 Forms\Components\TextInput::make('global_header_height')
                                                                     ->numeric()
-                                                                    ->label('Header Height'),
+                                                                    ->label(__('startupful-plugin.header_height')),
                                                                 Forms\Components\Select::make('global_header_alignment')
                                                                     ->options([
-                                                                        'left' => 'Left',
-                                                                        'center' => 'Center',
-                                                                        'right' => 'Right',
+                                                                        'left' => __('startupful-plugin.left'),
+                                                                        'center' => __('startupful-plugin.center'),
+                                                                        'right' => __('startupful-plugin.right'),
                                                                     ])
-                                                                    ->label('Header Alignment'),
+                                                                    ->label(__('startupful-plugin.header_alignment')),
                                                             ]),
                                                     ]),
                                                 Repeater::make('columns')
@@ -355,48 +384,53 @@ class LogicResource extends Resource
                                                             ->schema([
                                                                 Forms\Components\TextInput::make('name')
                                                                     ->required()
-                                                                    ->label('Column Name')
+                                                                    ->label(__('startupful-plugin.column_name'))
                                                                     ->columnSpan(1),
                                                                     Forms\Components\TextInput::make('description')
-                                                                    ->label('Column Description')
+                                                                    ->label(__('startupful-plugin.column_description'))
                                                                     ->columnSpan(2),
                                                             ]),
                                                         Grid::make(3)
                                                             ->schema([
                                                                 Forms\Components\TextInput::make('width')
                                                                     ->numeric()
-                                                                    ->label('Width'),
+                                                                    ->label(__('startupful-plugin.width')),
                                                                 Forms\Components\Select::make('alignment')
                                                                     ->options([
                                                                         'left' => 'Left',
                                                                         'center' => 'Center',
                                                                         'right' => 'Right',
                                                                     ])
-                                                                    ->label('Alignment'),
+                                                                    ->label(__('startupful-plugin.alignment')),
                                                                 Toggle::make('merge_duplicates')
                                                                     ->inline(false)
-                                                                    ->label('Merge Duplicates')
-                                                                    ->helperText('Merge cells with duplicate data'),
+                                                                    ->label(__('startupful-plugin.merge_duplicates')),
                                                             ]),
                                                     ])
                                                     ->columns(1)
-                                                    ->createItemButtonLabel('Add Column')
-                                                    ->label('Columns'),
+                                                    ->createItemButtonLabel(__('startupful-plugin.add_column'))
+                                                    ->label(__('startupful-plugin.column')),
                                                     
                                             ])
                                             ->columns(1)
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'generate_excel')
-                                            ->createItemButtonLabel('Add Sheet')
-                                            ->label('Excel Configuration'),
+                                            ->createItemButtonLabel(__('startupful-plugin.add_sheet'))
+                                            ->label(__('startupful-plugin.excel_configuration')),
 
-
+                                            // Content Integration 필드 추가
+                                            Forms\Components\Textarea::make('content_template')
+                                            ->label(__('startupful-plugin.content_template'))
+                                            ->helperText(__('startupful-plugin.content_template_help'))
+                                            ->rows(10)
+                                            ->visible(fn (Forms\Get $get) => $get('type') === 'content_integration')
+                                            ->columnSpanFull(),
                            
                                             
 
 
                                     ])
                                     ->columnSpanFull()
-                                    ->createItemButtonLabel('Add Step')
+                                    ->createItemButtonLabel(__('startupful-plugin.add_step'))
                                     ->reorderable()
                                     ->itemLabel(function (array $state): string {
                                         static $stepCounter = 0;
@@ -477,7 +511,9 @@ class LogicResource extends Resource
             ->actions([
             ])
             ->bulkActions([
-            ]);
+            ])
+            ->paginationPageOptions([16, 32, 48, 64])
+            ->defaultPaginationPageOption(16);
     }
 
     public static function getRelations(): array
@@ -543,6 +579,7 @@ class LogicResource extends Resource
                     $newStep['ai_provider'] = $step['ai_provider'] ?? null;
                     $newStep['ai_model'] = $step['ai_model'] ?? null;
                     $newStep['temperature'] = $step['temperature'] ?? null;
+                    $newStep['reference_file'] = $step['reference_file'] ?? null;
                     break;
                 case 'generate_audio':
                     $newStep['audio_text'] = $step['audio_text'] ?? null;
@@ -580,6 +617,9 @@ class LogicResource extends Resource
                     $newStep['ai_provider'] = $step['ai_provider'] ?? null;
                     $newStep['ai_model'] = $step['ai_model'] ?? null;
                     $newStep['temperature'] = $step['temperature'] ?? null;
+                    break;
+                case 'content_integration':
+                    $newStep['content_template'] = $step['content_template'] ?? null;
                     break;
             }
 
