@@ -3,6 +3,7 @@ namespace Startupful\ContentsGenerate\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
@@ -96,13 +97,44 @@ class ExcelGenerationController extends BaseController
                         "Provide only the CSV data without any additional text or markdown formatting. " .
                         "Always enclose each field in double quotes, and escape any double quotes within fields by doubling them.";
 
-        switch ($aiProvider) {
-            case 'openai':
-                return $this->callOpenAI($aiPrompt, $systemMessage, $aiModel, $temperature);
-            case 'anthropic':
-                return $this->callAnthropic($aiPrompt, $systemMessage, $aiModel, $temperature);
-            default:
-                throw new \Exception("Unsupported AI provider: {$aiProvider}");
+        $maxRetries = 3;
+        $retryDelay = 5000; // 5 seconds
+
+        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
+            try {
+                Log::info("Calling {$aiProvider} API (Attempt $attempt/$maxRetries)", [
+                    'model' => $aiModel,
+                    'temperature' => $temperature,
+                ]);
+
+                switch ($aiProvider) {
+                    case 'openai':
+                        return $this->callOpenAI($aiPrompt, $systemMessage, $aiModel, $temperature);
+                    case 'anthropic':
+                        return $this->callAnthropic($aiPrompt, $systemMessage, $aiModel, $temperature, $columnInfo);
+                    case 'gemini':
+                        return $this->callGemini($aiPrompt, $systemMessage, $aiModel, $temperature);
+                    default:
+                        throw new \Exception("Unsupported AI provider: {$aiProvider}");
+                }
+            } catch (\Exception $e) {
+                Log::warning("Error calling {$aiProvider} API (Attempt $attempt/$maxRetries)", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+
+                if ($attempt < $maxRetries) {
+                    Log::info("Retrying in {$retryDelay}ms...");
+                    usleep($retryDelay * 1000);
+                    $retryDelay *= 2; // Exponential backoff
+                } else {
+                    Log::error("All attempts to call {$aiProvider} API failed", [
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString()
+                    ]);
+                    throw new \Exception("Error calling {$aiProvider} API after " . $maxRetries . " attempts: " . $e->getMessage());
+                }
+            }
         }
     }
 
@@ -120,35 +152,161 @@ class ExcelGenerationController extends BaseController
         return $response->choices[0]->message->content;
     }
 
-    private function callAnthropic($prompt, $systemMessage, $model, $temperature)
+    private function callAnthropic($prompt, $systemMessage, $model, $temperature, $columnInfo)
     {
-        // Implement Anthropic API call here
-        throw new \Exception("Anthropic API call not implemented");
+        $apiKey = env('ANTHROPIC_API_KEY');
+        $apiVersion = $this->getAnthropicVersionFromModel($model);
+
+        // 컬럼 정보를 포함한 상세한 지시사항 생성
+        $detailedInstructions = $this->generateDetailedInstructions($columnInfo);
+
+        $fullPrompt = $systemMessage . "\n\n" . $detailedInstructions . "\n\n" . $prompt . "\n\nPlease provide the output as properly formatted CSV data.";
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'x-api-key' => $apiKey,
+            'anthropic-version' => $apiVersion,
+        ])->post('https://api.anthropic.com/v1/messages', [
+            'model' => $model,
+            'messages' => [
+                ['role' => 'user', 'content' => $fullPrompt],
+            ],
+            'max_tokens' => 4000,
+            'temperature' => $temperature,
+        ]);
+
+        if ($response->successful()) {
+            $content = $response->json('content');
+            if (is_array($content) && isset($content[0]['text'])) {
+                return $this->extractCSVFromClaudeResponse($content[0]['text']);
+            } else {
+                throw new \Exception('Unexpected Anthropic API response structure');
+            }
+        } else {
+            $errorMessage = $response->json('error.message') ?? $response->body();
+            throw new \Exception('Anthropic API request failed: ' . $errorMessage);
+        }
+    }
+
+    private function generateDetailedInstructions($columnInfo)
+    {
+        $instructions = "Please generate an Excel sheet with the following columns:\n\n";
+        foreach ($columnInfo as $column) {
+            $instructions .= "- {$column['name']}: {$column['description']}\n";
+        }
+        $instructions .= "\nEnsure that each row in the generated data corresponds to these columns in order. Provide the data in CSV format, with each field properly quoted and separated by commas. Include a header row with the column names.";
+        return $instructions;
+    }
+
+    private function callGemini($prompt, $systemMessage, $model, $temperature)
+    {
+        $apiKey = env('GEMINI_API_KEY');
+        
+        $requestBody = [
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $systemMessage . "\n\n" . $prompt]
+                    ]
+                ]
+            ],
+            'generationConfig' => [
+                'temperature' => $temperature,
+                'maxOutputTokens' => 4000,
+            ],
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}", $requestBody);
+
+        if ($response->successful()) {
+            $content = $response->json('candidates.0.content.parts.0.text');
+            if ($content) {
+                return $content;
+            } else {
+                throw new \Exception('Unexpected Gemini API response structure');
+            }
+        } else {
+            $errorMessage = $response->json('error.message') ?? $response->body();
+            throw new \Exception('Google Gemini API request failed: ' . $errorMessage);
+        }
+    }
+
+    private function getAnthropicVersionFromModel($model)
+    {
+        if (preg_match('/(\d{8})$/', $model, $matches)) {
+            $modelDate = $matches[1];
+            $currentDate = new \DateTime();
+            $modelDateTime = \DateTime::createFromFormat('Ymd', $modelDate);
+
+            if ($modelDateTime > $currentDate) {
+                $versionDate = $currentDate->format('Y-m-d');
+            } else {
+                $versionDate = $modelDateTime->format('Y-m-d');
+            }
+
+            $maxSupportedVersion = '2023-06-01';
+            if ($versionDate > $maxSupportedVersion) {
+                $versionDate = $maxSupportedVersion;
+            }
+
+            return $versionDate;
+        }
+        
+        return '2023-06-01';
+    }
+
+    private function extractCSVFromClaudeResponse($response)
+    {
+        // CSV 데이터를 포함하는 가장 큰 블록을 찾습니다
+        preg_match_all('/```(?:csv)?\s*([\s\S]*?)\s*```/', $response, $matches);
+        
+        if (!empty($matches[1])) {
+            // 가장 긴 CSV 블록을 선택합니다
+            $csvContent = max($matches[1], function($a, $b) {
+                return strlen($a) > strlen($b) ? $a : $b;
+            });
+        } else {
+            // CSV 블록이 없으면 전체 응답을 사용합니다
+            $csvContent = $response;
+        }
+
+        return trim($csvContent);
     }
 
     private function parseAndCleanGeneratedContent($content, $columnInfo)
     {
-        // Remove any potential markdown code block
-        $content = preg_replace('/```csv\s*([\s\S]*?)\s*```/', '$1', $content);
-        $content = trim($content);
-
-        // Parse CSV
+        // 기존 코드를 유지하되, CSV 파싱 로직을 강화합니다
+        $content = $this->extractCSVFromClaudeResponse($content);
+        
+        // CSV를 파싱합니다
         $rows = str_getcsv($content, "\n");
-        $data = array_map('str_getcsv', $rows);
+        $data = array_map(function($row) {
+            return str_getcsv($row, ",", '"', "\\");
+        }, $rows);
 
-        // Clean and validate data
+        // 헤더를 확인하고 정리합니다
         $headers = array_shift($data);
         $expectedHeaders = array_column($columnInfo, 'name');
         
-        if ($headers !== $expectedHeaders) {
-            throw new \Exception("Generated content does not match expected format. Expected headers: " . implode(', ', $expectedHeaders) . ". Received headers: " . implode(', ', $headers));
+        if (count($headers) !== count($expectedHeaders) || array_diff($headers, $expectedHeaders)) {
+            Log::warning("Generated headers do not match expected headers", [
+                'expected' => $expectedHeaders,
+                'received' => $headers
+            ]);
+            // 헤더가 일치하지 않으면 예상된 헤더를 사용합니다
+            array_unshift($data, $expectedHeaders);
+        } else {
+            array_unshift($data, $headers);
         }
 
-        $cleanedData = array_map(function($row) use ($headers) {
-            // Ensure each row has the correct number of columns
-            $row = array_pad($row, count($headers), '');
-            // Create associative array using headers as keys
-            return array_combine($headers, $this->cleanFields($row));
+        // 데이터를 정리합니다
+        $cleanedData = array_map(function($row) use ($expectedHeaders) {
+            // 각 행이 올바른 수의 열을 가지도록 합니다
+            $row = array_pad($row, count($expectedHeaders), '');
+            // 헤더를 키로 사용하여 연관 배열을 만듭니다
+            return array_combine($expectedHeaders, $this->cleanFields($row));
         }, $data);
 
         return $cleanedData;
@@ -184,7 +342,7 @@ class ExcelGenerationController extends BaseController
         }
 
         // Populate data
-        $startRow = 2; // Start from row 2 as row 1 is for headers
+        $startRow = 1; // Start from row 2 as row 1 is for headers
         foreach ($parsedData as $rowIndex => $rowData) {
             foreach ($excelConfig['columns'] as $colIndex => $columnConfig) {
                 $columnLetter = Coordinate::stringFromColumnIndex($colIndex + 2);  // Start from column B

@@ -14,6 +14,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Carbon\Carbon;
 
 class ViewLogic extends Page implements HasForms
 {
@@ -40,11 +41,8 @@ class ViewLogic extends Page implements HasForms
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\Section::make('Input Data')
-                    ->schema($this->generateInputFields())
-                    ->columns(1)
-            ])
+            ->schema($this->generateInputFields())
+            ->columns(1)
             ->statePath('formData');
     }
 
@@ -73,6 +71,9 @@ class ViewLogic extends Page implements HasForms
             'radio' => Forms\Components\Radio::make($name)->options($this->parseOptions($field['options'])),
             'multiselect' => Forms\Components\Select::make($name)->multiple()->options($this->parseOptions($field['options'])),
             'file' => Forms\Components\FileUpload::make($name)->acceptedFileTypes($this->getAcceptedFileTypes($field['file_type'])),
+            'time' => Forms\Components\TimePicker::make($name)
+            ->seconds(true)
+            ->default(fn () => Carbon::now()->format('H:i:s')),
             default => Forms\Components\TextInput::make($name),
         };
 
@@ -134,50 +135,74 @@ class ViewLogic extends Page implements HasForms
 
     public function processLogic()
     {
-        try {
-            $inputData = $this->formData;
-            Log::info('Starting to process logic', ['steps' => $this->record->steps, 'inputData' => $inputData]);
+        $maxRetries = 5;
+        $retryDelay = 5000; // 5 seconds
 
-            $processedInputData = $this->processInputDataRecursively($inputData);
+        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
+            try {
+                $inputData = $this->formData;
+                Log::info('Starting to process logic', ['steps' => $this->record->steps, 'inputData' => $inputData]);
 
-            Log::info('Processed input data', ['processedInputData' => $processedInputData]);
+                $processedInputData = $this->processInputDataRecursively($inputData);
 
-            $response = Http::post(route('process.logic'), [
-                'steps' => $this->record->steps,
-                'inputData' => $processedInputData,
-                'logic_id' => $this->record->id,
-            ]);
+                Log::info('Processed input data', ['processedInputData' => $processedInputData]);
 
-            if ($response->successful()) {
-                $result = $response->json();
-                Log::info('Logic processed successfully', ['result' => $result]);
+                $response = Http::timeout(30)->post(route('process.logic'), [
+                    'steps' => $this->record->steps,
+                    'inputData' => $processedInputData,
+                    'logic_id' => $this->record->id,
+                ]);
 
-                if (isset($result['success']) && $result['success']) {
-                    Notification::make()
-                        ->title('Success')
-                        ->body($result['message'] ?? "Content generated and stored successfully.")
-                        ->success()
-                        ->send();
+                if ($response->successful()) {
+                    $result = $response->json();
+                    Log::info('Logic processed successfully', ['result' => $result]);
+
+                    if (isset($result['success']) && $result['success']) {
+                        Notification::make()
+                            ->title('Success')
+                            ->body($result['message'] ?? "Content generated and stored successfully.")
+                            ->success()
+                            ->send();
+                        return; // 성공적으로 처리되면 함수 종료
+                    } else {
+                        throw new \Exception($result['message'] ?? 'Unknown error occurred');
+                    }
                 } else {
-                    throw new \Exception($result['message'] ?? 'Unknown error occurred');
+                    $errorMessage = $response->body();
+                    Log::error('Failed to process logic', ['response' => $errorMessage]);
+                    throw new \Exception('Failed to process logic: ' . $errorMessage);
                 }
-            } else {
-                $errorMessage = $response->body();
-                Log::error('Failed to process logic', ['response' => $errorMessage]);
-                throw new \Exception('Failed to process logic: ' . $errorMessage);
+            } catch (\Exception $e) {
+                Log::warning("Logic processing failed (Attempt $attempt/$maxRetries)", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ]);
+
+                if ($attempt < $maxRetries) {
+                    // 재시도 중임을 사용자에게 알림
+                    Notification::make()
+                        ->title('Processing')
+                        ->body("Attempt $attempt failed. Retrying...")
+                        ->info()
+                        ->send();
+
+                    // 재시도 전 대기
+                    usleep($retryDelay * 1000);
+                } else {
+                    // 모든 재시도가 실패한 경우
+                    Log::error('All attempts to process logic failed', [
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString(),
+                    ]);
+                    Notification::make()
+                        ->title('Error')
+                        ->body('Failed to process logic after multiple attempts. Please try again later.')
+                        ->danger()
+                        ->send();
+                }
             }
-        } catch (\Exception $e) {
-            Log::error('Error processing logic', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
-            Notification::make()
-                ->title('Error')
-                ->body('Failed to process logic: ' . $e->getMessage())
-                ->danger()
-                ->send();
         }
     }
 
@@ -248,4 +273,6 @@ class ViewLogic extends Page implements HasForms
             return $step;
         }, $steps);
     }
+
+
 }

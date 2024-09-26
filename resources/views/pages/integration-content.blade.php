@@ -18,3 +18,30 @@
                 prose-img:rounded-xl">
     {!! Str::markdown($content) !!}
 </div>
+
+<script>
+    function copyToClipboard(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function() {
+                console.log('Content copied to clipboard successfully');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        } else {
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = text;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+        }
+    }
+
+    window.addEventListener('copy-markdown', function(event) {
+        copyToClipboard(event.detail);
+    });
+
+    window.addEventListener('copy-html', function(event) {
+        copyToClipboard(event.detail);
+    });
+</script>

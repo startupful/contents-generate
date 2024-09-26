@@ -4,6 +4,7 @@ namespace Startupful\ContentsGenerate\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class CodeGenerationController extends BaseController
@@ -38,39 +39,257 @@ class CodeGenerationController extends BaseController
             $messages = $this->prepareMessages($backgroundInfo, $prompt, $previousResults, $referenceFile);
 
             Log::info("Prepared messages for code generation", [
-                'messages' => json_encode($messages),  // 전체 메시지 구조를 로그에 기록
+                'messages' => json_encode($messages),
                 'referenceFile' => $referenceFile
             ]);    
 
+            $aiProvider = $step['ai_provider'] ?? 'openai';
             $model = $step['ai_model'] ?? 'gpt-4-vision-preview';
             $temperature = $step['temperature'] ?? 0.7;
 
-            $response = OpenAI::chat()->create([
-                'model' => $model,
-                'messages' => $messages,
-                'temperature' => $temperature,
-                'max_tokens' => 4000
-            ]);
+            $generatedCode = $this->callAIProvider($aiProvider, $messages, $model, $temperature);
 
-            if (isset($response->choices[0]->message->content)) {
-                $generatedCode = $response->choices[0]->message->content;
-                
-                // Extract only the HTML content
-                $generatedCode = $this->extractHtmlContent($generatedCode);
-                
-                // Replace any remaining placeholders in the generated code
-                $generatedCode = $this->utilityController->replacePlaceholders($generatedCode, $inputData, $previousResults, $inputFields);
+            // Extract only the HTML content
+            $generatedCode = $this->extractHtmlContent($generatedCode);
+            
+            // Replace any remaining placeholders in the generated code
+            $generatedCode = $this->utilityController->replacePlaceholders($generatedCode, $inputData, $previousResults, $inputFields);
 
-                Log::info("Code generation completed", ['generatedCode' => substr($generatedCode, 0, 100) . '...']);
+            Log::info("Code generation completed", ['generatedCode' => substr($generatedCode, 0, 100) . '...']);
 
-                return $generatedCode;
-            } else {
-                throw new \Exception('Unexpected OpenAI API response structure');
-            }
+            return $generatedCode;
         } catch (\Exception $e) {
             Log::error('Error in generateCode method', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             throw $e;
         }
+    }
+
+    private function callAIProvider($provider, $messages, $model, $temperature)
+    {
+        $maxRetries = 3;
+        $retryDelay = 5000; // 5 seconds
+
+        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
+            try {
+                Log::info("Calling {$provider} API (Attempt $attempt/$maxRetries)", [
+                    'model' => $model,
+                    'temperature' => $temperature,
+                ]);
+
+                switch ($provider) {
+                    case 'openai':
+                        return $this->callOpenAI($messages, $model, $temperature);
+                    case 'anthropic':
+                        return $this->callAnthropic($messages, $model, $temperature);
+                    case 'gemini':
+                        return $this->callGemini($messages, $model, $temperature);
+                    default:
+                        throw new \Exception("Unsupported AI provider: $provider");
+                }
+            } catch (\Exception $e) {
+                Log::warning("Error calling {$provider} API (Attempt $attempt/$maxRetries)", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+
+                if ($attempt < $maxRetries) {
+                    Log::info("Retrying in {$retryDelay}ms...");
+                    usleep($retryDelay * 1000);
+                    $retryDelay *= 2; // Exponential backoff
+                } else {
+                    Log::error("All attempts to call {$provider} API failed", [
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString()
+                    ]);
+                    throw new \Exception("Error calling {$provider} API after " . $maxRetries . " attempts: " . $e->getMessage());
+                }
+            }
+        }
+    }
+
+    private function callOpenAI($messages, $model, $temperature)
+    {
+        $response = OpenAI::chat()->create([
+            'model' => $model,
+            'messages' => $messages,
+            'temperature' => $temperature,
+            'max_tokens' => 4000
+        ]);
+
+        if (isset($response->choices[0]->message->content)) {
+            return $response->choices[0]->message->content;
+        } else {
+            throw new \Exception('Unexpected OpenAI API response structure');
+        }
+    }
+
+    private function callAnthropic($messages, $model, $temperature)
+    {
+        $apiKey = env('ANTHROPIC_API_KEY');
+        $apiVersion = $this->getAnthropicVersionFromModel($model);
+
+        $systemMessage = '';
+        $userMessage = [];
+        foreach ($messages as $message) {
+            if ($message['role'] === 'system') {
+                $systemMessage .= $message['content'] . "\n";
+            } elseif ($message['role'] === 'user') {
+                foreach ($message['content'] as $content) {
+                    if ($content['type'] === 'text') {
+                        $userMessage[] = ['type' => 'text', 'text' => $content['text']];
+                    } elseif ($content['type'] === 'image_url') {
+                        $imageData = $this->getImageData($content['image_url']['url']);
+                        if ($imageData) {
+                            $userMessage[] = [
+                                'type' => 'image',
+                                'source' => [
+                                    'type' => 'base64',
+                                    'media_type' => $imageData['mime_type'],
+                                    'data' => $imageData['base64']
+                                ]
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'x-api-key' => $apiKey,
+            'anthropic-version' => $apiVersion,
+        ])->post('https://api.anthropic.com/v1/messages', [
+            'model' => $model,
+            'system' => $systemMessage,
+            'messages' => [
+                ['role' => 'user', 'content' => $userMessage],
+            ],
+            'max_tokens' => 4000,
+            'temperature' => $temperature,
+        ]);
+
+        if ($response->successful()) {
+            $content = $response->json('content');
+            if (is_array($content) && isset($content[0]['text'])) {
+                return $content[0]['text'];
+            } else {
+                throw new \Exception('Unexpected Anthropic API response structure');
+            }
+        } else {
+            $errorMessage = $response->json('error.message') ?? $response->body();
+            throw new \Exception('Anthropic API request failed: ' . $errorMessage);
+        }
+    }
+
+    private function callGemini($messages, $model, $temperature)
+    {
+        $apiKey = env('GEMINI_API_KEY');
+        
+        $prompt = '';
+        $imageContent = null;
+        foreach ($messages as $message) {
+            if ($message['role'] === 'user') {
+                foreach ($message['content'] as $content) {
+                    if ($content['type'] === 'text') {
+                        $prompt .= $content['text'] . "\n";
+                    } elseif ($content['type'] === 'image_url') {
+                        $imageData = $this->getImageData($content['image_url']['url']);
+                        if ($imageData) {
+                            $imageContent = $imageData;
+                        }
+                    }
+                }
+            }
+        }
+
+        $requestBody = [
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $prompt]
+                    ]
+                ]
+            ],
+            'generationConfig' => [
+                'temperature' => $temperature,
+                'maxOutputTokens' => 4000,
+            ],
+        ];
+
+        if ($imageContent) {
+            $requestBody['contents'][0]['parts'][] = [
+                'inline_data' => [
+                    'mime_type' => $imageContent['mime_type'],
+                    'data' => $imageContent['base64']
+                ]
+            ];
+        }
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}", $requestBody);
+
+        if ($response->successful()) {
+            $content = $response->json('candidates.0.content.parts.0.text');
+            if ($content) {
+                return $content;
+            } else {
+                throw new \Exception('Unexpected Gemini API response structure');
+            }
+        } else {
+            $errorMessage = $response->json('error.message') ?? $response->body();
+            throw new \Exception('Google Gemini API request failed: ' . $errorMessage);
+        }
+    }
+
+    private function getImageData($url)
+    {
+        try {
+            $imageContent = file_get_contents($url);
+            if ($imageContent === false) {
+                Log::error("Failed to fetch image content", ['url' => $url]);
+                return null;
+            }
+            
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mimeType = $finfo->buffer($imageContent);
+            
+            return [
+                'mime_type' => $mimeType,
+                'base64' => base64_encode($imageContent)
+            ];
+        } catch (\Exception $e) {
+            Log::error("Error fetching image data", ['url' => $url, 'error' => $e->getMessage()]);
+            return null;
+        }
+    }
+
+    private function getAnthropicVersionFromModel($model)
+    {
+        // Extract the date from the model name
+        if (preg_match('/(\d{8})$/', $model, $matches)) {
+            $modelDate = $matches[1];
+            $currentDate = new \DateTime();
+            $modelDateTime = \DateTime::createFromFormat('Ymd', $modelDate);
+
+            // If the model date is in the future, use the current date
+            if ($modelDateTime > $currentDate) {
+                $versionDate = $currentDate->format('Y-m-d');
+            } else {
+                $versionDate = $modelDateTime->format('Y-m-d');
+            }
+
+            // Anthropic API currently supports versions up to 2023-06-01
+            $maxSupportedVersion = '2023-06-01';
+            if ($versionDate > $maxSupportedVersion) {
+                $versionDate = $maxSupportedVersion;
+            }
+
+            return $versionDate;
+        }
+        
+        // If no date is found in the model name, return the max supported version
+        return '2023-06-01';
     }
 
     private function prepareMessages($backgroundInfo, $prompt, $previousResults, $referenceFile = null)

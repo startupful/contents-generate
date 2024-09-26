@@ -15,6 +15,7 @@ class StorageController extends BaseController
     public function __construct(JsonHelperController $jsonHelper)
     {
         $this->jsonHelper = $jsonHelper;
+        mb_internal_encoding('UTF-8');
     }
     
     public function storeGeneratedContent($result, $steps, $logicId)
@@ -56,9 +57,16 @@ class StorageController extends BaseController
             $contentGenerate->file_name = $resultData['file_name'] ?? null;
             $contentGenerate->content = json_encode($resultData);
         } elseif ($lastStepType === 'content_integration') {
-            $content = is_string($resultData) ? $resultData : ($resultData['result'] ?? json_encode($resultData));
-            // 줄바꿈 보존
-            $contentGenerate->content = str_replace(["\r\n", "\r", "\n"], "\\n", $content);
+    
+            // web_crawling 타입인 경우 별도 처리
+            if (isset($resultData['type']) && $resultData['type'] === 'web_crawling') {
+                $content = $this->handleWebCrawlingContent($resultData);
+            } else {
+                $content = is_string($resultData) ? $resultData : ($resultData['result'] ?? json_encode($resultData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            }
+            
+            // 줄바꿈을 그대로 보존
+            $contentGenerate->content = $this->prepareContentForStorage($content);
         } else {
             $contentGenerate->content = $this->prepareContentForStorage($lastStep);
         }
@@ -88,7 +96,6 @@ class StorageController extends BaseController
 
     private function prepareContentForStorage($content)
     {
-        // JSON 문자열인 경우 디코딩
         if (is_string($content) && $this->isJson($content)) {
             $decodedContent = json_decode($content, true);
             if (isset($decodedContent['result'])) {
@@ -98,23 +105,18 @@ class StorageController extends BaseController
             }
         }
 
-        // 배열이나 객체인 경우
         if (is_array($content) || is_object($content)) {
             if (isset($content['result'])) {
                 $content = $content['result'];
             }
+            $content = json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
 
-        // 문자열이 아닌 경우 문자열로 변환
         if (!is_string($content)) {
             $content = json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
 
-        // 유니코드 이스케이프 시퀀스 디코딩
         $content = $this->decodeUnicode($content);
-
-        // 줄바꿈 문자 보존
-        $content = str_replace('\n', "\n", $content);
 
         // 앞뒤의 따옴표 제거 (json_encode로 인해 추가된 것)
         $content = trim($content, '"');
@@ -122,7 +124,57 @@ class StorageController extends BaseController
         // HTML 엔티티 디코딩
         $content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
+        // Markdown 코드 블록 표시 제거
+        $content = preg_replace('/^```[\w]*\s*\n/m', '', $content); // 시작 부분의 ``` 제거
+        $content = preg_replace('/\n```\s*$/m', '', $content); // 끝 부분의 ``` 제거
+        $content = preg_replace('/```[\w]*,?\s*\n/m', '', $content); // 중간에 있는 ```code, 또는 ```markdown 등 제거
+
+        // 줄바꿈 문자 정규화 (PHP_EOL을 사용)
+        $content = str_replace(["\r\n", "\r", "\n"], PHP_EOL, $content);
+        
+        // 연속된 줄바꿈을 하나로 줄임
+        $content = preg_replace('/('.preg_quote(PHP_EOL, '/').'){3,}/', PHP_EOL.PHP_EOL, $content);
+
+        // 앞뒤 공백 제거
+        $content = trim($content);
+
         return $content;
+    }
+
+    private function normalizeLineBreaks($content)
+    {
+        // 모든 줄바꿈 문자를 PHP_EOL로 통일
+        $content = str_replace(["\r\n", "\r", "\n"], PHP_EOL, $content);
+
+        // 연속된 줄바꿈을 하나로 줄임
+        $content = preg_replace('/(' . PHP_EOL . '){3,}/', PHP_EOL . PHP_EOL, $content);
+
+        return $content;
+    }
+
+    private function handleWebCrawlingContent($resultData)
+    {
+        $content = $resultData['result'] ?? '';
+        
+        if (is_string($content)) {
+            // JSON 문자열인 경우 디코딩
+            $decodedContent = json_decode($content, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $content = $decodedContent;
+            }
+        }
+        
+        if (is_array($content)) {
+            // 배열의 각 요소에 대해 유니코드 디코딩 적용
+            array_walk_recursive($content, function(&$item) {
+                if (is_string($item)) {
+                    $item = $this->decodeUnicode($item);
+                }
+            });
+        }
+        
+        // 다시 JSON으로 인코딩 (유니코드 이스케이프 없이)
+        return json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     private function isJson($string) {
@@ -131,7 +183,7 @@ class StorageController extends BaseController
     }
 
     private function decodeUnicode($str) {
-        return preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
+        return preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/i', function ($match) {
             return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
         }, $str);
     }

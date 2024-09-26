@@ -11,22 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('content_generates', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('uuid')->unique();
-            $table->string('title');
-            $table->text('content');
-            $table->string('type');
-            $table->string('status')->default('pending');
-            $table->timestamp('published_date')->nullable();
-            $table->longText('audio_content')->nullable();
-            $table->text('audio_text')->nullable();
-            $table->string('audio_model')->nullable();
-            $table->string('audio_voice')->nullable();
-            $table->string('file_path')->nullable();
-            $table->string('file_name')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('content_generates')) {
+            Schema::create('content_generates', function (Blueprint $table) {
+                $table->id();
+                $table->string('uuid');
+                $table->string('title');
+                $table->text('content');
+                $table->string('type');
+                $table->string('status')->default('pending');
+                $table->dateTime('published_date')->nullable();
+                $table->text('audio_content')->nullable();
+                $table->text('audio_text')->nullable();
+                $table->string('audio_model')->nullable();
+                $table->string('audio_voice')->nullable();
+                $table->string('file_path')->nullable();
+                $table->string('file_name')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

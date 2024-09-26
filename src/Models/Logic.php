@@ -19,7 +19,8 @@ class Logic extends Model
 
     public function getStepsAttribute($value)
     {
-        return json_decode($value, true);
+        $decoded = json_decode($value, true);
+        return is_array($decoded) ? array_values(array_filter($decoded, 'is_array')) : [];
     }
 
     public function setStepsAttribute($value)

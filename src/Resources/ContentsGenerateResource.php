@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\MarkdownEditor;
 use Startupful\ContentsGenerate\Models\ContentGenerate;
 use Startupful\ContentsGenerate\Resources\ContentsGenerateResource\Pages;
@@ -71,6 +72,8 @@ class ContentsGenerateResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\BadgeColumn::make('type')
+                    ->label('Type')
+                    ->formatStateUsing(fn (string $state): string => ucfirst($state))
                     ->color(fn (string $state): string => static::getTypeColor($state))
                     ->icon(fn (string $state): string => static::getTypeIcon($state)),
                 Tables\Columns\TextColumn::make('title')->searchable(),
@@ -80,8 +83,22 @@ class ContentsGenerateResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
                     ->options([
+                        'text' => 'Text',
+                        'image' => 'Image',
+                        'code' => 'Code',
+                        'audio' => 'Audio',
+                        'excel' => 'Excel',
+                        'integration' => 'Integration',
                     ])
+                    ->label('Content Type')
+                    ->multiple()
             ])
+            ->filtersTriggerAction(
+                fn (Tables\Actions\Action $action) => $action
+                    ->button()
+                    ->label('Filters')
+                    ->slideOver()
+            )
             ->actions([
             ])
             ->bulkActions([

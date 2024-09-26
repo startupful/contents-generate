@@ -15,16 +15,18 @@ class EditLogic extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
+            Actions\ViewAction::make()->icon('heroicon-o-eye'),
             Actions\Action::make('saveNow')
                 ->label(__('startupful-plugin.save'))
                 ->action(function () {
                     $this->save();
                 })
+                ->icon('heroicon-o-check-circle')
                 ->requiresConfirmation(false)
                 ->color('primary'),
             Actions\Action::make('duplicate')
                 ->label(__('startupful-plugin.duplicate'))
+                ->icon('heroicon-o-square-2-stack')
                 ->action(function (Model $record) {
                     $newRecord = $record->replicate();
                     $newRecord->name = $newRecord->name . ' (Copy)';
@@ -37,7 +39,7 @@ class EditLogic extends EditRecord
                 })
                 ->requiresConfirmation()
                 ->color('success'),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->icon('heroicon-o-trash'),
         ];
     }
 

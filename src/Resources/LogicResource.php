@@ -34,6 +34,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Enums\FiltersLayout;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Grouping\Group;
+use Illuminate\Support\Facades\DB;
 
 class LogicResource extends Resource
 {
@@ -109,6 +110,7 @@ class LogicResource extends Resource
                                             ])
                                             ->icons([
                                                 'input' => 'heroicon-o-cursor-arrow-rays',
+                                                'web_crawling' => 'heroicon-o-magnifying-glass',
                                                 'scrap_webpage' => 'heroicon-o-globe-alt',
                                                 'generate_text' => 'heroicon-o-document-text',
                                                 'generate_image' => 'heroicon-o-photo',
@@ -150,6 +152,7 @@ class LogicResource extends Resource
                                                         'radio' => __('startupful-plugin.radio_button'),
                                                         'multiselect' => __('startupful-plugin.multi_select'),
                                                         'file' => __('startupful-plugin.file_upload'),
+                                                        'time' => __('startupful-plugin.time'),
                                                     ])
                                                     ->required()
                                                     ->reactive()
@@ -202,6 +205,38 @@ class LogicResource extends Resource
                                                 $set('steps', array_filter($state, fn ($item) => !empty($item['logic_process'])));
                                             }),
 
+
+                                            Forms\Components\TextInput::make('search_query')
+                                                ->label(__('startupful-plugin.search_query'))
+                                                ->required()
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'web_crawling'),
+                                            Forms\Components\TextInput::make('num_results')
+                                                ->label(__('startupful-plugin.num_results'))
+                                                ->numeric()
+                                                ->default(10)
+                                                ->required()
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'web_crawling'),
+                                            Forms\Components\Select::make('search_type')
+                                                ->label(__('startupful-plugin.search_type'))
+                                                ->options([
+                                                    'web' => __('startupful-plugin.web'),
+                                                    'image' => __('startupful-plugin.image'),
+                                                ])
+                                                ->default('web')
+                                                ->required()
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'web_crawling'),
+                                            Forms\Components\TextInput::make('file_type')
+                                                ->label(__('startupful-plugin.file_type'))
+                                                ->placeholder('pdf,doc,xls')
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'web_crawling'),
+                                            Forms\Components\DatePicker::make('date_restrict')
+                                                ->label(__('startupful-plugin.date_restrict'))
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'web_crawling'),
+                                            Forms\Components\TextInput::make('site_search')
+                                                ->label(__('startupful-plugin.site_search'))
+                                                ->placeholder('example.com')
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'web_crawling'),
+
                                             
 
                                         // Scrap Webpage type fields
@@ -222,11 +257,24 @@ class LogicResource extends Resource
                                             ->options([
                                                 'text_only' => __('startupful-plugin.text_only'),
                                                 'html' => __('startupful-plugin.html'),
+                                                //'specific_data' => __('startupful-plugin.specific_data'),
                                             ])
                                             ->default('text_only')
                                             ->label(__('startupful-plugin.extraction_type'))
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'scrap_webpage'),
+                                        //Forms\Components\CheckboxList::make('specific_data_types')
+                                        //    ->options([
+                                        //        'site' => __('startupful-plugin.site'),
+                                        //        'author' => __('startupful-plugin.author'),
+                                        //        'url' => __('startupful-plugin.url'),
+                                        //        'email' => __('startupful-plugin.email'),
+                                        //        'phone' => __('startupful-plugin.phone'),
+                                        //        'address' => __('startupful-plugin.address'),
+                                        //    ])
+                                        //    ->label(__('startupful-plugin.specific_data_types'))
+                                        //    ->visible(fn (Forms\Get $get) => $get('type') === 'scrap_webpage' && $get('extraction_type') === 'specific_data')
+                                        //    ->columns(2),
 
                                     // Internet Search fields
                                     TextInput::make('search_query')
@@ -286,9 +334,9 @@ class LogicResource extends Resource
                                             ->visible(fn (Forms\Get $get) => in_array($get('type'), ['generate_text', 'generate_image', 'generate_excel', 'generate_ppt', 'generate_ui_ux'])),
                                         Forms\Components\Select::make('ai_provider')
                                             ->options([
-                                                'anthropic' => 'Anthropic',
-                                                'openai' => 'OpenAI',
-                                                'gemini' => 'Gemini',
+                                                'anthropic' => 'Anthropic(Claude)',
+                                                'openai' => 'OpenAI(GPT)',
+                                                'gemini' => 'Google(Gemini)',
                                             ])
                                             ->label(__('startupful-plugin.ai_service'))
                                             ->required()
@@ -344,6 +392,23 @@ class LogicResource extends Resource
                                             ->required()
                                             ->visible(fn (Forms\Get $get) => $get('type') === 'generate_audio')
                                             ->label(__('startupful-plugin.voice')),
+
+                                            Forms\Components\Select::make('ai_provider')
+                                                ->options([
+                                                    'huggingface' => 'Hugging Face',
+                                                    'openai' => 'OpenAI',
+                                                ])
+                                                ->label(__('startupful-plugin.ai_service'))
+                                                ->required()
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'generate_image')
+                                                ->reactive()
+                                                ->afterStateUpdated(fn (Forms\Set $set) => $set('ai_model', null)),
+                                            Forms\Components\Select::make('ai_model')
+                                                ->options(fn (Forms\Get $get): array => self::getImageAIModelOptions($get('ai_provider')))
+                                                ->visible(fn (Forms\Get $get) => $get('type') === 'generate_image')
+                                                ->required()
+                                                ->label(__('startupful-plugin.ai_model'))
+                                                ->reactive(),
 
                                         // Generate Excel type fields
                                         Forms\Components\Repeater::make('excel_columns')
@@ -432,20 +497,41 @@ class LogicResource extends Resource
                                     ->columnSpanFull()
                                     ->createItemButtonLabel(__('startupful-plugin.add_step'))
                                     ->reorderable()
-                                    ->itemLabel(function (array $state): string {
-                                        static $stepCounter = 0;
+                                    ->itemLabel(function ($state) use (&$stepCounter): string {
                                         $stepNumber = ++$stepCounter;
-                                        $type = ucfirst($state['type'] ?? 'Unknown');
+                                        $type = is_array($state) && isset($state['type']) ? ucfirst($state['type']) : 'Unknown';
                                         return "Step {$stepNumber}: {$type}";
                                     })
                                     ->collapsible()
                                     ->defaultItems(1)
-                                    ->live()
+                                    ->afterStateUpdated(function (Repeater $component, $state) {
+                                        \Log::info('Repeater state updated:', ['state' => $state]);
+                                        if (!is_array($state)) {
+                                            $component->state($component->getState() ?? []);
+                                        } else {
+                                            $filteredState = array_filter($state, function ($item) {
+                                                return is_array($item) && isset($item['type']);
+                                            });
+                                            $component->state(array_values($filteredState));
+                                        }
+                                    })
+                                    ->afterStateUpdated(function (Repeater $component, $state) {
+                                        if (!is_array($state)) {
+                                            $component->state([]);
+                                        } else {
+                                            $component->state(array_values($state));
+                                        }
+                                    })
                                     ->afterStateHydrated(function (Repeater $component) {
                                         $items = $component->getState();
-                                        if (is_array($items)) {
+                                        if (!is_array($items) || empty($items)) {
+                                            $component->state([]);
+                                        } else {
                                             $component->state(array_values($items));
                                         }
+                                    })
+                                    ->mutateDehydratedStateUsing(function ($state) {
+                                        return is_array($state) ? array_values($state) : [];
                                     }),
                             ])
                             ->columnSpan(['lg' => 3]),
@@ -462,11 +548,15 @@ class LogicResource extends Resource
         switch ($provider) {
             case 'anthropic':
                 return [
-                    'claude-2' => 'Claude 2',
-                    'claude-instant-1' => 'Claude Instant 1',
+                    'claude-3-5-sonnet-20240620' => 'Claude 3.5 sonnet',
+                    'claude-3-opus-20240229' => 'Claude 3 opus',
+                    'claude-3-sonnet-20240229' => 'Claude 3 sonnet',
+                    'claude-3-haiku-20240307' => 'Claude 3 haiku',
                 ];
             case 'openai':
                 return [
+                    'o1-preview-2024-09-12' => 'GPT-o1-preview',
+                    'o1-mini-2024-09-12' => 'GPT-o1-mini',
                     'gpt-4o-2024-05-13' => 'GPT-4o(Max 4k Token)',
                     'gpt-4o-2024-08-06' => 'GPT-4o(Max 16k Token)',
                     'gpt-4o-mini-2024-07-18' => 'GPT-4o-mini',
@@ -475,7 +565,39 @@ class LogicResource extends Resource
                 ];
             case 'gemini':
                 return [
-                    'gemini-pro' => 'Gemini Pro',
+                    'gemini-1.5-flash-latest' => 'Gemini Pro',
+                ];
+            default:
+                return [];
+        }
+    }
+
+    public static function getImageAIModelOptions(?string $provider): array
+    {
+        if (!$provider) {
+            return [];
+        }
+
+        switch ($provider) {
+            case 'huggingface':
+                return [
+                    'black-forest-labs/FLUX.1-dev' => 'FLUX.1-dev',
+                    'black-forest-labs/FLUX.1-schnell' => 'FLUX.1-schnell',
+                    'alvdansen/haunted_linework_flux' => 'FLUX-linework',
+                    'Shakker-Labs/FLUX.1-dev-LoRA-add-details' => 'FLUX-details',
+                    'dvyio/flux-lora-the-sims' => 'FLUX-sims',
+                    'nerijs/pixel-art-xl' => 'FLUX-pixelart',
+                    'Shakker-Labs/FLUX.1-dev-LoRA-Logo-Design' => 'FLUX-Logo',
+                    'enhanceaiteam/Flux-uncensored' => 'FLUX-uncensored(NSFW)',
+                    'stabilityai/stable-diffusion-2-1' => 'Stable Diffusion v2.1',
+                    'stable-diffusion-v1-5/stable-diffusion-v1-5' => 'Stable Diffusion v1.5',
+                    'stabilityai/stable-diffusion-xl-base-1.0' => 'stable-diffusion-xl-base-1.0',
+                    'mgwr/Cine-Aesthetic' => 'Cine-Aesthetic',
+                ];
+            case 'openai':
+                return [
+                    'dall-e-2' => 'DALL-E 2',
+                    'dall-e-3' => 'DALL-E 3',
                 ];
             default:
                 return [];
@@ -508,6 +630,40 @@ class LogicResource extends Resource
                 'lg' => 3,
                 'xl' => 4,
             ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('tags')
+                    ->multiple()
+                    ->label('Tags')
+                    ->options(function () {
+                        return Logic::query()
+                            ->whereNotNull('tags')
+                            ->pluck('tags')
+                            ->flatMap(function ($tags) {
+                                return is_array($tags) ? $tags : [];
+                            })
+                            ->unique()
+                            ->sort()
+                            ->mapWithKeys(function ($tag) {
+                                return [$tag => $tag];
+                            });
+                    })
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['values'],
+                            fn (Builder $query, array $values): Builder => $query->where(function($query) use ($values) {
+                                foreach ($values as $value) {
+                                    $query->orWhereJsonContains('tags', $value);
+                                }
+                            })
+                        );
+                    })
+            ])
+            ->filtersTriggerAction(
+                fn (Tables\Actions\Action $action) => $action
+                    ->button()
+                    ->label('Filters')
+                    ->slideOver()
+            )
             ->actions([
             ])
             ->bulkActions([
@@ -536,7 +692,10 @@ class LogicResource extends Resource
     public static function saving(Model $record, array $data): void
     {
         // 저장 전 steps 데이터 완전 리셋
-        $record->steps = [];
+        $steps = $data['steps'] ?? [];
+        $filteredSteps = array_filter($steps, function ($step) {
+            return is_array($step) && isset($step['type']);
+        });    
 
         // 새로운 steps 데이터만 설정
         $newSteps = array_map(function ($step, $index) {
@@ -559,10 +718,18 @@ class LogicResource extends Resource
                     }, $step['input_fields'] ?? []);
                     break;
                 case 'scrap_youtube':
+                case 'web_crawling':
+                    $newStep['search_query'] = $step['search_query'] ?? null;
+                    $newStep['num_results'] = $step['num_results'] ?? null;
+                    $newStep['search_type'] = $step['search_type'] ?? null;
+                    $newStep['file_type'] = $step['file_type'] ?? null;
+                    $newStep['date_restrict'] = $step['date_restrict'] ?? null;
+                    $newStep['site_search'] = $step['site_search'] ?? null;
                 case 'scrap_webpage':
                     $newStep['url_source'] = $step['url_source'] ?? null;
                     $newStep['fixed_url'] = $step['fixed_url'] ?? null;
                     $newStep['extraction_type'] = $step['extraction_type'] ?? null;
+                    $newStep['specific_data_types'] = $step['specific_data_types'] ?? null;
                     break;
                 case 'generate_text':
                     $newStep['prompt'] = $step['prompt'] ?? null;

@@ -13,7 +13,7 @@ class ListLogics extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('로직 생성'),
+            Actions\CreateAction::make()->icon('heroicon-o-sparkles')->label('로직 생성'),
         ];
     }
 

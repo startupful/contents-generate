@@ -1,4 +1,9 @@
 @vite('resources/css/app.css')
+<style>
+    .CodeMirror-fullscreen {
+        height: calc(100vh - 64px) !important;
+    }
+</style>
 <div>
     <div class="mb-4 flex justify-between">
         <div class="hidden lg:block">
@@ -27,8 +32,8 @@
     </div>
 </div>
 
-<div id="fullscreen-container" class="fixed inset-0 bg-white z-50 hidden flex flex-col">
-    <div id="fullscreen-controls" class="bg-white p-4 flex justify-between items-center">
+<div id="fullscreen-container" class="fixed inset-0 bg-basic z-50 hidden">
+    <div id="fullscreen-controls" class="bg-basic p-4 flex justify-between items-center">
         <div>
             <button id="fullscreen-mobile-view" class="btn btn-outline"><x-heroicon-o-device-phone-mobile class="h-6 w-6 mr-2" />{{ __('button.mobile') }}</button>
             <button id="fullscreen-tablet-view" class="btn btn-outline"><x-heroicon-o-device-tablet class="h-6 w-6 mr-2" />{{ __('button.tablet') }}</button>
@@ -40,9 +45,11 @@
             <button id="close-fullscreen" class="btn btn-outline"><x-heroicon-o-x-mark class="h-6 w-6 mr-2" />Close</button>
         </div>
     </div>
-    <div id="fullscreen-preview" class="flex-grow overflow-auto"></div>
-    <div id="fullscreen-code-container" class="hidden h-1/2 overflow-auto">
-        <textarea id="fullscreen-code-editor"></textarea>
+    <div class="flex h-[calc(100%-64px)]"> <!-- 상단 컨트롤 높이를 뺀 나머지 높이 -->
+        <div id="fullscreen-preview" class="flex-grow overflow-auto"></div>
+        <div id="fullscreen-code-container" class="hidden h-full w-1/3 overflow-auto border-l border-gray-200">
+            <textarea id="fullscreen-code-editor" class="h-full"></textarea>
+        </div>
     </div>
 </div>
 
@@ -69,10 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let codeEditor, fullscreenCodeEditorInstance;
 
-    const code = {!! json_encode($getRecord()->getCodeContent()) !!};
+    // 코드 내용을 안전하게 가져오기
+    const code = codeEditorElement ? codeEditorElement.value : '';
 
+    // CodeMirror 인스턴스 초기화
     function initCodeMirror() {
-        if (!codeEditor) {
+        if (!codeEditor && codeEditorElement) {
             codeEditor = CodeMirror.fromTextArea(codeEditorElement, {
                 mode: 'htmlmixed',
                 theme: 'dracula',
@@ -80,10 +89,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 readOnly: true,
                 lineWrapping: true
             });
-            codeEditor.setValue(code);
+            if (code) {
+                codeEditor.setValue(code);
+            }
         }
 
-        if (!fullscreenCodeEditorInstance) {
+        if (!fullscreenCodeEditorInstance && fullscreenCodeEditor) {
             fullscreenCodeEditorInstance = CodeMirror.fromTextArea(fullscreenCodeEditor, {
                 mode: 'htmlmixed',
                 theme: 'dracula',
@@ -91,72 +102,156 @@ document.addEventListener('DOMContentLoaded', function () {
                 readOnly: true,
                 lineWrapping: true
             });
-            fullscreenCodeEditorInstance.setValue(code);
+            if (code) {
+                fullscreenCodeEditorInstance.setValue(code);
+            }
         }
     }
 
-    // View mode buttons
+    // 페이지 로드 시 CodeMirror 초기화
+    initCodeMirror();
+
+    // 뷰 모드 버튼
     ['mobile', 'tablet', 'desktop'].forEach(mode => {
-        document.getElementById(`${mode}-view`).addEventListener('click', () => setViewMode(mode));
-        document.getElementById(`fullscreen-${mode}-view`).addEventListener('click', () => setViewMode(mode, true));
+        const button = document.getElementById(`${mode}-view`);
+        if (button) {
+            button.addEventListener('click', () => setViewMode(mode));
+        }
+        const fullscreenButton = document.getElementById(`fullscreen-${mode}-view`);
+        if (fullscreenButton) {
+            fullscreenButton.addEventListener('click', () => setViewMode(mode, true));
+        }
     });
 
     function setViewMode(mode, isFullscreen = false) {
         const frame = isFullscreen ? fullscreenPreview.querySelector('iframe') : previewFrame;
-        switch(mode) {
-            case 'mobile':
-                frame.style.width = '375px';
-                break;
-            case 'tablet':
-                frame.style.width = '768px';
-                break;
-            case 'desktop':
-                frame.style.width = '100%';
-                break;
+        if (frame) {
+            switch(mode) {
+                case 'mobile':
+                    frame.style.width = '375px';
+                    break;
+                case 'tablet':
+                    frame.style.width = '768px';
+                    break;
+                case 'desktop':
+                    frame.style.width = '100%';
+                    break;
+            }
+            frame.style.margin = mode !== 'desktop' ? '0 auto' : '0';
         }
-        frame.style.margin = mode !== 'desktop' ? '0 auto' : '0';
     }
 
-    // Toggle code view
-    toggleCodeButton.addEventListener('click', () => toggleCodeView());
-    document.getElementById('fullscreen-toggle-code').addEventListener('click', () => toggleCodeView(true));
+    // 코드 보기 토글
+    if (toggleCodeButton) {
+        toggleCodeButton.addEventListener('click', () => toggleCodeView());
+    }
 
     function toggleCodeView(isFullscreen = false) {
-        initCodeMirror();
         const container = isFullscreen ? fullscreenCodeContainer : codeContainer;
         const text = isFullscreen ? document.getElementById('fullscreen-toggleText') : toggleText;
-        if (container.classList.contains('hidden')) {
-            container.classList.remove('hidden');
-            text.textContent = '{{ __('button.hide_code') }}';
-            (isFullscreen ? fullscreenCodeEditorInstance : codeEditor).refresh();
-        } else {
-            container.classList.add('hidden');
-            text.textContent = '{{ __('button.view_code') }}';
+        const preview = isFullscreen ? fullscreenPreview : previewFrame.parentElement;
+        
+        if (container && text) {
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                text.textContent = '코드 숨기기';
+                if (isFullscreen) {
+                    preview.classList.remove('w-full');
+                    preview.classList.add('w-2/3');
+                    if (fullscreenCodeEditorInstance) {
+                        fullscreenCodeEditorInstance.getWrapperElement().classList.add('CodeMirror-fullscreen');
+                        fullscreenCodeEditorInstance.refresh();
+                    }
+                }
+            } else {
+                container.classList.add('hidden');
+                text.textContent = '코드 보기';
+                if (isFullscreen) {
+                    preview.classList.remove('w-2/3');
+                    preview.classList.add('w-full');
+                    if (fullscreenCodeEditorInstance) {
+                        fullscreenCodeEditorInstance.getWrapperElement().classList.remove('CodeMirror-fullscreen');
+                    }
+                }
+            }
         }
     }
 
-    // Copy code
-    copyCodeButton.addEventListener('click', () => copyCode());
-    document.getElementById('fullscreen-copy-code').addEventListener('click', () => copyCode());
+    // 풀스크린 토글 코드 버튼 이벤트 리스너
+    const fullscreenToggleCode = document.getElementById('fullscreen-toggle-code');
+    if (fullscreenToggleCode) {
+        fullscreenToggleCode.addEventListener('click', () => toggleCodeView(true));
+    }
+
+    // 코드 복사
+    if (copyCodeButton) {
+        copyCodeButton.addEventListener('click', copyCode);
+    }
 
     function copyCode() {
-        navigator.clipboard.writeText(getCode()).then(() => {
-            alert('{{ __('button.code_copied') }}');
+        navigator.clipboard.writeText(code).then(() => {
+            alert('코드가 복사되었습니다.');
         }, (err) => {
-            console.error('Could not copy text: ', err);
+            console.error('텍스트를 복사할 수 없습니다: ', err);
         });
     }
 
-    // Fullscreen mode
-    fullscreenButton.addEventListener('click', () => {
-        fullscreenContainer.classList.remove('hidden');
-        fullscreenPreview.innerHTML = `<iframe srcdoc="${getCode()}" class="w-full h-full"></iframe>`;
-        document.body.style.overflow = 'hidden';
-    });
+    // 전체 화면 모드
+    if (fullscreenButton) {
+        fullscreenButton.addEventListener('click', () => {
+            fullscreenContainer.classList.remove('hidden');
+            
+            // 기존 iframe을 fullscreenPreview로 이동
+            if (previewFrame && fullscreenPreview) {
+                fullscreenPreview.innerHTML = '';
+                const clonedFrame = previewFrame.cloneNode(true);
+                clonedFrame.style.height = '100%';
+                clonedFrame.style.width = '100%';
+                clonedFrame.classList.remove('rounded-b-lg');
+                fullscreenPreview.appendChild(clonedFrame);
+            }
+            
+            document.body.style.overflow = 'hidden';
 
-    closeFullscreenButton.addEventListener('click', () => {
-        fullscreenContainer.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-    });
+            // 코드 에디터 초기화
+            initCodeMirror();
+        });
+    }
+
+    if (closeFullscreenButton) {
+        closeFullscreenButton.addEventListener('click', () => {
+            fullscreenContainer.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            
+            // fullscreenPreview에서 iframe 제거
+            if (fullscreenPreview) {
+                fullscreenPreview.innerHTML = '';
+            }
+
+            // 코드 보기가 열려있었다면 닫기
+            if (!fullscreenCodeContainer.classList.contains('hidden')) {
+                toggleCodeView(true);
+            }
+        });
+    }
+
+    
+
+    // 메인 문서에서 모든 스타일을 가져오는 헬퍼 함수
+    function getStyles() {
+        let styles = '';
+        for (let i = 0; i < document.styleSheets.length; i++) {
+            const sheet = document.styleSheets[i];
+            try {
+                const rules = sheet.cssRules || sheet.rules;
+                for (let j = 0; j < rules.length; j++) {
+                    styles += rules[j].cssText + '\n';
+                }
+            } catch (e) {
+                console.log('스타일시트 접근 오류 (CORS 제한일 수 있음):', e);
+            }
+        }
+        return styles;
+    }
 });
 </script>

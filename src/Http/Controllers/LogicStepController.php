@@ -25,6 +25,7 @@ class LogicStepController extends BaseController
 
         $stepResult = match ($step['type']) {
             'input' => $this->processInputStep($inputData, $step),
+            'web_crawling' => App::make(WebCrawlingController::class)->crawlWebsites($step, $inputData, $stepIndex),
             'scrap_webpage' => App::make(WebScrapingController::class)->scrapWebpage($step, $inputData, $stepIndex),
             'generate_text' => App::make(TextGenerationController::class)->generateText($step, $inputData, $previousResults),
             'generate_image' => App::make(ImageGenerationController::class)->generateImage($step, $inputData, $previousResults),
