@@ -111,18 +111,18 @@ class ImageGenerationController extends BaseController
 
     private function callHuggingFaceImage($prompt, $model)
     {
-        $response = Http::timeout($this->timeout)->withHeaders([
+        $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('HUGGINGFACE_API_KEY'),
         ])->post("https://api-inference.huggingface.co/models/$model", [
             'inputs' => $prompt,
         ]);
-
+    
         if ($response->successful()) {
             $imageContent = $response->body();
             $filename = 'generated_image_' . time() . '.png';
             $path = storage_path('app/public/' . $filename);
             file_put_contents($path, $imageContent);
-
+    
             return [
                 'file_path' => $path,
                 'file_name' => $filename,

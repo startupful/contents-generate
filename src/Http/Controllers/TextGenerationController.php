@@ -153,8 +153,8 @@ class TextGenerationController extends BaseController
     {
         $apiKey = env('ANTHROPIC_API_KEY');
         $apiVersion = $this->getAnthropicVersionFromModel($model);
-
-        $response = Http::timeout(120)->withHeaders([
+    
+        $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'x-api-key' => $apiKey,
             'anthropic-version' => $apiVersion,
@@ -167,7 +167,7 @@ class TextGenerationController extends BaseController
             'max_tokens' => 8000,
             'temperature' => $temperature,
         ]);
-
+    
         if ($response->successful()) {
             $content = $response->json('content');
             if (is_array($content) && isset($content[0]['text'])) {
