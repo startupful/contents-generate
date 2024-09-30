@@ -583,16 +583,23 @@ class LogicResource extends Resource
                 return [
                     'black-forest-labs/FLUX.1-dev' => 'FLUX.1-dev',
                     'black-forest-labs/FLUX.1-schnell' => 'FLUX.1-schnell',
-                    'alvdansen/haunted_linework_flux' => 'FLUX-linework',
                     'Shakker-Labs/FLUX.1-dev-LoRA-add-details' => 'FLUX-details',
-                    'dvyio/flux-lora-the-sims' => 'FLUX-sims',
+                    'alvdansen/pola-photo-flux' => 'FLUX-Pola-photo',
+                    'alvdansen/flux-koda' => 'FLUX-KODA-Flim',
+                    'nerijs/animation2k-flux' => 'FLUX-20s Anime',
+                    'alvdansen/haunted_linework_flux' => 'FLUX-linework',
                     'nerijs/pixel-art-xl' => 'FLUX-pixelart',
+                    'sWizad/pokemon-trainer-sprites-pixelart-flux' => 'FLUX-pixel(feat.pokemon style)',
+                    'aleksa-codes/flux-ghibsky-illustration' => 'FLUX-Ghibsky Illustrate',
                     'Shakker-Labs/FLUX.1-dev-LoRA-Logo-Design' => 'FLUX-Logo',
                     'enhanceaiteam/Flux-uncensored' => 'FLUX-uncensored(NSFW)',
                     'stabilityai/stable-diffusion-2-1' => 'Stable Diffusion v2.1',
                     'stable-diffusion-v1-5/stable-diffusion-v1-5' => 'Stable Diffusion v1.5',
                     'stabilityai/stable-diffusion-xl-base-1.0' => 'stable-diffusion-xl-base-1.0',
+                    'glif/90s-anime-art' => '90s Anime Art',
+                    'alvdansen/enna-sketch-style' => 'Sketch Anime',
                     'mgwr/Cine-Aesthetic' => 'Cine-Aesthetic',
+                    'glif/how2draw' => 'Drawing',
                 ];
             case 'openai':
                 return [

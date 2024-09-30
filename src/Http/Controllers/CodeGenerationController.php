@@ -66,44 +66,20 @@ class CodeGenerationController extends BaseController
 
     private function callAIProvider($provider, $messages, $model, $temperature)
     {
-        $maxRetries = 3;
-        $retryDelay = 5000; // 5 seconds
+        Log::info("Calling {$provider} API", [
+            'model' => $model,
+            'temperature' => $temperature,
+        ]);
 
-        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
-            try {
-                Log::info("Calling {$provider} API (Attempt $attempt/$maxRetries)", [
-                    'model' => $model,
-                    'temperature' => $temperature,
-                ]);
-
-                switch ($provider) {
-                    case 'openai':
-                        return $this->callOpenAI($messages, $model, $temperature);
-                    case 'anthropic':
-                        return $this->callAnthropic($messages, $model, $temperature);
-                    case 'gemini':
-                        return $this->callGemini($messages, $model, $temperature);
-                    default:
-                        throw new \Exception("Unsupported AI provider: $provider");
-                }
-            } catch (\Exception $e) {
-                Log::warning("Error calling {$provider} API (Attempt $attempt/$maxRetries)", [
-                    'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
-                ]);
-
-                if ($attempt < $maxRetries) {
-                    Log::info("Retrying in {$retryDelay}ms...");
-                    usleep($retryDelay * 1000);
-                    $retryDelay *= 2; // Exponential backoff
-                } else {
-                    Log::error("All attempts to call {$provider} API failed", [
-                        'error' => $e->getMessage(),
-                        'trace' => $e->getTraceAsString()
-                    ]);
-                    throw new \Exception("Error calling {$provider} API after " . $maxRetries . " attempts: " . $e->getMessage());
-                }
-            }
+        switch ($provider) {
+            case 'openai':
+                return $this->callOpenAI($messages, $model, $temperature);
+            case 'anthropic':
+                return $this->callAnthropic($messages, $model, $temperature);
+            case 'gemini':
+                return $this->callGemini($messages, $model, $temperature);
+            default:
+                throw new \Exception("Unsupported AI provider: $provider");
         }
     }
 
@@ -364,6 +340,9 @@ class CodeGenerationController extends BaseController
         
         // Remove any leading or trailing whitespace
         $content = trim($content);
+
+        // Normalize line breaks to LF
+        $content = str_replace(["\r\n", "\r"], "\n", $content);
 
         return $content;
     }

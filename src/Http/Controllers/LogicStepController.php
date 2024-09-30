@@ -27,6 +27,7 @@ class LogicStepController extends BaseController
             'input' => $this->processInputStep($inputData, $step),
             'web_crawling' => App::make(WebCrawlingController::class)->crawlWebsites($step, $inputData, $stepIndex),
             'scrap_webpage' => App::make(WebScrapingController::class)->scrapWebpage($step, $inputData, $stepIndex),
+            'scrap_youtube' => App::make(YouTubeScrapingController::class)->scrapYouTube($step, $inputData, $stepIndex),
             'generate_text' => App::make(TextGenerationController::class)->generateText($step, $inputData, $previousResults),
             'generate_image' => App::make(ImageGenerationController::class)->generateImage($step, $inputData, $previousResults),
             'generate_excel' => App::make(ExcelGenerationController::class)->generateExcel($step, $inputData, $previousResults),

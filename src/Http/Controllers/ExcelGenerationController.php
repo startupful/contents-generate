@@ -14,10 +14,12 @@ use OpenAI\Laravel\Facades\OpenAI;
 class ExcelGenerationController extends BaseController
 {
     protected $utilityController;
+    protected $currentLanguage;
 
     public function __construct(UtilityController $utilityController)
     {
         $this->utilityController = $utilityController;
+        $this->currentLanguage = config('app.locale', 'ko');
     }
 
     public function generateExcel($step, $inputData, $previousResults)
@@ -81,60 +83,46 @@ class ExcelGenerationController extends BaseController
     {
         $columnNames = array_column($columnInfo, 'name');
         $columnDescriptions = array_column($columnInfo, 'description');
-
-        $aiPrompt = $prompt . "\n\n" .
+    
+        $languagePrompt = "Please generate the content in {$this->currentLanguage} language (culturally appropriate and natural).\n\n";
+    
+        $aiPrompt = $languagePrompt . $prompt . "\n\n" .
                     "Please provide the output as CSV data, with the following headers in the first row:\n" .
                     implode(', ', $columnNames) . "\n\n" .
                     "Column descriptions:\n" .
                     implode("\n", array_map(function($name, $desc) {
                         return "$name: $desc";
                     }, $columnNames, $columnDescriptions)) . "\n\n" .
-                    "Ensure that each field is properly quoted, especially if it contains commas.";
-
+                    "Ensure that each field is properly quoted, especially if it contains commas.\n\n" .
+                    "For the 'User Role' column:\n" .
+                    "1. Generate a list of distinct user roles (e.g., End-User, Administrator, Moderator) based on the project requirements.\n" .
+                    "2. For each distinct role, group all related features and requirements together.\n" .
+                    "3. Do not repeat user roles unnecessarily. Keep each role contiguous in the output.\n" .
+                    "4. Ensure that all features and requirements for a role are listed before moving to the next role.\n";
+    
         $systemMessage = $backgroundInfo . "\n\n" .
                         "You are a helpful assistant that generates Excel data in CSV format. " .
                         "Ensure proper handling of special characters and formatting. " .
                         "Provide only the CSV data without any additional text or markdown formatting. " .
-                        "Always enclose each field in double quotes, and escape any double quotes within fields by doubling them.";
-
-        $maxRetries = 3;
-        $retryDelay = 5000; // 5 seconds
-
-        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
-            try {
-                Log::info("Calling {$aiProvider} API (Attempt $attempt/$maxRetries)", [
-                    'model' => $aiModel,
-                    'temperature' => $temperature,
-                ]);
-
-                switch ($aiProvider) {
-                    case 'openai':
-                        return $this->callOpenAI($aiPrompt, $systemMessage, $aiModel, $temperature);
-                    case 'anthropic':
-                        return $this->callAnthropic($aiPrompt, $systemMessage, $aiModel, $temperature, $columnInfo);
-                    case 'gemini':
-                        return $this->callGemini($aiPrompt, $systemMessage, $aiModel, $temperature);
-                    default:
-                        throw new \Exception("Unsupported AI provider: {$aiProvider}");
-                }
-            } catch (\Exception $e) {
-                Log::warning("Error calling {$aiProvider} API (Attempt $attempt/$maxRetries)", [
-                    'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
-                ]);
-
-                if ($attempt < $maxRetries) {
-                    Log::info("Retrying in {$retryDelay}ms...");
-                    usleep($retryDelay * 1000);
-                    $retryDelay *= 2; // Exponential backoff
-                } else {
-                    Log::error("All attempts to call {$aiProvider} API failed", [
-                        'error' => $e->getMessage(),
-                        'trace' => $e->getTraceAsString()
-                    ]);
-                    throw new \Exception("Error calling {$aiProvider} API after " . $maxRetries . " attempts: " . $e->getMessage());
-                }
-            }
+                        "Always enclose each field in double quotes, and escape any double quotes within fields by doubling them. " .
+                        "Generate the content in {$this->currentLanguage} language, ensuring it's culturally appropriate and natural. " .
+                        "For the 'User Role' column, ensure that roles are grouped together without unnecessary repetition.";
+    
+        Log::info("Calling {$aiProvider} API for Excel content generation", [
+            'model' => $aiModel,
+            'temperature' => $temperature,
+            'language' => $this->currentLanguage,
+        ]);
+    
+        switch ($aiProvider) {
+            case 'openai':
+                return $this->callOpenAI($aiPrompt, $systemMessage, $aiModel, $temperature);
+            case 'anthropic':
+                return $this->callAnthropic($aiPrompt, $systemMessage, $aiModel, $temperature, $columnInfo);
+            case 'gemini':
+                return $this->callGemini($aiPrompt, $systemMessage, $aiModel, $temperature);
+            default:
+                throw new \Exception("Unsupported AI provider: {$aiProvider}");
         }
     }
 
@@ -336,7 +324,7 @@ class ExcelGenerationController extends BaseController
 
         // Set headers and apply column styles
         foreach ($excelConfig['columns'] as $colIndex => $columnConfig) {
-            $columnLetter = Coordinate::stringFromColumnIndex($colIndex + 2);  // Start from column B
+            $columnLetter = Coordinate::stringFromColumnIndex($colIndex + 1);  // Start from column B
             $sheet->setCellValue($columnLetter . '1', $columnConfig['name']);
             $this->applyColumnStyles($sheet, $columnLetter, $columnConfig);
         }
@@ -345,7 +333,7 @@ class ExcelGenerationController extends BaseController
         $startRow = 1; // Start from row 2 as row 1 is for headers
         foreach ($parsedData as $rowIndex => $rowData) {
             foreach ($excelConfig['columns'] as $colIndex => $columnConfig) {
-                $columnLetter = Coordinate::stringFromColumnIndex($colIndex + 2);  // Start from column B
+                $columnLetter = Coordinate::stringFromColumnIndex($colIndex + 1);  // Start from column B
                 $cellValue = $rowData[$columnConfig['name']] ?? ''; // Use column name to get the correct data
                 $sheet->setCellValue($columnLetter . ($rowIndex + $startRow), $cellValue);
             }
@@ -418,7 +406,7 @@ class ExcelGenerationController extends BaseController
     {
         foreach ($columnConfig as $index => $column) {
             if (isset($column['merge_duplicates']) && $column['merge_duplicates']) {
-                $columnLetter = Coordinate::stringFromColumnIndex($index + 2);  // Start from column B
+                $columnLetter = Coordinate::stringFromColumnIndex($index + 1);  // Start from column B
                 $this->mergeDuplicates($sheet, $columnLetter, $lastRow);
             }
         }

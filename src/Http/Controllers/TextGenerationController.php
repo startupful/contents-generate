@@ -36,7 +36,7 @@ class TextGenerationController extends BaseController
             $prompt = $this->utilityController->replacePlaceholders($step['prompt'], $processedInputData, $previousResults, $step['input_fields'] ?? []);
             $backgroundInfo = $this->utilityController->replacePlaceholders($step['background_information'], $processedInputData, $previousResults, $step['input_fields'] ?? []);
 
-            $fullPrompt = "Please generate the content in {$this->currentLanguage} language.\n\n" . $prompt;
+            $fullPrompt = "Please generate the content in {$this->currentLanguage} language(culturally appropriate natural).\n\n" . $prompt;
 
             // Handle reference file only if it's not an image
             if (!$isImageFile) {
@@ -134,7 +134,7 @@ class TextGenerationController extends BaseController
         $response = OpenAI::chat()->create([
             'model' => $model,
             'messages' => $messages,
-            'temperature' => $temperature,
+            'temperature' => floatval($temperature), 
         ]);
 
         if (isset($response->choices[0]->message->content)) {

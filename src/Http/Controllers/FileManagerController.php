@@ -85,7 +85,7 @@ class FileManagerController extends BaseController
             return 'spreadsheet';
         } elseif (in_array($fileExtension, ['ppt', 'pptx'])) {
             return 'presentation';
-        } elseif (in_array($fileExtension, ['mp3', 'wav', 'ogg'])) {
+        } elseif (in_array($fileExtension, ['mp3', 'wav', 'ogg', 'm4a'])) {
             return 'audio';
         } elseif (in_array($fileExtension, ['mp4', 'avi', 'mov'])) {
             return 'video';
@@ -116,7 +116,11 @@ class FileManagerController extends BaseController
                 case 'presentation':
                     return $this->extractTextFromPresentation($absolutePath);
                 case 'audio':
-                    return $this->transcribeAudio($absolutePath);
+                    $transcription = $this->transcribeAudio($absolutePath);
+                    if (strpos($transcription, "Error") === 0) {
+                        return $transcription;
+                    }
+                    return "Audio Transcription:\n\n" . $transcription;
                 case 'video':
                     return $this->getPublicUrlForFile($path);
                 default:
@@ -212,26 +216,35 @@ class FileManagerController extends BaseController
                             }
                         }
                     } catch (\Exception $shapeError) {
-                        // 문제가 있는 도형을 건너뛰고 로그를 남김
-                        Log::error('Error processing shape', [
+                        Log::warning('Error processing shape', [
                             'error' => $shapeError->getMessage(),
-                            'shape' => $shape,
+                            'shape_type' => get_class($shape),
                             'slide_number' => $slide->getSlideNumber(),
                         ]);
-                        continue; // 해당 도형 처리 건너뛰기
+                        continue;
                     }
                 }
                 $text .= "\n--- New Slide ---\n\n";
             }
+            
+            if (empty(trim($text))) {
+                throw new \Exception('No text extracted from presentation');
+            }
+            
             return $text;
+        } catch (\TypeError $e) {
+            Log::error('TypeError in PowerPoint2007 reader', [
+                'error' => $e->getMessage(),
+                'file' => $path,
+                'trace' => $e->getTraceAsString()
+            ]);
+            return $this->extractTextFromPresentationAlternative($path);
         } catch (\Exception $e) {
             Log::error('Error extracting text from PowerPoint file', [
                 'error' => $e->getMessage(),
                 'file' => $path,
                 'trace' => $e->getTraceAsString()
             ]);
-
-            // 대체 방법으로 텍스트 추출 시도
             return $this->extractTextFromPresentationAlternative($path);
         }
     }
@@ -242,21 +255,37 @@ class FileManagerController extends BaseController
         $text = '';
 
         if ($zip->open($path) === TRUE) {
-            for ($i = 1; $i <= $zip->numFiles; $i++) {
+            for ($i = 0; $i < $zip->numFiles; $i++) {
                 $filename = $zip->getNameIndex($i);
                 if (strpos($filename, 'ppt/slides/slide') === 0) {
                     $content = $zip->getFromIndex($i);
-                    $text .= strip_tags($content) . "\n--- New Slide ---\n\n";
+                    $text .= $this->extractTextFromXML($content) . "\n--- New Slide ---\n\n";
                 }
             }
             $zip->close();
         }
 
-        if (empty($text)) {
+        if (empty(trim($text))) {
             $fileInfo = $this->getFileInfo($path);
+            Log::warning('Unable to extract text from presentation', ['file_info' => $fileInfo]);
             return "Unable to extract text. File information: " . json_encode($fileInfo);
         }
 
+        return $text;
+    }
+
+    private function extractTextFromXML($xmlContent)
+    {
+        $dom = new \DOMDocument();
+        $dom->loadXML($xmlContent, LIBXML_NOENT | LIBXML_XINCLUDE | LIBXML_NOERROR | LIBXML_NOWARNING);
+        $xpath = new \DOMXPath($dom);
+        $xpath->registerNamespace('a', 'http://schemas.openxmlformats.org/drawingml/2006/main');
+        $query = '//a:t';
+        $entries = $xpath->query($query);
+        $text = '';
+        foreach ($entries as $entry) {
+            $text .= $entry->nodeValue . "\n";
+        }
         return $text;
     }
 
@@ -274,18 +303,28 @@ class FileManagerController extends BaseController
 
     private function transcribeAudio($path)
     {
+        if (!$this->isAudioFile($path)) {
+            Log::error('Invalid file type for transcription', ['file' => $path]);
+            return "Error: Not a valid audio file.";
+        }
+    
+        if (!$this->isFileSizeWithinLimit($path)) {
+            Log::error('File size exceeds limit', ['file' => $path]);
+            return "Error: File size exceeds the limit.";
+        }
+    
         try {
             $response = OpenAI::audio()->transcribe([
                 'model' => 'whisper-1',
                 'file' => fopen($path, 'r'),
                 'response_format' => 'text'
             ]);
-
+    
             Log::info('Audio transcription completed', [
                 'file' => $path,
                 'transcription_length' => strlen($response->text)
             ]);
-
+    
             return $response->text;
         } catch (\Exception $e) {
             Log::error('Error transcribing audio with Whisper', [
@@ -295,6 +334,17 @@ class FileManagerController extends BaseController
             ]);
             return "Error transcribing audio: " . $e->getMessage();
         }
+    }
+
+    private function isAudioFile($path)
+    {
+        $mimeType = mime_content_type($path);
+        return strpos($mimeType, 'audio/') === 0;
+    }
+
+    private function isFileSizeWithinLimit($path, $maxSizeMB = 25)
+    {
+        return filesize($path) <= $maxSizeMB * 1024 * 1024;
     }
 
     public function deleteFile($path)

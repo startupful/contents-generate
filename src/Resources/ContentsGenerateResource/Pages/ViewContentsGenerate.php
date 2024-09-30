@@ -77,6 +77,12 @@ class ViewContentsGenerate extends ViewRecord
                     ->view('contents-generate::pages.integration-content')
                     ->visible(fn ($record) => $record->type === 'integration')
                     ->columnSpanFull(),
+
+                TextEntry::make('content')
+                    ->label('Image Prompt')
+                    ->visible(fn ($record) => $record->type === 'image')
+                    ->columnSpanFull()
+                    ->markdown(),
             ]);
     }
 
@@ -129,13 +135,6 @@ class ViewContentsGenerate extends ViewRecord
                 ->label(__('startupful-plugin.image_down'))
                 ->icon('heroicon-o-arrow-down-tray')
                 ->action(fn () => $this->downloadImage());
-
-            $actions[] = Action::make('viewPrompt')
-                ->label(__('startupful-plugin.view_prompt'))
-                ->icon('heroicon-o-eye')
-                ->action(function () {
-                    $this->viewPrompt();
-                });
         }
 
         if ($this->record->type === 'audio') {

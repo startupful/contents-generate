@@ -147,7 +147,7 @@ class ViewLogic extends Page implements HasForms
 
                 Log::info('Processed input data', ['processedInputData' => $processedInputData]);
 
-                $response = Http::timeout(30)->post(route('process.logic'), [
+                $response = Http::timeout(120)->post(route('process.logic'), [
                     'steps' => $this->record->steps,
                     'inputData' => $processedInputData,
                     'logic_id' => $this->record->id,

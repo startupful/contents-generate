@@ -30,11 +30,15 @@ class StorageController extends BaseController
         $contentGenerate->uuid = Str::uuid();
         $contentGenerate->title = $title;
         $contentGenerate->type = $this->determineContentType($lastStepType);
+        
+        $contentType = $contentGenerate->type;
 
         // Check if 'result' key exists and is an array
         $resultData = isset($lastStep['result']) && is_array($lastStep['result']) ? $lastStep['result'] : $lastStep;
 
-        if ($lastStepType === 'generate_audio') {
+        if ($lastStepType === 'generate_ui_ux') {
+            $contentGenerate->content = $this->prepareContentForStorage($lastStep, 'code');
+        } elseif ($lastStepType === 'generate_audio') {
             $contentGenerate->audio_text = $resultData['text'] ?? null;
             $contentGenerate->audio_model = $resultData['model'] ?? null;
             $contentGenerate->audio_voice = $resultData['voice'] ?? null;
@@ -66,9 +70,9 @@ class StorageController extends BaseController
             }
             
             // 줄바꿈을 그대로 보존
-            $contentGenerate->content = $this->prepareContentForStorage($content);
+            $contentGenerate->content = $this->prepareContentForStorage($content, $contentType);
         } else {
-            $contentGenerate->content = $this->prepareContentForStorage($lastStep);
+            $contentGenerate->content = $this->prepareContentForStorage($lastStep, $contentType);
         }
 
         $contentGenerate->published_date = now();
@@ -94,8 +98,15 @@ class StorageController extends BaseController
         return $baseTitle . '-' . $newNumber;
     }
 
-    private function prepareContentForStorage($content)
+    private function prepareContentForStorage($content, $contentType = null)
     {
+        if ($contentType === 'code') {
+            if (is_array($content) && isset($content['result'])) {
+                $content = $content['result'];
+            }
+            return $content;
+        }
+
         if (is_string($content) && $this->isJson($content)) {
             $decodedContent = json_decode($content, true);
             if (isset($decodedContent['result'])) {
@@ -125,9 +136,9 @@ class StorageController extends BaseController
         $content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         // Markdown 코드 블록 표시 제거
-        $content = preg_replace('/^```[\w]*\s*\n/m', '', $content); // 시작 부분의 ``` 제거
-        $content = preg_replace('/\n```\s*$/m', '', $content); // 끝 부분의 ``` 제거
-        $content = preg_replace('/```[\w]*,?\s*\n/m', '', $content); // 중간에 있는 ```code, 또는 ```markdown 등 제거
+        $content = preg_replace('/^```[\w]*\s*\n/m', '', $content);
+        $content = preg_replace('/\n```\s*$/m', '', $content);
+        $content = preg_replace('/```[\w]*,?\s*\n/m', '', $content);
 
         // 줄바꿈 문자 정규화 (PHP_EOL을 사용)
         $content = str_replace(["\r\n", "\r", "\n"], PHP_EOL, $content);
@@ -141,13 +152,15 @@ class StorageController extends BaseController
         return $content;
     }
 
-    private function normalizeLineBreaks($content)
+    private function normalizeLineBreaks($content, $contentType = null)
     {
-        // 모든 줄바꿈 문자를 PHP_EOL로 통일
-        $content = str_replace(["\r\n", "\r", "\n"], PHP_EOL, $content);
-
-        // 연속된 줄바꿈을 하나로 줄임
-        $content = preg_replace('/(' . PHP_EOL . '){3,}/', PHP_EOL . PHP_EOL, $content);
+        if ($contentType !== 'code') {
+            // 줄바꿈 문자 정규화 (PHP_EOL을 사용)
+            $content = str_replace(["\r\n", "\r", "\n"], PHP_EOL, $content);
+            
+            // 연속된 줄바꿈을 하나로 줄임
+            $content = preg_replace('/('.preg_quote(PHP_EOL, '/').'){3,}/', PHP_EOL.PHP_EOL, $content);
+        }
 
         return $content;
     }

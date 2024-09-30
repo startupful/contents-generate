@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Http;
 class ImageGenerationController extends BaseController
 {
     protected $utilityController;
-    protected $maxRetries = 3;
-    protected $timeout = 300; // 60 seconds timeout
 
     public function __construct(UtilityController $utilityController)
     {
@@ -68,22 +66,18 @@ class ImageGenerationController extends BaseController
 
     private function callImageAPI($aiProvider, $aiModel, $prompt)
     {
-        for ($attempt = 1; $attempt <= $this->maxRetries; $attempt++) {
-            try {
-                if ($aiProvider === 'openai') {
-                    return $this->callOpenAIImage($prompt, $aiModel);
-                } elseif ($aiProvider === 'huggingface') {
-                    return $this->callHuggingFaceImage($prompt, $aiModel);
-                } else {
-                    throw new \Exception("Unsupported AI provider: $aiProvider");
-                }
-            } catch (\Exception $e) {
-                Log::warning("API call attempt $attempt failed", ['error' => $e->getMessage()]);
-                if ($attempt === $this->maxRetries) {
-                    throw $e;
-                }
-                sleep(2); // Wait for 2 seconds before retrying
-            }
+        Log::info("Calling image generation API", [
+            'provider' => $aiProvider,
+            'model' => $aiModel,
+        ]);
+
+        switch ($aiProvider) {
+            case 'openai':
+                return $this->callOpenAIImage($prompt, $aiModel);
+            case 'huggingface':
+                return $this->callHuggingFaceImage($prompt, $aiModel);
+            default:
+                throw new \Exception("Unsupported AI provider: $aiProvider");
         }
     }
 
@@ -141,11 +135,7 @@ class ImageGenerationController extends BaseController
 
     private function createDetailedPrompt($backgroundInfo, $prompt)
     {
-        return "Generate a detailed, high-quality image based on the following description:\n\n" .
-               "Background: $backgroundInfo\n\n" .
-               "Specific request: $prompt\n\n" .
-               "Please ensure the image accurately reflects all details mentioned. " .
-               "The image should be clear, well-composed, and visually appealing.";
+        return "$prompt";
     }
 
     private function sanitizePrompt($prompt)
