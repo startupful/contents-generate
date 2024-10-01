@@ -497,41 +497,27 @@ class LogicResource extends Resource
                                     ->columnSpanFull()
                                     ->createItemButtonLabel(__('startupful-plugin.add_step'))
                                     ->reorderable()
-                                    ->itemLabel(function ($state) use (&$stepCounter): string {
-                                        $stepNumber = ++$stepCounter;
-                                        $type = is_array($state) && isset($state['type']) ? ucfirst($state['type']) : 'Unknown';
+                                    ->itemLabel(function ($state) {
+                                        $stepNumber = $state['step_number'] ?? 0;
+                                        $type = isset($state['type']) ? ucfirst(str_replace('_', ' ', $state['type'])) : 'Unknown';
                                         return "Step {$stepNumber}: {$type}";
                                     })
                                     ->collapsible()
-                                    ->defaultItems(1)
-                                    ->afterStateUpdated(function (Repeater $component, $state) {
-                                        \Log::info('Repeater state updated:', ['state' => $state]);
-                                        if (!is_array($state)) {
-                                            $component->state($component->getState() ?? []);
-                                        } else {
-                                            $filteredState = array_filter($state, function ($item) {
-                                                return is_array($item) && isset($item['type']);
-                                            });
-                                            $component->state(array_values($filteredState));
-                                        }
-                                    })
                                     ->afterStateUpdated(function (Repeater $component, $state) {
                                         if (!is_array($state)) {
-                                            $component->state([]);
-                                        } else {
-                                            $component->state(array_values($state));
+                                            return;
                                         }
-                                    })
-                                    ->afterStateHydrated(function (Repeater $component) {
-                                        $items = $component->getState();
-                                        if (!is_array($items) || empty($items)) {
-                                            $component->state([]);
-                                        } else {
-                                            $component->state(array_values($items));
-                                        }
-                                    })
-                                    ->mutateDehydratedStateUsing(function ($state) {
-                                        return is_array($state) ? array_values($state) : [];
+                                
+                                        // Update step_number based on the new order
+                                        $updatedState = collect($state)
+                                            ->values()
+                                            ->map(function ($item, $index) {
+                                                $item['step_number'] = $index + 1;
+                                                return $item;
+                                            })
+                                            ->all();
+                                
+                                        $component->state($updatedState);
                                     }),
                             ])
                             ->columnSpan(['lg' => 3]),
@@ -698,17 +684,23 @@ class LogicResource extends Resource
 
     public static function saving(Model $record, array $data): void
     {
-        // 저장 전 steps 데이터 완전 리셋
+        \Log::info('Saving method called with data:', ['data' => $data]);
+
         $steps = $data['steps'] ?? [];
+        if (!is_array($steps)) {
+            \Log::warning('Invalid steps data in saving method:', ['steps' => $steps]);
+            $steps = [];
+        }
+    
         $filteredSteps = array_filter($steps, function ($step) {
             return is_array($step) && isset($step['type']);
-        });    
-
-        // 새로운 steps 데이터만 설정
+        });
+    
+        // Pass the array and its keys to array_map
         $newSteps = array_map(function ($step, $index) {
             $newStep = [
                 'type' => $step['type'],
-                'step_number' => $index + 1,
+                'step_number' => $index + 1, // Update step_number based on index
                 'uuid' => $step['uuid'] ?? uniqid(),
             ];
 
@@ -798,13 +790,16 @@ class LogicResource extends Resource
             }
 
             return $newStep;
-        }, $data['steps'] ?? [], array_keys($data['steps'] ?? []));
+        }, array_values($filteredSteps), array_keys($filteredSteps));
 
+        \Log::info('New steps after processing:', ['steps' => $newSteps]);
+    
+        // Update other fields
         $record->steps = $newSteps;
-
-        // 다른 필드들 설정
         $record->name = $data['name'];
         $record->description = $data['description'] ?? null;
         $record->tags = $data['tags'] ?? null;
+    
+        \Log::info('Final record state:', ['record' => $record->toArray()]);
     }
 }

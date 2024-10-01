@@ -55,12 +55,23 @@ class EditLogic extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        // LogicResource의 saving 메서드를 직접 호출
+        if (isset($data['steps']) && is_array($data['steps'])) {
+            $data['steps'] = collect($data['steps'])
+                ->sortBy('step_number')
+                ->values()
+                ->map(function ($step, $index) {
+                    $step['step_number'] = $index + 1;
+                    return $step;
+                })
+                ->toArray();
+        }
+    
         LogicResource::saving($record, $data);
         $record->save();
-
+    
         return $record;
     }
+
 
     public function save(bool $shouldRedirect = true, bool $shouldSendSavedNotification = true): void
     {
