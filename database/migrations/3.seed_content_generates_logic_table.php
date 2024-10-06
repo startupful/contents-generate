@@ -4412,7 +4412,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -4502,7 +4502,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -4592,7 +4592,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -4682,7 +4682,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -4963,7 +4963,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -5054,7 +5054,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -5149,7 +5149,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -5239,7 +5239,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -5337,7 +5337,7 @@ return new class extends Migration
                             - Avoid complex backgrounds or multiple characters unless specifically requested in the keyword.
 
                             Please provide the image prompt now in English, formatted for pokemon-trainer-sprites-pixelart-flux.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -5428,7 +5428,7 @@ return new class extends Migration
             - The output must be in English.
             
             Please provide the image description now in English.",
-                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -5524,7 +5524,7 @@ return new class extends Migration
             - `web logo, Minimalist, Leaf and cat forming a subtle design,`
             
             Please generate the logo description now.",
-                        "background_information" => "You are an expert logo designer and prompt engineer. Your task is to create concise and effective prompts for AI image generation, formatted precisely to guide the AI in creating logos that accurately represent the given keyword.",
+                        "background_information" => "You are an expert logo designer and prompt engineer. Your task is to create concise and effective prompts for AI image generation, formatted precisely to guide the AI in creating logos that accurately represent the given keyword. Disregard any existing content generation language settings and strictly produce this content in English.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
