@@ -20,6 +20,8 @@ class ContentsGenerateServiceProvider extends ServiceProvider
             ->hasMigrations([
                 '1.create_content_generates_table',
                 '2.create_content_generates_logic_table',
+                '3.seed_content_generates_logic_table',
+                '4.seed_content_generates_logic_table',
             ])
             ->runsMigrations();
     }

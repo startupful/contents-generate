@@ -23,8 +23,30 @@ return new class extends Migration
         $logicsData = [
             //이벤트
             [
-                'name' => 'Startupful Review Blog Posting',
-                'description' => 'keyword > titles, selected title, introduction, main body, conclusion, and content integration for professional news articles',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Startupful Review Blog-Beitrag',
+                    'en' => 'Startupful Review Blog Posting',
+                    'fr' => 'Publication de blog de critique Startupful',
+                    'hi' => 'स्टार्टअपफुल समीक्षा ब्लॉग पोस्टिंग',
+                    'ja' => 'Startupful レビューブログ投稿',
+                    'ko' => 'Startupful 리뷰 블로그 포스팅',
+                    'pt' => 'Postagem de Blog de Avaliação Startupful',
+                    'th' => 'การโพสต์บล็อกรีวิว Startupful',
+                    'tl' => 'Pag-post ng Blog ng Pagsusuri ng Startupful',
+                    'zh' => 'Startupful 评论博客发布',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Titel, ausgewählter Titel, Einleitung, Hauptteil, Schlussfolgerung und Inhaltsintegration für professionelle Nachrichtenartikel',
+                    'en' => 'keyword > titles, selected title, introduction, main body, conclusion, and content integration for professional news articles',
+                    'fr' => 'mot-clé > titres, titre sélectionné, introduction, corps principal, conclusion et intégration de contenu pour des articles de presse professionnels',
+                    'hi' => 'कीवर्ड > शीर्षक, चयनित शीर्षक, परिचय, मुख्य भाग, निष्कर्ष, और पेशेवर समाचार लेखों के लिए सामग्री एकीकरण',
+                    'ja' => 'キーワード > タイトル、選択されたタイトル、序論、本文、結論、そしてプロフェッショナルなニュース記事のためのコンテンツ統合',
+                    'ko' => '키워드 > 제목, 선택된 제목, 서론, 본문, 결론 및 전문 블로그 콘텐츠를 위한 콘텐츠 통합',
+                    'pt' => 'palavra-chave > títulos, título selecionado, introdução, corpo principal, conclusão e integração de conteúdo para artigos de notícias profissionais',
+                    'th' => 'คำสำคัญ > ชื่อเรื่อง, ชื่อเรื่องที่เลือก, บทนำ, เนื้อหาหลัก, บทสรุป และการรวมเนื้อหาสำหรับบทความข่าวมืออาชีพ',
+                    'tl' => 'keyword > mga pamagat, napiling pamagat, panimula, pangunahing bahagi, konklusyon, at pagsasama ng nilalaman para sa mga propesyonal na artikulo ng balita',
+                    'zh' => '关键词 > 标题、选定标题、引言、正文、结论以及专业新闻文章的内容整合',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -40,9 +62,32 @@ return new class extends Migration
                             ],
                             [
                                 "label" => "Features",
-                                "description" => "Please choose 1 service that you found interesting",
+                                "description" => $this->getLocalizedText([
+                                    'de' => "Bitte wählen Sie 1 Dienst aus, den Sie interessant fanden",
+                                    'en' => "Please choose 1 service that you found interesting",
+                                    'fr' => "Veuillez choisir 1 service que vous avez trouvé intéressant",
+                                    'hi' => "कृपया 1 सेवा चुनें जो आपको रोचक लगी",
+                                    'ja' => "興味深いと感じたサービスを1つ選んでください",
+                                    'ko' => "흥미롭다고 생각한 서비스 1개를 선택해 주세요",
+                                    'pt' => "Por favor, escolha 1 serviço que você achou interessante",
+                                    'th' => "โปรดเลือก 1 บริการที่คุณพบว่าน่าสนใจ",
+                                    'tl' => "Mangyaring pumili ng 1 serbisyo na natagpuan mong kawili-wili",
+                                    'zh' => "请选择1项您觉得有趣的服务",
+                                ]),
                                 "type" => "select",
-                                "options" => "[text] blog contents generate, [text] sns contents generate, [text] docs generate, [text] webpage summary, [text] docs summary, [image] image generate, [UI/UX] text-to-code, [UI/UX] image-to-code, [image] anime image generate, [image] NSFW(18+) image generate, [audio] text-to-speech, [avatar-chat] Role Playing, [avatar-chat] language tuter, [avatar-chat] a variety of consultants",
+                                "options" => $this->getLocalizedText([
+                                    'de' => '[Text] Blog-Inhalte generieren, [Text] SNS-Inhalte generieren, [Text] Dokumente generieren, [Text] Webseiten-Zusammenfassung, [Text] Dokumentenzusammenfassung, [Bild] Bild generieren, [UI/UX] Text-zu-Code, [UI/UX] Bild-zu-Code, [Bild] Anime-Bild generieren, [Bild] NSFW(18+) Bild generieren, [Audio] Text-zu-Sprache, [Avatar-Chat] Rollenspiel, [Avatar-Chat] Sprachlehrer, [Avatar-Chat] Verschiedene Berater, [Text] E-Mail-Antwort generieren, [Text] Nutzungsbedingungen generieren, [Text] Einwilligungserklärung für die Verwendung personenbezogener Daten generieren, [Docs] One-Pager generieren, [Docs] Six-Pager generieren, [Docs] Geschäftsplan generieren, [Docs] Anforderungsspezifikation generieren, [Bild] Logo-Bild generieren',
+                                    'en' => '[text] blog contents generate, [text] sns contents generate, [text] docs generate, [text] webpage summary, [text] docs summary, [image] image generate, [UI/UX] text-to-code, [UI/UX] image-to-code, [image] anime image generate, [image] NSFW(18+) image generate, [audio] text-to-speech, [avatar-chat] Role Playing, [avatar-chat] language tutor, [avatar-chat] a variety of consultants, [text] email reply generate, [text] terms of service generate, [text] privacy policy generate, [docs] one-pager generate, [docs] six-pager generate, [docs] business plan generate, [docs] development requirements definition generate, [image] logo image generate',
+                                    'fr' => '[Texte] génération de contenu de blog, [Texte] génération de contenu SNS, [Texte] génération de documents, [Texte] résumé de la page Web, [Texte] résumé de documents, [Image] génération d\'image, [UI/UX] texte en code, [UI/UX] image en code, [Image] génération d\'image anime, [Image] génération d\'image NSFW(18+), [Audio] texte en parole, [Avatar-Chat] Jeu de rôle, [Avatar-Chat] tuteur de langue, [Avatar-Chat] une variété de consultants, [Texte] génération de réponse par e-mail, [Texte] génération des conditions d\'utilisation, [Texte] génération de la politique de confidentialité, [Docs] génération de one-pager, [Docs] génération de six-pager, [Docs] génération de plan d\'affaires, [Docs] génération de cahier des charges, [Image] génération de logo',
+                                    'hi' => '[पाठ] ब्लॉग सामग्री उत्पन्न करें, [पाठ] एसएनएस सामग्री उत्पन्न करें, [पाठ] दस्तावेज़ उत्पन्न करें, [पाठ] वेबपेज सारांश, [पाठ] दस्तावेज़ सारांश, [छवि] छवि उत्पन्न करें, [UI/UX] टेक्स्ट-से-कोड, [UI/UX] छवि-से-कोड, [छवि] एनीमे छवि उत्पन्न करें, [छवि] NSFW (18+) छवि उत्पन्न करें, [ऑडियो] टेक्स्ट-टू-स्पीच, [अवतार-चैट] भूमिका निभाना, [अवतार-चैट] भाषा शिक्षक, [अवतार-चैट] विभिन्न परामर्शदाता, [पाठ] ईमेल उत्तर उत्पन्न करें, [पाठ] सेवा की शर्तें उत्पन्न करें, [पाठ] गोपनीयता नीति उत्पन्न करें, [दस्तावेज़] वन-पेजर उत्पन्न करें, [दस्तावेज़] सिक्स-पेजर उत्पन्न करें, [दस्तावेज़] व्यापार योजना उत्पन्न करें, [दस्तावेज़] विकास आवश्यकताओं की परिभाषा उत्पन्न करें, [छवि] लोगो छवि उत्पन्न करें',
+                                    'ja' => '[テキスト] ブログコンテンツ生成, [テキスト] SNSコンテンツ生成, [テキスト] ドキュメント生成, [テキスト] ウェブページの要約, [テキスト] ドキュメントの要約, [画像] 画像生成, [UI/UX] テキストをコードに変換, [UI/UX] 画像をコードに変換, [画像] アニメ画像生成, [画像] NSFW(18+)画像生成, [オーディオ] テキスト読み上げ, [アバターチャット] ロールプレイング, [アバターチャット] 言語チューター, [アバターチャット] 様々なコンサルタント, [テキスト] メール返信生成, [テキスト] 利用規約生成, [テキスト] プライバシーポリシー生成, [ドキュメント] ワンペイジャー生成, [ドキュメント] シックスペイジャー生成, [ドキュメント] ビジネスプラン生成, [ドキュメント] 開発要件定義生成, [画像] ロゴ画像生成',
+                                    'ko' => '[텍스트] 블로그 콘텐츠 생성, [텍스트] SNS 콘텐츠 생성, [텍스트] 문서 생성, [텍스트] 웹페이지 요약, [텍스트] 문서 요약, [이미지] 이미지 생성, [UI/UX] 텍스트-코드 변환, [UI/UX] 이미지-코드 변환, [이미지] 애니메이션 이미지 생성, [이미지] NSFW(18+) 이미지 생성, [오디오] 텍스트-음성 변환, [아바타-챗] 역할 놀이, [아바타-챗] 언어 교사, [아바타-챗] 다양한 컨설턴트, [텍스트] 이메일 답변 생성, [텍스트] 이용약관 생성, [텍스트] 개인정보 이용 동의서 생성, [문서] 원페이저 생성, [문서] 식스페이저 생성, [문서] 사업계획서 생성, [문서] 개발요구사항 정의서 생성, [이미지] 로고 이미지 생성',
+                                    'pt' => '[Texto] gerar conteúdo de blog, [Texto] gerar conteúdo de SNS, [Texto] gerar documentos, [Texto] resumo da página da Web, [Texto] resumo de documentos, [Imagem] gerar imagem, [UI/UX] texto para código, [UI/UX] imagem para código, [Imagem] gerar imagem de anime, [Imagem] gerar imagem NSFW(18+), [Áudio] texto para fala, [Avatar-chat] Jogar Role Playing, [Avatar-chat] tutor de línguas, [Avatar-chat] uma variedade de consultores, [Texto] gerar resposta de e-mail, [Texto] gerar termos de serviço, [Texto] gerar política de privacidade, [Docs] gerar one-pager, [Docs] gerar six-pager, [Docs] gerar plano de negócios, [Docs] gerar definição de requisitos de desenvolvimento, [Imagem] gerar logotipo',
+                                    'th' => '[ข้อความ] สร้างเนื้อหาบล็อก, [ข้อความ] สร้างเนื้อหา SNS, [ข้อความ] สร้างเอกสาร, [ข้อความ] สรุปหน้าเว็บ, [ข้อความ] สรุปเอกสาร, [ภาพ] สร้างภาพ, [UI/UX] แปลงข้อความเป็นโค้ด, [UI/UX] แปลงภาพเป็นโค้ด, [ภาพ] สร้างภาพอนิเมะ, [ภาพ] สร้างภาพ NSFW(18+), [เสียง] แปลงข้อความเป็นเสียงพูด, [อวาตาร์-แชท] เล่นตามบทบาท, [อวาตาร์-แชท] ติวเตอร์ภาษา, [อวาตาร์-แชท] ที่ปรึกษาหลากหลายประเภท, [ข้อความ] สร้างการตอบกลับอีเมล, [ข้อความ] สร้างข้อกำหนดการใช้บริการ, [ข้อความ] สร้างนโยบายความเป็นส่วนตัว, [เอกสาร] สร้าง one-pager, [เอกสาร] สร้าง six-pager, [เอกสาร] สร้างแผนธุรกิจ, [เอกสาร] สร้างคำจำกัดความข้อกำหนดการพัฒนา, [ภาพ] สร้างภาพโลโก้',
+                                    'tl' => '[Teksto] bumuo ng nilalaman ng blog, [Teksto] bumuo ng nilalaman ng SNS, [Teksto] bumuo ng mga dokumento, [Teksto] buod ng webpage, [Teksto] buod ng mga dokumento, [Larawan] bumuo ng imahe, [UI/UX] tekstong-ginawa sa code, [UI/UX] imahe-ginawa sa code, [Larawan] bumuo ng imahe ng anime, [Larawan] bumuo ng NSFW (18+) na imahe, [Audio] text-to-speech, [Avatar-chat] Role Playing, [Avatar-chat] tutor sa wika, [Avatar-chat] iba\'t ibang mga consultant, [Teksto] bumuo ng tugon sa email, [Teksto] bumuo ng mga tuntunin ng serbisyo, [Teksto] bumuo ng patakaran sa privacy, [Dokumento] bumuo ng one-pager, [Dokumento] bumuo ng six-pager, [Dokumento] bumuo ng plano ng negosyo, [Dokumento] bumuo ng kahulugan ng mga kinakailangan sa pag-unlad, [Larawan] bumuo ng imahe ng logo',
+                                    'zh' => '[文本] 生成博客内容, [文本] 生成SNS内容, [文本] 生成文档, [文本] 网页摘要, [文本] 文档摘要, [图片] 生成图片, [UI/UX] 文本生成代码, [UI/UX] 图片生成代码, [图片] 生成动漫图片, [图片] 生成NSFW(18+)图片, [音频] 文本转语音, [头像聊天] 角色扮演, [头像聊天] 语言导师, [头像聊天] 各类顾问, [文本] 生成邮件回复, [文本] 生成服务条款, [文本] 生成隐私政策, [文档] 生成One-Pager, [文档] 生成Six-Pager, [文档] 生成商业计划书, [文档] 生成开发需求定义, [图片] 生成徽标图片',
+                                ]),
+
                                 "file_type" => null
                             ]
                         ]
@@ -53,42 +98,42 @@ return new class extends Migration
                         "uuid" => $generateUuid(),
                         "prompt" => "Based on the current time {{step1.input.time}}, generate a persona with the following characteristics:
 
-Tone and Manner: [Determine based on the hour]
-Writing Style: [Determine based on the minute]
-Structure: [Determine based on the second]
+                            Tone and Manner: [Determine based on the hour]
+                            Writing Style: [Determine based on the minute]
+                            Structure: [Determine based on the second]
 
-Provide a brief description of the persona, explaining how these three characteristics will influence their writing style for a blog post about a startup service.
-Example output:
-\"This persona writes with a cool and detached tone, using a conversational style as if talking directly to the reader. They structure their post as a story, weaving the information about the startup service into a narrative.\"
-Generate the persona description now.",
-                        "background_information" => "The time is divided into three components: hours, minutes, and seconds. Each component determines a specific characteristic of the persona:
+                            Provide a brief description of the persona, explaining how these three characteristics will influence their writing style for a blog post about a startup service.
+                            Example output:
+                            \"This persona writes with a cool and detached tone, using a conversational style as if talking directly to the reader. They structure their post as a story, weaving the information about the startup service into a narrative.\"
+                            Generate the persona description now.",
+                                                    "background_information" => "The time is divided into three components: hours, minutes, and seconds. Each component determines a specific characteristic of the persona:
 
-1. Hours (0-23): Tone and Manner
-- 0-2: Formal
-- 3-5: Informal
-- 6-8: Professional
-- 9-11: Passionate
-- 12-14: Cool and detached
-- 15-17: Humorous
-- 18-20: Serious
-- 21-22: Optimistic
-- 23: Realistic
+                            1. Hours (0-23): Tone and Manner
+                            - 0-2: Formal
+                            - 3-5: Informal
+                            - 6-8: Professional
+                            - 9-11: Passionate
+                            - 12-14: Cool and detached
+                            - 15-17: Humorous
+                            - 18-20: Serious
+                            - 21-22: Optimistic
+                            - 23: Realistic
 
 
-2. Minutes (0-59): Writing Style
-- 0-9: Topic sentence first
-- 10-19: Conclusion first
-- 20-29: Both topic sentence and conclusion first
-- 30-39: Main point in the middle
-- 40-49: Conversational (as if talking to the reader)
-- 50-59: Reflective (as if organizing one's own thoughts)
+                            2. Minutes (0-59): Writing Style
+                            - 0-9: Topic sentence first
+                            - 10-19: Conclusion first
+                            - 20-29: Both topic sentence and conclusion first
+                            - 30-39: Main point in the middle
+                            - 40-49: Conversational (as if talking to the reader)
+                            - 50-59: Reflective (as if organizing one's own thoughts)
 
-3. Seconds (0-59): Structure
-- 0-11: Introduction-Body-Conclusion
-- 12-23: Q&A format
-- 24-35: Storytelling
-- 36-47: Comparison with alternative services
-- 48-59: Review and feedback format",
+                            3. Seconds (0-59): Structure
+                            - 0-11: Introduction-Body-Conclusion
+                            - 12-23: Q&A format
+                            - 24-35: Storytelling
+                            - 36-47: Comparison with alternative services
+                            - 48-59: Review and feedback format",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -100,29 +145,29 @@ Generate the persona description now.",
                         "uuid" => $generateUuid(),
                         "prompt" => "Generate 10 compelling blog post titles for Startupful's {{step1.input.Features}} service. These titles should focus on reviews, user experiences, and feedback. Your titles should:
 
-Incorporate keywords from {{step1.input.Features}} to create strong hook points.
-Reflect the tone and manner of the target persona: {{step2.output}}
-Be interesting and click-worthy to drive high CTR (Click-Through Rate).
-Highlight different aspects of the Startupful service from a user's perspective.
-Convey the idea of a review or user feedback.
+                            Incorporate keywords from {{step1.input.Features}} to create strong hook points.
+                            Reflect the tone and manner of the target persona: {{step2.output}}
+                            Be interesting and click-worthy to drive high CTR (Click-Through Rate).
+                            Highlight different aspects of the Startupful service from a user's perspective.
+                            Convey the idea of a review or user feedback.
 
-Guidelines:
+                            Guidelines:
 
-Craft concise yet descriptive titles (aim for 50-60 characters).
-Use power words and emotional triggers to capture attention.
-Incorporate numbers or specific benefits where appropriate.
-Consider using phrases like \"Our Experience with\", \"X Months Using\", \"The Truth About\", \"Honest Review of\", etc.
-Ensure the titles align with the persona's preferred writing style.
+                            Craft concise yet descriptive titles (aim for 50-60 characters).
+                            Use power words and emotional triggers to capture attention.
+                            Incorporate numbers or specific benefits where appropriate.
+                            Consider using phrases like \"Our Experience with\", \"X Months Using\", \"The Truth About\", \"Honest Review of\", etc.
+                            Ensure the titles align with the persona's preferred writing style.
 
-Please provide a numbered list of 10 review-style titles.
-Example output format:
+                            Please provide a numbered list of 10 review-style titles.
+                            Example output format:
 
-[Review-Focused Title 1]
-[Review-Focused Title 2]
-[Review-Focused Title 3]
-...
+                            [Review-Focused Title 1]
+                            [Review-Focused Title 2]
+                            [Review-Focused Title 3]
+                            ...
 
-Generate your top 10 review-style title recommendations now.",
+                            Generate your top 10 review-style title recommendations now.",
                         "background_information" => "You are a world-renowned SEO expert who has achieved top rankings on global search engines for numerous clients. Your expertise in creating compelling, SEO-friendly content has made you the go-to professional for businesses looking to improve their online visibility. Today, you've been tasked with creating blog post titles for Startup Pool's {{step1.input.Features}} service.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -134,10 +179,10 @@ Generate your top 10 review-style title recommendations now.",
                         "step_number" => 4,
                         "uuid" => $generateUuid(),
                         "prompt" => "Review the 10 blog post titles generated in Step 3 ({{step3.output}}). Select the single most effective title that best combines SEO potential, appeal to the target persona, and relevance to Startupful's {{step1.input.Features}} service.
-Your response should only include the selected title, copied exactly as it appears in {{step3.output}}.
-Example output:
-[Selected Title]
-Please provide your selection now.",
+                            Your response should only include the selected title, copied exactly as it appears in {{step3.output}}.
+                            Example output:
+                            [Selected Title]
+                            Please provide your selection now.",
                         "background_information" => "You continue your role as a world-renowned SEO expert. Your task now is to analyze the 10 blog post titles generated in the previous step and select the most effective one for Startupful's {{step1.input.Features}} service.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -149,46 +194,46 @@ Please provide your selection now.",
                         "step_number" => 5,
                         "uuid" => $generateUuid(),
                         "prompt" => "Create a detailed outline for an engaging, review-style blog post using the selected title: {{step4.output}}. The outline should effectively structure the content to captivate the target persona and highlight the key features of Startupful's {{step1.input.Features}} service from a user's perspective.
-Guidelines for creating the outline:
+                            Guidelines for creating the outline:
 
-1. Start with an introduction that immediately grabs the reader's attention and briefly introduces Startupful and its {{step1.input.Features}} service.
-2. Create 4 main sections that logically flow from the title and cover key aspects of the service, focusing on user experience and feedback.
-3. Under each main section, include 2-3 subsections that dive deeper into specific points or features.
-4. Ensure that the outline reflects the tone and style preferred by the target persona ({{step2.output}}).
-5. Structure the content to maintain reader interest throughout:
-5.1. The first section should be provocative and attention-grabbing. Use a hook that resonates with common frustrations or skepticism about AI services.
-5.2. Subsequent sections should maintain interest through storytelling, gradually building a narrative that addresses initial doubts and showcases the value of Startupful's service.
+                            1. Start with an introduction that immediately grabs the reader's attention and briefly introduces Startupful and its {{step1.input.Features}} service.
+                            2. Create 4 main sections that logically flow from the title and cover key aspects of the service, focusing on user experience and feedback.
+                            3. Under each main section, include 2-3 subsections that dive deeper into specific points or features.
+                            4. Ensure that the outline reflects the tone and style preferred by the target persona ({{step2.output}}).
+                            5. Structure the content to maintain reader interest throughout:
+                            5.1. The first section should be provocative and attention-grabbing. Use a hook that resonates with common frustrations or skepticism about AI services.
+                            5.2. Subsequent sections should maintain interest through storytelling, gradually building a narrative that addresses initial doubts and showcases the value of Startupful's service.
 
-6. For each main section and subsection, create catchy, intriguing titles that:
-6.1. Use power words, emotional triggers, or curiosity-inducing phrases
-6.2. Incorporate elements of surprise, contrast, or mystery
-6.3. Reflect the content while leaving room for curiosity
-6.4. Are concise yet impactful
+                            6. For each main section and subsection, create catchy, intriguing titles that:
+                            6.1. Use power words, emotional triggers, or curiosity-inducing phrases
+                            6.2. Incorporate elements of surprise, contrast, or mystery
+                            6.3. Reflect the content while leaving room for curiosity
+                            6.4. Are concise yet impactful
 
-7. Include a section that addresses potential questions or concerns the target persona might have.
-8. End with a conclusion that summarizes key points and provides a thoughtful reflection on the user's journey from skepticism to appreciation.
-9. Provide the outline in a clear, hierarchical format using markdown. Use H2 (##) for main sections and H3 (###) for subsections.
+                            7. Include a section that addresses potential questions or concerns the target persona might have.
+                            8. End with a conclusion that summarizes key points and provides a thoughtful reflection on the user's journey from skepticism to appreciation.
+                            9. Provide the outline in a clear, hierarchical format using markdown. Use H2 (##) for main sections and H3 (###) for subsections.
 
-- Example format (with sample catchy titles):
-From Skeptic to Believer: My AI Awakening
-The AI Promised Land: Too Good to Be True?
-Startupful: Just Another Mirage in the Desert?
-{{step1.input.Features}}: The Oasis I Never Knew I Needed
-[Main Review Section 1: Battling the AI Demons]
-[Subsection 1.1: When Algorithms Attacked: My AI Nightmares]
-[Subsection 1.2: Startupful: Friend or Foe?]
-[Main Review Section 2: The Moment Everything Changed]
-[Subsection 2.1: Jaw-Dropping First Encounter]
-[Subsection 2.2: Hidden Treasures: Unearthing the Unexpected]
-[Main Review Section 3: Peeling Back the Curtain]
-[Subsection 3.1: The Secret Sauce: What Makes It Tick?]
-[Subsection 3.2: In the Driver's Seat: My {{step1.input.Features}} Journey]
-[Main Review Section 4: The Proof is in the Pudding]
-[Subsection 4.1: Numbers Don't Lie: My Performance Skyrocketed]
-[Subsection 4.2: Future-Proofing: The Gift That Keeps on Giving]
-The Verdict: From Cynic to Champion
+                            - Example format (with sample catchy titles):
+                            From Skeptic to Believer: My AI Awakening
+                            The AI Promised Land: Too Good to Be True?
+                            Startupful: Just Another Mirage in the Desert?
+                            {{step1.input.Features}}: The Oasis I Never Knew I Needed
+                            [Main Review Section 1: Battling the AI Demons]
+                            [Subsection 1.1: When Algorithms Attacked: My AI Nightmares]
+                            [Subsection 1.2: Startupful: Friend or Foe?]
+                            [Main Review Section 2: The Moment Everything Changed]
+                            [Subsection 2.1: Jaw-Dropping First Encounter]
+                            [Subsection 2.2: Hidden Treasures: Unearthing the Unexpected]
+                            [Main Review Section 3: Peeling Back the Curtain]
+                            [Subsection 3.1: The Secret Sauce: What Makes It Tick?]
+                            [Subsection 3.2: In the Driver's Seat: My {{step1.input.Features}} Journey]
+                            [Main Review Section 4: The Proof is in the Pudding]
+                            [Subsection 4.1: Numbers Don't Lie: My Performance Skyrocketed]
+                            [Subsection 4.2: Future-Proofing: The Gift That Keeps on Giving]
+                            The Verdict: From Cynic to Champion
 
-Please generate the complete outline now, ensuring it follows this structure and maintains a compelling narrative arc from initial skepticism to informed appreciation. Remember to create unique, catchy titles that will hook the reader and maintain their interest throughout the post.",
+                            Please generate the complete outline now, ensuring it follows this structure and maintains a compelling narrative arc from initial skepticism to informed appreciation. Remember to create unique, catchy titles that will hook the reader and maintain their interest throughout the post.",
                         "background_information" => "You are a content strategist specializing in creating engaging and SEO-friendly blog post structures. Your task is to develop a comprehensive outline for a blog post about Startupful's {{step1.input.Features}} service.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -201,36 +246,36 @@ Please generate the complete outline now, ensuring it follows this structure and
                         "uuid" => $generateUuid(),
                         "prompt" => "1. Write only the introduction and the first main section (Section 1) of the blog post, following the outline provided in {{step5.output}}.
 
-2. The introduction should:
-2.1. Start with a provocative hook that resonates with common frustrations or skepticism about AI services.
-2.2. Briefly introduce Startupful and its {{step1.input.Features}} service.
-2.3. Set the stage for the review from a skeptic's perspective.
+                            2. The introduction should:
+                            2.1. Start with a provocative hook that resonates with common frustrations or skepticism about AI services.
+                            2.2. Briefly introduce Startupful and its {{step1.input.Features}} service.
+                            2.3. Set the stage for the review from a skeptic's perspective.
 
-3. For Section 1 (\"The Skeptic's Journey\" or similar):
-3.1. Dive deep into past disappointments with AI services.
-3.2 Express initial doubts about Startupful's offering.
-3.3 Use personal anecdotes or hypothetical scenarios to make the content relatable.
+                            3. For Section 1 (\"The Skeptic's Journey\" or similar):
+                            3.1. Dive deep into past disappointments with AI services.
+                            3.2 Express initial doubts about Startupful's offering.
+                            3.3 Use personal anecdotes or hypothetical scenarios to make the content relatable.
 
-4. Maintain the tone and style that appeals to the target persona ({{step2.output}}).
-4.1 Use proper markdown syntax throughout:
+                            4. Maintain the tone and style that appeals to the target persona ({{step2.output}}).
+                            4.1 Use proper markdown syntax throughout:
 
-5. Use # for the main title, ## for section headings, and ### for subsections.
-5.1 Use * or _ for italics, and ** or __ for bold text.
-5.2 Use > for blockquotes if needed.
-5.3 Use - or * for unordered lists, and 1. for ordered lists if necessary.
+                            5. Use # for the main title, ## for section headings, and ### for subsections.
+                            5.1 Use * or _ for italics, and ** or __ for bold text.
+                            5.2 Use > for blockquotes if needed.
+                            5.3 Use - or * for unordered lists, and 1. for ordered lists if necessary.
 
-6. Aim for a length of about 2000-4000 words for this section.
-7. End this section with a subtle cliffhanger or transition that entices the reader to continue to the next section.
+                            6. Aim for a length of about 2000-4000 words for this section.
+                            7. End this section with a subtle cliffhanger or transition that entices the reader to continue to the next section.
 
-Remember, you're writing from a reviewer's perspective, as if you have personal experience with various AI services and are approaching Startupful's offering with initial skepticism. Your goal is to capture the reader's attention and set the stage for the journey from doubt to appreciation.
-Please generate the content for the introduction and Section 1 now, following these guidelines.",
-                        "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
-Context
+                            Remember, you're writing from a reviewer's perspective, as if you have personal experience with various AI services and are approaching Startupful's offering with initial skepticism. Your goal is to capture the reader's attention and set the stage for the journey from doubt to appreciation.
+                            Please generate the content for the introduction and Section 1 now, following these guidelines.",
+                                                    "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
+                            Context
 
-- Service: Startupful's {{step1.input.Features}}
-- Blog Post Title: {{step4.output}}
-- Target Persona: {{step2.output}}
-- Outline: {{step5.output}}",
+                            - Service: Startupful's {{step1.input.Features}}
+                            - Blog Post Title: {{step4.output}}
+                            - Target Persona: {{step2.output}}
+                            - Outline: {{step5.output}}",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -242,36 +287,36 @@ Context
                         "uuid" => $generateUuid(),
                         "prompt" => "1. Write only the second main section (Section 2) of the blog post, following the outline provided in {{step5.output}}. This section should focus on the \"Turning Point\" in the reviewer's experience with Startupful's service.
 
-2. For Section 2 (\"Turning Point\" or similar):
-2.1. Begin with a smooth transition from the skepticism expressed in Section 1.
-2.2. Describe the first impressions of actually using Startupful's {{step1.input.Features}} service.
-2.3. Highlight any unexpected benefits or features that began to change your perspective.
-2.4. Use specific examples or scenarios to illustrate how the service started to address your initial doubts.
+                            2. For Section 2 (\"Turning Point\" or similar):
+                            2.1. Begin with a smooth transition from the skepticism expressed in Section 1.
+                            2.2. Describe the first impressions of actually using Startupful's {{step1.input.Features}} service.
+                            2.3. Highlight any unexpected benefits or features that began to change your perspective.
+                            2.4. Use specific examples or scenarios to illustrate how the service started to address your initial doubts.
 
-3. Maintain the tone and style that appeals to the target persona ({{step2.output}}), but start shifting from skepticism to cautious optimism.
+                            3. Maintain the tone and style that appeals to the target persona ({{step2.output}}), but start shifting from skepticism to cautious optimism.
 
-4. Use proper markdown syntax throughout:
-4.1. Use ## for the section heading, and ### for subsections.
-4.2. Use * or _ for italics, and ** or __ for bold text.
-4.3. Use > for blockquotes if needed.
-4.4. Use - or * for unordered lists, and 1. for ordered lists if necessary.
+                            4. Use proper markdown syntax throughout:
+                            4.1. Use ## for the section heading, and ### for subsections.
+                            4.2. Use * or _ for italics, and ** or __ for bold text.
+                            4.3. Use > for blockquotes if needed.
+                            4.4. Use - or * for unordered lists, and 1. for ordered lists if necessary.
 
-5. Aim for a length of about 2000-4000 words for this section.
+                            5. Aim for a length of about 2000-4000 words for this section.
 
-6. Include at least one specific feature or aspect of Startupful's {{step1.input.Features}} service that particularly impressed you or started to change your mind.
+                            6. Include at least one specific feature or aspect of Startupful's {{step1.input.Features}} service that particularly impressed you or started to change your mind.
 
-7. End this section with a sense of growing interest and curiosity about the service, setting the stage for a deeper exploration in the next section.
+                            7. End this section with a sense of growing interest and curiosity about the service, setting the stage for a deeper exploration in the next section.
 
-Remember, you're writing from a reviewer's perspective, describing the journey from initial skepticism to growing interest. Your goal is to maintain the reader's engagement by showing how your own perspective began to shift, while still maintaining a balanced and honest approach.
+                            Remember, you're writing from a reviewer's perspective, describing the journey from initial skepticism to growing interest. Your goal is to maintain the reader's engagement by showing how your own perspective began to shift, while still maintaining a balanced and honest approach.
 
-Please generate the content for Section 2 now, following these guidelines.",
-                        "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
-Context
+                            Please generate the content for Section 2 now, following these guidelines.",
+                                                    "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
+                            Context
 
-- Service: Startupful's {{step1.input.Features}}
-- Blog Post Title: {{step4.output}}
-- Target Persona: {{step2.output}}
-- Outline: {{step5.output}}",
+                            - Service: Startupful's {{step1.input.Features}}
+                            - Blog Post Title: {{step4.output}}
+                            - Target Persona: {{step2.output}}
+                            - Outline: {{step5.output}}",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -283,39 +328,39 @@ Context
                         "uuid" => $generateUuid(),
                         "prompt" => "1. Write only the third main section (Section 3) of the blog post, following the outline provided in {{step5.output}}. This section should focus on a \"Deep Dive into Features\" of Startupful's {{step1.input.Features}} service.
 
-2. For Section 3 (\"Deep Dive into Features\" or similar):
-2.1. Start with a brief transition from the previous section, acknowledging the growing interest in the service.
-2.2. Provide a detailed analysis of key features of the {{step1.input.Features}} service.
-2.3. Describe the user experience in depth, including interface, ease of use, and any unique aspects.
-2.4. Use specific examples or use cases to illustrate how each feature works and its potential benefits.
-2.5. Include both strengths and potential areas for improvement in your analysis.
+                            2. For Section 3 (\"Deep Dive into Features\" or similar):
+                            2.1. Start with a brief transition from the previous section, acknowledging the growing interest in the service.
+                            2.2. Provide a detailed analysis of key features of the {{step1.input.Features}} service.
+                            2.3. Describe the user experience in depth, including interface, ease of use, and any unique aspects.
+                            2.4. Use specific examples or use cases to illustrate how each feature works and its potential benefits.
+                            2.5. Include both strengths and potential areas for improvement in your analysis.
 
-3. Maintain the tone and style that appeals to the target persona ({{step2.output}}), now from the perspective of someone who has spent significant time with the service.
+                            3. Maintain the tone and style that appeals to the target persona ({{step2.output}}), now from the perspective of someone who has spent significant time with the service.
 
-4. Use proper markdown syntax throughout:
-4.1. Use ## for the section heading, and ### for subsections.
-4.2. Use * or _ for italics, and ** or __ for bold text.
-4.3. Use > for blockquotes if needed.
-4.4. Use - or * for unordered lists, and 1. for ordered lists if necessary.
+                            4. Use proper markdown syntax throughout:
+                            4.1. Use ## for the section heading, and ### for subsections.
+                            4.2. Use * or _ for italics, and ** or __ for bold text.
+                            4.3. Use > for blockquotes if needed.
+                            4.4. Use - or * for unordered lists, and 1. for ordered lists if necessary.
 
-5. Aim for a length of about 2000-4000 words for this section, as it's a detailed exploration of features.
+                            5. Aim for a length of about 2000-4000 words for this section, as it's a detailed exploration of features.
 
-6. Include at least 3-4 specific features or aspects of Startupful's {{step1.input.Features}} service, providing a balanced view of each.
+                            6. Include at least 3-4 specific features or aspects of Startupful's {{step1.input.Features}} service, providing a balanced view of each.
 
-7. Where relevant, compare features to industry standards or competitor offerings, highlighting what makes Startupful's service unique or superior.
+                            7. Where relevant, compare features to industry standards or competitor offerings, highlighting what makes Startupful's service unique or superior.
 
-8. End this section with a summary of your findings from this deep dive, setting the stage for the final section on real-world impact.
+                            8. End this section with a summary of your findings from this deep dive, setting the stage for the final section on real-world impact.
 
-Remember, you're writing from a reviewer's perspective who has now thoroughly explored the service. Your goal is to provide readers with a comprehensive understanding of what Startupful's {{step1.input.Features}} service offers, balancing technical details with practical insights.
+                            Remember, you're writing from a reviewer's perspective who has now thoroughly explored the service. Your goal is to provide readers with a comprehensive understanding of what Startupful's {{step1.input.Features}} service offers, balancing technical details with practical insights.
 
-Please generate the content for Section 3 now, following these guidelines.",
-                        "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
-Context
+                            Please generate the content for Section 3 now, following these guidelines.",
+                                                    "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
+                            Context
 
-- Service: Startupful's {{step1.input.Features}}
-- Blog Post Title: {{step4.output}}
-- Target Persona: {{step2.output}}
-- Outline: {{step5.output}}",
+                            - Service: Startupful's {{step1.input.Features}}
+                            - Blog Post Title: {{step4.output}}
+                            - Target Persona: {{step2.output}}
+                            - Outline: {{step5.output}}",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -327,44 +372,44 @@ Context
                         "uuid" => $generateUuid(),
                         "prompt" => "1. Write the fourth main section (Section 4) and the conclusion of the blog post, following the outline provided in {{step5.output}}. This section should focus on the \"Real-World Impact\" of using Startupful's {{step1.input.Features}} service.
 
-2. For Section 4 (\"Real-World Impact\" or similar):
-2.1. Begin with a brief transition from the previous section's feature analysis.
-2.2. Describe tangible performance improvements experienced while using the service.
-2.3. Discuss long-term benefits and potential ROI for users.
-2.4. Use specific examples, case studies, or hypothetical scenarios to illustrate the real-world application and impact of the service.
-2.5. Address how the service solves problems or improves processes for the target persona.
+                            2. For Section 4 (\"Real-World Impact\" or similar):
+                            2.1. Begin with a brief transition from the previous section's feature analysis.
+                            2.2. Describe tangible performance improvements experienced while using the service.
+                            2.3. Discuss long-term benefits and potential ROI for users.
+                            2.4. Use specific examples, case studies, or hypothetical scenarios to illustrate the real-world application and impact of the service.
+                            2.5. Address how the service solves problems or improves processes for the target persona.
 
 
-3. For the Conclusion:
-3.1. Summarize the key points from all sections of the review.
-3.2. Reflect on the journey from initial skepticism to informed appreciation of the service.
-3.3. Offer final thoughts on Startupful's place in the AI landscape.
-3.4. Provide a balanced overall recommendation or assessment.
+                            3. For the Conclusion:
+                            3.1. Summarize the key points from all sections of the review.
+                            3.2. Reflect on the journey from initial skepticism to informed appreciation of the service.
+                            3.3. Offer final thoughts on Startupful's place in the AI landscape.
+                            3.4. Provide a balanced overall recommendation or assessment.
 
-4. Maintain the tone and style that appeals to the target persona ({{step2.output}}), now from the perspective of someone who has fully explored and utilized the service.
+                            4. Maintain the tone and style that appeals to the target persona ({{step2.output}}), now from the perspective of someone who has fully explored and utilized the service.
 
-5. Use proper markdown syntax throughout:
-5.1. Use ## for the section heading and conclusion, and ### for subsections.
-5.2. Use * or _ for italics, and ** or __ for bold text.
-5.3. Use > for blockquotes if needed.
-5.4. Use - or * for unordered lists, and 1. for ordered lists if necessary.
+                            5. Use proper markdown syntax throughout:
+                            5.1. Use ## for the section heading and conclusion, and ### for subsections.
+                            5.2. Use * or _ for italics, and ** or __ for bold text.
+                            5.3. Use > for blockquotes if needed.
+                            5.4. Use - or * for unordered lists, and 1. for ordered lists if necessary.
 
-6. Aim for a length of about 2000-4000 words for this section and conclusion combined.
+                            6. Aim for a length of about 2000-4000 words for this section and conclusion combined.
 
-7. In the Real-World Impact section, include at least 2-3 specific examples of how the service has positively affected productivity, efficiency, or other relevant metrics.
+                            7. In the Real-World Impact section, include at least 2-3 specific examples of how the service has positively affected productivity, efficiency, or other relevant metrics.
 
-8. In the conclusion, ensure you've addressed any remaining potential concerns or questions the target persona might have.
+                            8. In the conclusion, ensure you've addressed any remaining potential concerns or questions the target persona might have.
 
-Remember, you're writing from a reviewer's perspective who has now fully experienced and evaluated the service. Your goal is to provide a compelling argument for the real-world value of Startupful's {{step1.input.Features}} service, while offering a fair and balanced overall assessment.
+                            Remember, you're writing from a reviewer's perspective who has now fully experienced and evaluated the service. Your goal is to provide a compelling argument for the real-world value of Startupful's {{step1.input.Features}} service, while offering a fair and balanced overall assessment.
 
-Please generate the content for Section 4 and the Conclusion now, following these guidelines.",
-                        "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
-Context
+                            Please generate the content for Section 4 and the Conclusion now, following these guidelines.",
+                                                    "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
+                            Context
 
-- Service: Startupful's {{step1.input.Features}}
-- Blog Post Title: {{step4.output}}
-- Target Persona: {{step2.output}}
-- Outline: {{step5.output}}",
+                            - Service: Startupful's {{step1.input.Features}}
+                            - Blog Post Title: {{step4.output}}
+                            - Target Persona: {{step2.output}}
+                            - Outline: {{step5.output}}",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -375,45 +420,45 @@ Context
                         "step_number" => 10,
                         "uuid" => $generateUuid(),
                         "prompt" => "You are a professional content writer tasked with creating a compelling call-to-action (CTA) section for a blog post review of Startupful's {{step1.input.Features}} service. This section will be added at the end of the review to address legal considerations and promote the service.
-Guidelines for creating the CTA section:
+                            Guidelines for creating the CTA section:
 
-1. Start by disclosing that the entire blog post, including this CTA, was generated in just 10 seconds using the Startupful plugin.
-2. Clarify that the review and testimonials in the post are simulated for demonstration purposes and may not reflect actual user experiences.
-3. Highlight that the Startupful plugin can generate various types of content beyond blog posts, including audio, images, and code.
-4. List the current benefits of using Startupful's service:
-4.1. Mention the possibility of using the service for free for up to 6 months. Break down the offer: 30 days for initial subscription, 30 days for blog upload, 30 days for social media upload, and 90 days for short-form content upload.
-4.2. Emphasize that unlike other AI content generators, Startupful allows users to design the logic process itself, enabling the creation of a wide variety of content.
-4.3. Highlight that Startupful's service is not cloud-based but uses a plugin installed on the user's own hosting, making it significantly cheaper (tens, hundreds, or thousands of times) than traditional AI services.
+                            1. Start by disclosing that the entire blog post, including this CTA, was generated in just 10 seconds using the Startupful plugin.
+                            2. Clarify that the review and testimonials in the post are simulated for demonstration purposes and may not reflect actual user experiences.
+                            3. Highlight that the Startupful plugin can generate various types of content beyond blog posts, including audio, images, and code.
+                            4. List the current benefits of using Startupful's service:
+                            4.1. Mention the possibility of using the service for free for up to 6 months. Break down the offer: 30 days for initial subscription, 30 days for blog upload, 30 days for social media upload, and 90 days for short-form content upload.
+                            4.2. Emphasize that unlike other AI content generators, Startupful allows users to design the logic process itself, enabling the creation of a wide variety of content.
+                            4.3. Highlight that Startupful's service is not cloud-based but uses a plugin installed on the user's own hosting, making it significantly cheaper (tens, hundreds, or thousands of times) than traditional AI services.
 
-5. End with a compelling, hook-laden CTA that includes a link to https://startupful.io.
-6. Use markdown formatting for better readability and emphasis where appropriate.
-7. Keep the tone consistent with the rest of the blog post and appealing to the target persona ({{step2.output}}).
-8. Aim for a length of about 2000-4000 words for this CTA section.
+                            5. End with a compelling, hook-laden CTA that includes a link to https://startupful.io.
+                            6. Use markdown formatting for better readability and emphasis where appropriate.
+                            7. Keep the tone consistent with the rest of the blog post and appealing to the target persona ({{step2.output}}).
+                            8. Aim for a length of about 2000-4000 words for this CTA section.
 
-Example structure:
-markdownCopy## The Truth Behind This Review (And Why It Matters to You)
+                            Example structure:
+                            markdownCopy## The Truth Behind This Review (And Why It Matters to You)
 
-[Disclosure about the blog post being AI-generated]
+                            [Disclosure about the blog post being AI-generated]
 
-[Clarification about the simulated nature of the review]
+                            [Clarification about the simulated nature of the review]
 
-[Highlight of Startupful's capabilities beyond blog posts]
+                            [Highlight of Startupful's capabilities beyond blog posts]
 
-### Why Startupful Could Be Your Game-Changer
+                            ### Why Startupful Could Be Your Game-Changer
 
-- [Free trial offer details]
-- [Unique selling point about logic process design]
-- [Cost-effectiveness compared to cloud-based AI services]
+                            - [Free trial offer details]
+                            - [Unique selling point about logic process design]
+                            - [Cost-effectiveness compared to cloud-based AI services]
 
-[Compelling CTA with link to https://startupful.io]
-Please generate the CTA section now, following these guidelines and maintaining a tone that will resonate with the target persona while effectively promoting Startupful's service.",
-                        "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
-Context
+                            [Compelling CTA with link to https://startupful.io]
+                            Please generate the CTA section now, following these guidelines and maintaining a tone that will resonate with the target persona while effectively promoting Startupful's service.",
+                                                    "background_information" => "You are a professional content writer specializing in tech product reviews. Your task is to write a comprehensive, engaging, and informative blog post reviewing Startupful's {{step1.input.Features}} service.
+                            Context
 
-- Service: Startupful's {{step1.input.Features}}
-- Blog Post Title: {{step4.output}}
-- Target Persona: {{step2.output}}
-- Outline: {{step5.output}}",
+                            - Service: Startupful's {{step1.input.Features}}
+                            - Blog Post Title: {{step4.output}}
+                            - Target Persona: {{step2.output}}
+                            - Outline: {{step5.output}}",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -431,8 +476,30 @@ Context
                 'updated_at' => now(),
             ], 
             [
-                'name' => 'Startupful Review Blog Posting',
-                'description' => 'keyword > titles, selected title, introduction, main body, conclusion, and content integration for professional news articles',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Startupful Review SNS-Beitrag',
+                    'en' => 'Startupful Review SNS Posting',
+                    'fr' => 'Publication SNS de critique Startupful',
+                    'hi' => 'स्टार्टअपफुल समीक्षा SNS पोस्टिंग',
+                    'ja' => 'Startupful レビューSNS投稿',
+                    'ko' => 'Startupful 리뷰 SNS 포스팅',
+                    'pt' => 'Postagem de SNS de Avaliação Startupful',
+                    'th' => 'การโพสต์ SNS รีวิว Startupful',
+                    'tl' => 'Pag-post ng SNS ng Pagsusuri ng Startupful',
+                    'zh' => 'Startupful 评论 SNS 发布',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Titel, ausgewählter Titel, Einleitung, Hauptteil, Schlussfolgerung und Inhaltsintegration für professionelle Nachrichtenartikel',
+                    'en' => 'keyword > titles, selected title, introduction, main body, conclusion, and content integration for professional news articles',
+                    'fr' => 'mot-clé > titres, titre sélectionné, introduction, corps principal, conclusion et intégration de contenu pour des articles de presse professionnels',
+                    'hi' => 'कीवर्ड > शीर्षक, चयनित शीर्षक, परिचय, मुख्य भाग, निष्कर्ष, और पेशेवर समाचार लेखों के लिए सामग्री एकीकरण',
+                    'ja' => 'キーワード > タイトル、選択されたタイトル、序論、本文、結論、そしてプロフェッショナルなニュース記事のためのコンテンツ統合',
+                    'ko' => '키워드 > 제목, 선택된 제목, 서론, 본문, 결론 및 전문 뉴스 기사를 위한 콘텐츠 통합',
+                    'pt' => 'palavra-chave > títulos, título selecionado, introdução, corpo principal, conclusão e integração de conteúdo para artigos de notícias profissionais',
+                    'th' => 'คำสำคัญ > ชื่อเรื่อง, ชื่อเรื่องที่เลือก, บทนำ, เนื้อหาหลัก, บทสรุป และการรวมเนื้อหาสำหรับบทความข่าวมืออาชีพ',
+                    'tl' => 'keyword > mga pamagat, napiling pamagat, panimula, pangunahing bahagi, konklusyon, at pagsasama ng nilalaman para sa mga propesyonal na artikulo ng balita',
+                    'zh' => '关键词 > 标题、选定标题、引言、正文、结论以及专业新闻文章的内容整合',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -448,14 +515,47 @@ Context
                             ],
                             [
                                 "label" => "Features",
-                                "description" => "Please choose 1 service that you found interesting",
+                                "description" => $this->getLocalizedText([
+                                    'de' => "Bitte wählen Sie 1 Dienst aus, den Sie interessant fanden",
+                                    'en' => "Please choose 1 service that you found interesting",
+                                    'fr' => "Veuillez choisir 1 service que vous avez trouvé intéressant",
+                                    'hi' => "कृपया 1 सेवा चुनें जो आपको रोचक लगी",
+                                    'ja' => "興味深いと感じたサービスを1つ選んでください",
+                                    'ko' => "흥미롭다고 생각한 서비스 1개를 선택해 주세요",
+                                    'pt' => "Por favor, escolha 1 serviço que você achou interessante",
+                                    'th' => "โปรดเลือก 1 บริการที่คุณพบว่าน่าสนใจ",
+                                    'tl' => "Mangyaring pumili ng 1 serbisyo na natagpuan mong kawili-wili",
+                                    'zh' => "请选择1项您觉得有趣的服务",
+                                ]),                            
                                 "type" => "select",
-                                "options" => "[text] blog contents generate, [text] sns contents generate, [text] docs generate, [text] webpage summary, [text] docs summary, [image] image generate, [UI/UX] text-to-code, [UI/UX] image-to-code, [image] anime image generate, [image] NSFW(18+) image generate, [audio] text-to-speech, [avatar-chat] Role Playing, [avatar-chat] language tuter, [avatar-chat] a variety of consultants",
+                                "options" => $this->getLocalizedText([
+                                    'de' => '[Text] Blog-Inhalte generieren, [Text] SNS-Inhalte generieren, [Text] Dokumente generieren, [Text] Webseiten-Zusammenfassung, [Text] Dokumentenzusammenfassung, [Bild] Bild generieren, [UI/UX] Text-zu-Code, [UI/UX] Bild-zu-Code, [Bild] Anime-Bild generieren, [Bild] NSFW(18+) Bild generieren, [Audio] Text-zu-Sprache, [Avatar-Chat] Rollenspiel, [Avatar-Chat] Sprachlehrer, [Avatar-Chat] Verschiedene Berater, [Text] E-Mail-Antwort generieren, [Text] Nutzungsbedingungen generieren, [Text] Einwilligungserklärung für die Verwendung personenbezogener Daten generieren, [Docs] One-Pager generieren, [Docs] Six-Pager generieren, [Docs] Geschäftsplan generieren, [Docs] Anforderungsspezifikation generieren, [Bild] Logo-Bild generieren',
+                                    'en' => '[text] blog contents generate, [text] sns contents generate, [text] docs generate, [text] webpage summary, [text] docs summary, [image] image generate, [UI/UX] text-to-code, [UI/UX] image-to-code, [image] anime image generate, [image] NSFW(18+) image generate, [audio] text-to-speech, [avatar-chat] Role Playing, [avatar-chat] language tutor, [avatar-chat] a variety of consultants, [text] email reply generate, [text] terms of service generate, [text] privacy policy generate, [docs] one-pager generate, [docs] six-pager generate, [docs] business plan generate, [docs] development requirements definition generate, [image] logo image generate',
+                                    'fr' => '[Texte] génération de contenu de blog, [Texte] génération de contenu SNS, [Texte] génération de documents, [Texte] résumé de la page Web, [Texte] résumé de documents, [Image] génération d\'image, [UI/UX] texte en code, [UI/UX] image en code, [Image] génération d\'image anime, [Image] génération d\'image NSFW(18+), [Audio] texte en parole, [Avatar-Chat] Jeu de rôle, [Avatar-Chat] tuteur de langue, [Avatar-Chat] une variété de consultants, [Texte] génération de réponse par e-mail, [Texte] génération des conditions d\'utilisation, [Texte] génération de la politique de confidentialité, [Docs] génération de one-pager, [Docs] génération de six-pager, [Docs] génération de plan d\'affaires, [Docs] génération de cahier des charges, [Image] génération de logo',
+                                    'hi' => '[पाठ] ब्लॉग सामग्री उत्पन्न करें, [पाठ] एसएनएस सामग्री उत्पन्न करें, [पाठ] दस्तावेज़ उत्पन्न करें, [पाठ] वेबपेज सारांश, [पाठ] दस्तावेज़ सारांश, [छवि] छवि उत्पन्न करें, [UI/UX] टेक्स्ट-से-कोड, [UI/UX] छवि-से-कोड, [छवि] एनीमे छवि उत्पन्न करें, [छवि] NSFW (18+) छवि उत्पन्न करें, [ऑडियो] टेक्स्ट-टू-स्पीच, [अवतार-चैट] भूमिका निभाना, [अवतार-चैट] भाषा शिक्षक, [अवतार-चैट] विभिन्न परामर्शदाता, [पाठ] ईमेल उत्तर उत्पन्न करें, [पाठ] सेवा की शर्तें उत्पन्न करें, [पाठ] गोपनीयता नीति उत्पन्न करें, [दस्तावेज़] वन-पेजर उत्पन्न करें, [दस्तावेज़] सिक्स-पेजर उत्पन्न करें, [दस्तावेज़] व्यापार योजना उत्पन्न करें, [दस्तावेज़] विकास आवश्यकताओं की परिभाषा उत्पन्न करें, [छवि] लोगो छवि उत्पन्न करें',
+                                    'ja' => '[テキスト] ブログコンテンツ生成, [テキスト] SNSコンテンツ生成, [テキスト] ドキュメント生成, [テキスト] ウェブページの要約, [テキスト] ドキュメントの要約, [画像] 画像生成, [UI/UX] テキストをコードに変換, [UI/UX] 画像をコードに変換, [画像] アニメ画像生成, [画像] NSFW(18+)画像生成, [オーディオ] テキスト読み上げ, [アバターチャット] ロールプレイング, [アバターチャット] 言語チューター, [アバターチャット] 様々なコンサルタント, [テキスト] メール返信生成, [テキスト] 利用規約生成, [テキスト] プライバシーポリシー生成, [ドキュメント] ワンペイジャー生成, [ドキュメント] シックスペイジャー生成, [ドキュメント] ビジネスプラン生成, [ドキュメント] 開発要件定義生成, [画像] ロゴ画像生成',
+                                    'ko' => '[텍스트] 블로그 콘텐츠 생성, [텍스트] SNS 콘텐츠 생성, [텍스트] 문서 생성, [텍스트] 웹페이지 요약, [텍스트] 문서 요약, [이미지] 이미지 생성, [UI/UX] 텍스트-코드 변환, [UI/UX] 이미지-코드 변환, [이미지] 애니메이션 이미지 생성, [이미지] NSFW(18+) 이미지 생성, [오디오] 텍스트-음성 변환, [아바타-챗] 역할 놀이, [아바타-챗] 언어 교사, [아바타-챗] 다양한 컨설턴트, [텍스트] 이메일 답변 생성, [텍스트] 이용약관 생성, [텍스트] 개인정보 이용 동의서 생성, [문서] 원페이저 생성, [문서] 식스페이저 생성, [문서] 사업계획서 생성, [문서] 개발요구사항 정의서 생성, [이미지] 로고 이미지 생성',
+                                    'pt' => '[Texto] gerar conteúdo de blog, [Texto] gerar conteúdo de SNS, [Texto] gerar documentos, [Texto] resumo da página da Web, [Texto] resumo de documentos, [Imagem] gerar imagem, [UI/UX] texto para código, [UI/UX] imagem para código, [Imagem] gerar imagem de anime, [Imagem] gerar imagem NSFW(18+), [Áudio] texto para fala, [Avatar-chat] Jogar Role Playing, [Avatar-chat] tutor de línguas, [Avatar-chat] uma variedade de consultores, [Texto] gerar resposta de e-mail, [Texto] gerar termos de serviço, [Texto] gerar política de privacidade, [Docs] gerar one-pager, [Docs] gerar six-pager, [Docs] gerar plano de negócios, [Docs] gerar definição de requisitos de desenvolvimento, [Imagem] gerar logotipo',
+                                    'th' => '[ข้อความ] สร้างเนื้อหาบล็อก, [ข้อความ] สร้างเนื้อหา SNS, [ข้อความ] สร้างเอกสาร, [ข้อความ] สรุปหน้าเว็บ, [ข้อความ] สรุปเอกสาร, [ภาพ] สร้างภาพ, [UI/UX] แปลงข้อความเป็นโค้ด, [UI/UX] แปลงภาพเป็นโค้ด, [ภาพ] สร้างภาพอนิเมะ, [ภาพ] สร้างภาพ NSFW(18+), [เสียง] แปลงข้อความเป็นเสียงพูด, [อวาตาร์-แชท] เล่นตามบทบาท, [อวาตาร์-แชท] ติวเตอร์ภาษา, [อวาตาร์-แชท] ที่ปรึกษาหลากหลายประเภท, [ข้อความ] สร้างการตอบกลับอีเมล, [ข้อความ] สร้างข้อกำหนดการใช้บริการ, [ข้อความ] สร้างนโยบายความเป็นส่วนตัว, [เอกสาร] สร้าง one-pager, [เอกสาร] สร้าง six-pager, [เอกสาร] สร้างแผนธุรกิจ, [เอกสาร] สร้างคำจำกัดความข้อกำหนดการพัฒนา, [ภาพ] สร้างภาพโลโก้',
+                                    'tl' => '[Teksto] bumuo ng nilalaman ng blog, [Teksto] bumuo ng nilalaman ng SNS, [Teksto] bumuo ng mga dokumento, [Teksto] buod ng webpage, [Teksto] buod ng mga dokumento, [Larawan] bumuo ng imahe, [UI/UX] tekstong-ginawa sa code, [UI/UX] imahe-ginawa sa code, [Larawan] bumuo ng imahe ng anime, [Larawan] bumuo ng NSFW (18+) na imahe, [Audio] text-to-speech, [Avatar-chat] Role Playing, [Avatar-chat] tutor sa wika, [Avatar-chat] iba\'t ibang mga consultant, [Teksto] bumuo ng tugon sa email, [Teksto] bumuo ng mga tuntunin ng serbisyo, [Teksto] bumuo ng patakaran sa privacy, [Dokumento] bumuo ng one-pager, [Dokumento] bumuo ng six-pager, [Dokumento] bumuo ng plano ng negosyo, [Dokumento] bumuo ng kahulugan ng mga kinakailangan sa pag-unlad, [Larawan] bumuo ng imahe ng logo',
+                                    'zh' => '[文本] 生成博客内容, [文本] 生成SNS内容, [文本] 生成文档, [文本] 网页摘要, [文本] 文档摘要, [图片] 生成图片, [UI/UX] 文本生成代码, [UI/UX] 图片生成代码, [图片] 生成动漫图片, [图片] 生成NSFW(18+)图片, [音频] 文本转语音, [头像聊天] 角色扮演, [头像聊天] 语言导师, [头像聊天] 各类顾问, [文本] 生成邮件回复, [文本] 生成服务条款, [文本] 生成隐私政策, [文档] 生成One-Pager, [文档] 生成Six-Pager, [文档] 生成商业计划书, [文档] 生成开发需求定义, [图片] 生成徽标图片',
+                                ]),
                                 "file_type" => null
                             ],
                             [
                                 "label" => "SNS",
-                                "description" => "Please select the SNS you want to upload",
+                                "description" => $this->getLocalizedText([
+                                    'de' => "Bitte wählen Sie das SNS aus, auf dem Sie hochladen möchten",
+                                    'en' => "Please select the SNS you want to upload",
+                                    'fr' => "Veuillez sélectionner le réseau social sur lequel vous souhaitez publier",
+                                    'hi' => "कृपया वह SNS चुनें जिस पर आप अपलोड करना चाहते हैं",
+                                    'ja' => "アップロードしたいSNSを選択してください",
+                                    'ko' => "업로드하고 싶은 SNS를 선택해 주세요",
+                                    'pt' => "Por favor, selecione o SNS em que deseja fazer o upload",
+                                    'th' => "โปรดเลือก SNS ที่คุณต้องการอัปโหลด",
+                                    'tl' => "Mangyaring piliin ang SNS na gusto mong i-upload",
+                                    'zh' => "请选择您想要上传的社交网络",
+                                ]),
                                 "type" => "select",
                                 "options" => "LinkedIn, Instagram, Facebook, Threads, Twitter(X)",
                                 "file_type" => null
@@ -468,42 +568,42 @@ Context
                         "uuid" => $generateUuid(),
                         "prompt" => "Based on the current time {{step1.input.time}}, generate a persona with the following characteristics:
 
-Tone and Manner: [Determine based on the hour]
-Writing Style: [Determine based on the minute]
-Structure: [Determine based on the second]
+                            Tone and Manner: [Determine based on the hour]
+                            Writing Style: [Determine based on the minute]
+                            Structure: [Determine based on the second]
 
-Provide a brief description of the persona, explaining how these three characteristics will influence their writing style for a blog post about a startup service.
-Example output:
-\"This persona writes with a cool and detached tone, using a conversational style as if talking directly to the reader. They structure their post as a story, weaving the information about the startup service into a narrative.\"
-Generate the persona description now.",
-                        "background_information" => "The time is divided into three components: hours, minutes, and seconds. Each component determines a specific characteristic of the persona:
+                            Provide a brief description of the persona, explaining how these three characteristics will influence their writing style for a blog post about a startup service.
+                            Example output:
+                            \"This persona writes with a cool and detached tone, using a conversational style as if talking directly to the reader. They structure their post as a story, weaving the information about the startup service into a narrative.\"
+                            Generate the persona description now.",
+                                                    "background_information" => "The time is divided into three components: hours, minutes, and seconds. Each component determines a specific characteristic of the persona:
 
-1. Hours (0-23): Tone and Manner
-- 0-2: Formal
-- 3-5: Informal
-- 6-8: Professional
-- 9-11: Passionate
-- 12-14: Cool and detached
-- 15-17: Humorous
-- 18-20: Serious
-- 21-22: Optimistic
-- 23: Realistic
+                            1. Hours (0-23): Tone and Manner
+                            - 0-2: Formal
+                            - 3-5: Informal
+                            - 6-8: Professional
+                            - 9-11: Passionate
+                            - 12-14: Cool and detached
+                            - 15-17: Humorous
+                            - 18-20: Serious
+                            - 21-22: Optimistic
+                            - 23: Realistic
 
 
-2. Minutes (0-59): Writing Style
-- 0-9: Topic sentence first
-- 10-19: Conclusion first
-- 20-29: Both topic sentence and conclusion first
-- 30-39: Main point in the middle
-- 40-49: Conversational (as if talking to the reader)
-- 50-59: Reflective (as if organizing one's own thoughts)
+                            2. Minutes (0-59): Writing Style
+                            - 0-9: Topic sentence first
+                            - 10-19: Conclusion first
+                            - 20-29: Both topic sentence and conclusion first
+                            - 30-39: Main point in the middle
+                            - 40-49: Conversational (as if talking to the reader)
+                            - 50-59: Reflective (as if organizing one's own thoughts)
 
-3. Seconds (0-59): Structure
-- 0-11: Introduction-Body-Conclusion
-- 12-23: Q&A format
-- 24-35: Storytelling
-- 36-47: Comparison with alternative services
-- 48-59: Review and feedback format",
+                            3. Seconds (0-59): Structure
+                            - 0-11: Introduction-Body-Conclusion
+                            - 12-23: Q&A format
+                            - 24-35: Storytelling
+                            - 36-47: Comparison with alternative services
+                            - 48-59: Review and feedback format",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -515,31 +615,31 @@ Generate the persona description now.",
                         "uuid" => $generateUuid(),
                         "prompt" => "Generate 10 compelling SNS caption titles for Startupful's {{step1.input.Features}} service. These titles should focus on user experiences, feedback, and key features. Your titles should:
 
-1. Incorporate keywords from {{step1.input.Features}} to create strong hook points.
-2. Reflect the tone and manner of the target persona: {{step2.output}}
-3. Be interesting and engaging to drive high interaction rates.
-4. Highlight different aspects of the Startupful service from a user's perspective.
-5. Convey the idea of a user experience or feedback.
+                            1. Incorporate keywords from {{step1.input.Features}} to create strong hook points.
+                            2. Reflect the tone and manner of the target persona: {{step2.output}}
+                            3. Be interesting and engaging to drive high interaction rates.
+                            4. Highlight different aspects of the Startupful service from a user's perspective.
+                            5. Convey the idea of a user experience or feedback.
 
-Guidelines:
-- Consider the characteristics and limitations of the chosen SNS platform ({{step1.input.SNS}}).
-- Craft concise yet descriptive titles (aim for optimal length per platform).
-- Use power words and emotional triggers to capture attention.
-- Incorporate numbers or specific benefits where appropriate.
-- Consider using phrases like \"Our Experience with\", \"X Days Using\", \"The Truth About\", \"Honest Take on\", etc.
-- Ensure the titles align with the persona's preferred writing style.
-- Tailor the content to match the atmosphere and tone of the specific SNS platform.
-- Include elements that immediately grab attention at the beginning of the caption title.
+                            Guidelines:
+                            - Consider the characteristics and limitations of the chosen SNS platform ({{step1.input.SNS}}).
+                            - Craft concise yet descriptive titles (aim for optimal length per platform).
+                            - Use power words and emotional triggers to capture attention.
+                            - Incorporate numbers or specific benefits where appropriate.
+                            - Consider using phrases like \"Our Experience with\", \"X Days Using\", \"The Truth About\", \"Honest Take on\", etc.
+                            - Ensure the titles align with the persona's preferred writing style.
+                            - Tailor the content to match the atmosphere and tone of the specific SNS platform.
+                            - Include elements that immediately grab attention at the beginning of the caption title.
 
-Please provide a numbered list of 10 SNS caption titles.
-Example output format:
+                            Please provide a numbered list of 10 SNS caption titles.
+                            Example output format:
 
-[SNS-optimized Caption Title 1]
-[SNS-optimized Caption Title 2]
-[SNS-optimized Caption Title 3]
-...
+                            [SNS-optimized Caption Title 1]
+                            [SNS-optimized Caption Title 2]
+                            [SNS-optimized Caption Title 3]
+                            ...
 
-Generate your top 10 SNS caption title recommendations now.",
+                            Generate your top 10 SNS caption title recommendations now.",
                         "background_information" => "You are a world-renowned SEO expert who has achieved top rankings on global search engines for numerous clients. Your expertise in creating compelling, SEO-friendly content has made you the go-to professional for businesses looking to improve their online visibility. Today, you've been tasked with creating SNS caption titles for Startupful's {{step1.input.Features}} service.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -551,10 +651,10 @@ Generate your top 10 SNS caption title recommendations now.",
                         "step_number" => 4,
                         "uuid" => $generateUuid(),
                         "prompt" => "Review the 10 sns caption titles generated in Step 3 ({{step3.output}}). Select the single most effective title that best combines SEO potential, appeal to the target persona, and relevance to Startupful's {{step1.input.Features}} service.
-Your response should only include the selected title, copied exactly as it appears in {{step3.output}}.
-Example output:
-[Selected Title]
-Please provide your selection now.",
+                            Your response should only include the selected title, copied exactly as it appears in {{step3.output}}.
+                            Example output:
+                            [Selected Title]
+                            Please provide your selection now.",
                         "background_information" => "You continue your role as a world-renowned SEO expert. Your task now is to analyze the 10 sns caption titles generated in the previous step and select the most effective one for Startupful's {{step1.input.Features}} service.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -567,46 +667,46 @@ Please provide your selection now.",
                         "uuid" => $generateUuid(),
                         "prompt" => "1. Write an extended SNS caption for Startupful's {{step1.input.Features}} service, based on the caption title provided in {{step4.output}}.
 
-2. The caption should:
-2.1. Start with an attention-grabbing hook that resonates with the target audience's interests or pain points.
-2.2. Briefly introduce Startupful and its {{step1.input.Features}} service.
-2.3. Highlight key benefits and features that set Startupful apart from competitors.
+                            2. The caption should:
+                            2.1. Start with an attention-grabbing hook that resonates with the target audience's interests or pain points.
+                            2.2. Briefly introduce Startupful and its {{step1.input.Features}} service.
+                            2.3. Highlight key benefits and features that set Startupful apart from competitors.
 
-3. Content structure and length:
-3.1. Create a caption of 3,000-4,000 characters, suitable for platforms that allow longer posts.
-3.2. Use short paragraphs or bullet points for easy readability on mobile devices.
-3.3. Include a call-to-action (CTA) that encourages engagement.
+                            3. Content structure and length:
+                            3.1. Create a caption of 3,000-4,000 characters, suitable for platforms that allow longer posts.
+                            3.2. Use short paragraphs or bullet points for easy readability on mobile devices.
+                            3.3. Include a call-to-action (CTA) that encourages engagement.
 
-4. Storytelling and hooking elements: Weave the following points into a compelling narrative:
-4.1. Express initial concerns about data security with other services, and how Startupful's installable solution alleviates these worries.
-4.2. Describe the surprising ease of installation, even for someone not tech-savvy (setup in just 5 minutes).
-4.3. Compare the cost-effectiveness of Startupful (hundreds of times cheaper per 100k tokens) to other services, emphasizing the freedom to generate content liberally.
-4.4. Highlight the attractive pricing, including up to 6 months of free service for trying it out.
-4.5. Emphasize the ability to design and manage your own logic, resulting in easy, high-quality content generation anytime.
+                            4. Storytelling and hooking elements: Weave the following points into a compelling narrative:
+                            4.1. Express initial concerns about data security with other services, and how Startupful's installable solution alleviates these worries.
+                            4.2. Describe the surprising ease of installation, even for someone not tech-savvy (setup in just 5 minutes).
+                            4.3. Compare the cost-effectiveness of Startupful (hundreds of times cheaper per 100k tokens) to other services, emphasizing the freedom to generate content liberally.
+                            4.4. Highlight the attractive pricing, including up to 6 months of free service for trying it out.
+                            4.5. Emphasize the ability to design and manage your own logic, resulting in easy, high-quality content generation anytime.
 
-5. Tone and style:
-5.1. Maintain a tone and style that appeals to the target persona ({{step2.output}}).
-5.2. Use a conversational and authentic voice that builds trust and relatability.
+                            5. Tone and style:
+                            5.1. Maintain a tone and style that appeals to the target persona ({{step2.output}}).
+                            5.2. Use a conversational and authentic voice that builds trust and relatability.
 
-6. Platform-specific considerations: Optimize the content for {{step1.input.SNS}}, considering its unique features and audience expectations.
+                            6. Platform-specific considerations: Optimize the content for {{step1.input.SNS}}, considering its unique features and audience expectations.
 
-7. Engagement elements:
-7.1. Include questions or prompts throughout the caption to encourage audience interaction.
-7.2. Mention the time-sensitive offer (6 months free) to create urgency.
+                            7. Engagement elements:
+                            7.1. Include questions or prompts throughout the caption to encourage audience interaction.
+                            7.2. Mention the time-sensitive offer (6 months free) to create urgency.
 
-8. Branding:
-8.1. Incorporate Startupful's brand voice and key messaging.
-8.2. If there's a branded hashtag, include it naturally within the content.
+                            8. Branding:
+                            8.1. Incorporate Startupful's brand voice and key messaging.
+                            8.2. If there's a branded hashtag, include it naturally within the content.
 
-Remember, you're writing from the perspective of someone who has hands-on experience with Startupful's {{step1.input.Features}} service. Your goal is to capture the audience's attention, maintain their interest throughout the longer caption, and convey the value of the service in a way that resonates with the target persona.
+                            Remember, you're writing from the perspective of someone who has hands-on experience with Startupful's {{step1.input.Features}} service. Your goal is to capture the audience's attention, maintain their interest throughout the longer caption, and convey the value of the service in a way that resonates with the target persona.
 
-Please generate the extended SNS caption content now, following these guidelines and optimized for the platform {{step1.input.SNS}}.",
-                        "background_information" => "You are a professional social media content creator specializing in tech product showcases. Your task is to write compelling and engaging SNS captions for Startupful's {{step1.input.Features}} service.
+                            Please generate the extended SNS caption content now, following these guidelines and optimized for the platform {{step1.input.SNS}}.",
+                                                    "background_information" => "You are a professional social media content creator specializing in tech product showcases. Your task is to write compelling and engaging SNS captions for Startupful's {{step1.input.Features}} service.
 
-Context
-- Service: Startupful's {{step1.input.Features}}
-- Blog Post Title: {{step4.output}}
-- Target Persona: {{step2.output}}",
+                            Context
+                            - Service: Startupful's {{step1.input.Features}}
+                            - Blog Post Title: {{step4.output}}
+                            - Target Persona: {{step2.output}}",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
                         "temperature" => 0.7,
@@ -625,8 +725,30 @@ Context
             ], 
             //블로그
             [
-                'name' => 'Blog Post Generate',
-                'description' => 'keyword > title, outline, sectioned content generation, and integration',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Blogbeitrag-Generator',
+                    'en' => 'Blog Post Generate',
+                    'fr' => 'Générateur d\'articles de blog',
+                    'hi' => 'ब्लॉग पोस्ट जनरेटर',
+                    'ja' => 'ブログ記事ジェネレーター',
+                    'ko' => '블로그 포스트 생성기',
+                    'pt' => 'Gerador de Posts de Blog',
+                    'th' => 'เครื่องมือสร้างบทความบล็อก',
+                    'tl' => 'Tagabuo ng Post sa Blog',
+                    'zh' => '博客文章生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Titel, Gliederung, Inhaltsgenerierung nach Abschnitten und Integration',
+                    'en' => 'keyword > title, outline, sectioned content generation, and integration',
+                    'fr' => 'mot-clé > titre, plan, génération de contenu par sections et intégration',
+                    'hi' => 'कीवर्ड > शीर्षक, रूपरेखा, खंडित सामग्री निर्माण और एकीकरण',
+                    'ja' => 'キーワード > タイトル、アウトライン、セクション別コンテンツ生成、統合',
+                    'ko' => '키워드 > 제목, 개요, 섹션별 콘텐츠 생성 및 통합',
+                    'pt' => 'palavra-chave > título, estrutura, geração de conteúdo por seções e integração',
+                    'th' => 'คำสำคัญ > ชื่อเรื่อง, โครงร่าง, การสร้างเนื้อหาแบ่งตามส่วน และการผสมผสาน',
+                    'tl' => 'keyword > pamagat, balangkas, pagbuo ng nilalaman ayon sa seksiyon, at pagsasama',
+                    'zh' => '关键词 > 标题、大纲、分节内容生成和整合',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -635,7 +757,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the main keyword for the blog post",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Hauptschlüsselwort für den Blogbeitrag ein',
+                                    'en' => 'Enter the main keyword for the blog post',
+                                    'fr' => 'Saisissez le mot-clé principal de l\'article de blog',
+                                    'hi' => 'ब्लॉग पोस्ट के लिए मुख्य कीवर्ड दर्ज करें',
+                                    'ja' => 'ブログ記事のメインキーワードを入力してください',
+                                    'ko' => '블로그 포스트의 주요 키워드를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave principal para o post do blog',
+                                    'th' => 'ป้อนคำสำคัญหลักสำหรับบทความบล็อก',
+                                    'tl' => 'Ilagay ang pangunahing keyword para sa post sa blog',
+                                    'zh' => '输入博客文章的主要关键词',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -742,8 +875,30 @@ Context
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Product Review Generate',
-                'description' => 'keyword > title, outline, sectioned review content generation, and integration',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Produktbewertung Generator',
+                    'en' => 'Product Review Generate',
+                    'fr' => 'Générateur d\'avis sur les produits',
+                    'hi' => 'उत्पाद समीक्षा जनरेटर',
+                    'ja' => '製品レビュー生成',
+                    'ko' => '제품 리뷰 생성기',
+                    'pt' => 'Gerador de Avaliação de Produto',
+                    'th' => 'เครื่องมือสร้างรีวิวสินค้า',
+                    'tl' => 'Tagabuo ng Pagsusuri ng Produkto',
+                    'zh' => '产品评论生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Titel, Gliederung, Generierung von Bewertungsinhalten nach Abschnitten und Integration',
+                    'en' => 'keyword > title, outline, sectioned review content generation, and integration',
+                    'fr' => 'mot-clé > titre, plan, génération de contenu d\'avis par sections et intégration',
+                    'hi' => 'कीवर्ड > शीर्षक, रूपरेखा, खंडित समीक्षा सामग्री निर्माण और एकीकरण',
+                    'ja' => 'キーワード > タイトル、アウトライン、セクション別レビューコンテンツ生成、統合',
+                    'ko' => '키워드 > 제목, 개요, 섹션별 리뷰 콘텐츠 생성 및 통합',
+                    'pt' => 'palavra-chave > título, estrutura, geração de conteúdo de avaliação por seções e integração',
+                    'th' => 'คำสำคัญ > ชื่อเรื่อง, โครงร่าง, การสร้างเนื้อหารีวิวแบ่งตามส่วน และการผสมผสาน',
+                    'tl' => 'keyword > pamagat, balangkas, pagbuo ng nilalaman ng pagsusuri ayon sa seksiyon, at pagsasama',
+                    'zh' => '关键词 > 标题、大纲、分节评论内容生成和整合',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -752,7 +907,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "product_keyword",
-                                "description" => "Enter the main keyword or product name for the review",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Hauptschlüsselwort oder den Produktnamen für die Bewertung ein',
+                                    'en' => 'Enter the main keyword or product name for the review',
+                                    'fr' => 'Saisissez le mot-clé principal ou le nom du produit pour l\'avis',
+                                    'hi' => 'समीक्षा के लिए मुख्य कीवर्ड या उत्पाद का नाम दर्ज करें',
+                                    'ja' => 'レビューのメインキーワードまたは製品名を入力してください',
+                                    'ko' => '리뷰를 위한 주요 키워드 또는 제품명을 입력하세요',
+                                    'pt' => 'Digite a palavra-chave principal ou o nome do produto para a avaliação',
+                                    'th' => 'ป้อนคำสำคัญหลักหรือชื่อผลิตภัณฑ์สำหรับรีวิว',
+                                    'tl' => 'Ilagay ang pangunahing keyword o pangalan ng produkto para sa pagsusuri',
+                                    'zh' => '输入评论的主要关键词或产品名称',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -870,8 +1036,30 @@ Context
                 'updated_at' => now(),
             ],
             [
-                'name' => 'News Article Generate',
-                'description' => 'keyword > titles, selected title, introduction, main body, conclusion, and content integration for professional news articles',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Nachrichtenartikel Generator',
+                    'en' => 'News Article Generate',
+                    'fr' => 'Générateur d\'articles de presse',
+                    'hi' => 'समाचार लेख जनरेटर',
+                    'ja' => 'ニュース記事生成',
+                    'ko' => '뉴스 기사 생성기',
+                    'pt' => 'Gerador de Artigos de Notícias',
+                    'th' => 'เครื่องมือสร้างบทความข่าว',
+                    'tl' => 'Tagabuo ng Artikulo ng Balita',
+                    'zh' => '新闻文章生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Titel, ausgewählter Titel, Einleitung, Hauptteil, Schlussfolgerung und Inhaltsintegration für professionelle Nachrichtenartikel',
+                    'en' => 'keyword > titles, selected title, introduction, main body, conclusion, and content integration for professional news articles',
+                    'fr' => 'mot-clé > titres, titre sélectionné, introduction, corps principal, conclusion et intégration du contenu pour des articles de presse professionnels',
+                    'hi' => 'कीवर्ड > शीर्षक, चयनित शीर्षक, परिचय, मुख्य भाग, निष्कर्ष और पेशेवर समाचार लेखों के लिए सामग्री एकीकरण',
+                    'ja' => 'キーワード > タイトル、選択されたタイトル、導入、本文、結論、プロのニュース記事のためのコンテンツ統合',
+                    'ko' => '키워드 > 제목, 선택된 제목, 서론, 본문, 결론 및 전문 뉴스 기사를 위한 콘텐츠 통합',
+                    'pt' => 'palavra-chave > títulos, título selecionado, introdução, corpo principal, conclusão e integração de conteúdo para artigos de notícias profissionais',
+                    'th' => 'คำสำคัญ > ชื่อเรื่อง, ชื่อเรื่องที่เลือก, บทนำ, เนื้อหาหลัก, บทสรุป และการผสมผสานเนื้อหาสำหรับบทความข่าวมืออาชีพ',
+                    'tl' => 'keyword > mga pamagat, napiling pamagat, panimula, pangunahing bahagi, konklusyon, at pagsasama ng nilalaman para sa mga propesyonal na artikulo ng balita',
+                    'zh' => '关键词 > 标题、选定标题、引言、正文、结论以及专业新闻文章的内容整合',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -880,7 +1068,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "article_topic",
-                                "description" => "Enter the main topic or keyword for the article",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Hauptthema oder Schlüsselwort für den Artikel ein',
+                                    'en' => 'Enter the main topic or keyword for the article',
+                                    'fr' => 'Saisissez le sujet principal ou le mot-clé de l\'article',
+                                    'hi' => 'लेख के लिए मुख्य विषय या कीवर्ड दर्ज करें',
+                                    'ja' => '記事のメインテーマまたはキーワードを入力してください',
+                                    'ko' => '기사의 주요 주제 또는 키워드를 입력하세요',
+                                    'pt' => 'Digite o tópico principal ou palavra-chave para o artigo',
+                                    'th' => 'ป้อนหัวข้อหลักหรือคำสำคัญสำหรับบทความ',
+                                    'tl' => 'Ilagay ang pangunahing paksa o keyword para sa artikulo',
+                                    'zh' => '输入文章的主要主题或关键词',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -954,8 +1153,30 @@ Context
                 'updated_at' => now(),
             ], 
             [
-                'name' => 'SNS Caption Generate',
-                'description' => 'Generate engaging captions for various social media platforms based on a given topic',
+                'name' => $this->getLocalizedText([
+                    'de' => 'SNS-Bildunterschrift Generator',
+                    'en' => 'SNS Caption Generate',
+                    'fr' => 'Générateur de légendes pour réseaux sociaux',
+                    'hi' => 'सोशल मीडिया कैप्शन जनरेटर',
+                    'ja' => 'SNSキャプション生成',
+                    'ko' => 'SNS 캡션 생성기',
+                    'pt' => 'Gerador de Legendas para Redes Sociais',
+                    'th' => 'เครื่องมือสร้างคำบรรยายโซเชียลมีเดีย',
+                    'tl' => 'Tagabuo ng Caption sa SNS',
+                    'zh' => '社交媒体说明文生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Generieren Sie ansprechende Bildunterschriften für verschiedene Social-Media-Plattformen basierend auf einem bestimmten Thema',
+                    'en' => 'Generate engaging captions for various social media platforms based on a given topic',
+                    'fr' => 'Générez des légendes attrayantes pour diverses plateformes de médias sociaux en fonction d\'un sujet donné',
+                    'hi' => 'दिए गए विषय के आधार पर विभिन्न सोशल मीडिया प्लेटफ़ॉर्म के लिए आकर्षक कैप्शन तैयार करें',
+                    'ja' => '与えられたトピックに基づいて、様々なソーシャルメディアプラットフォーム用の魅力的なキャプションを生成します',
+                    'ko' => '주어진 주제를 바탕으로 다양한 소셜 미디어 플랫폼을 위한 매력적인 캡션을 생성합니다',
+                    'pt' => 'Gere legendas envolventes para várias plataformas de mídia social com base em um tópico específico',
+                    'th' => 'สร้างคำบรรยายที่น่าสนใจสำหรับแพลตฟอร์มโซเชียลมีเดียต่างๆ ตามหัวข้อที่กำหนด',
+                    'tl' => 'Bumuo ng nakaka-engganyong mga caption para sa iba\'t ibang platform ng social media batay sa isang ibinigay na paksa',
+                    'zh' => '根据给定主题为各种社交媒体平台生成引人入胜的说明文',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -964,23 +1185,67 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "topic_keyword",
-                                "description" => "Enter the main topic or keyword for the caption",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Hauptthema oder Schlüsselwort für die Bildunterschrift ein',
+                                    'en' => 'Enter the main topic or keyword for the caption',
+                                    'fr' => 'Saisissez le sujet principal ou le mot-clé pour la légende',
+                                    'hi' => 'कैप्शन के लिए मुख्य विषय या कीवर्ड दर्ज करें',
+                                    'ja' => 'キャプションのメインテーマまたはキーワードを入力してください',
+                                    'ko' => '캡션의 주요 주제 또는 키워드를 입력하세요',
+                                    'pt' => 'Digite o tópico principal ou palavra-chave para a legenda',
+                                    'th' => 'ป้อนหัวข้อหลักหรือคำสำคัญสำหรับคำบรรยาย',
+                                    'tl' => 'Ilagay ang pangunahing paksa o keyword para sa caption',
+                                    'zh' => '输入说明文的主要主题或关键词',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
                             ],
                             [
                                 "label" => "sns",
-                                "description" => "Please select the SNS you want to upload to",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Bitte wählen Sie das soziale Netzwerk aus, auf das Sie hochladen möchten',
+                                    'en' => 'Please select the SNS you want to upload to',
+                                    'fr' => 'Veuillez sélectionner le réseau social sur lequel vous souhaitez publier',
+                                    'hi' => 'कृपया वह सोशल नेटवर्क चुनें जहां आप अपलोड करना चाहते हैं',
+                                    'ja' => 'アップロードしたいSNSを選択してください',
+                                    'ko' => '업로드하고 싶은 SNS를 선택해 주세요',
+                                    'pt' => 'Por favor, selecione a rede social para a qual deseja fazer o upload',
+                                    'th' => 'โปรดเลือกโซเชียลมีเดียที่คุณต้องการอัปโหลด',
+                                    'tl' => 'Mangyaring piliin ang SNS na gusto mong i-upload',
+                                    'zh' => '请选择您想要上传的社交网络',
+                                ]),
                                 "type" => "radio",
                                 "options" => "LinkedIn, Facebook, Instagram, Threads, Twitter(X), Tumblr, TikTok",
                                 "file_type" => null
                             ],
                             [
                                 "label" => "tone",
-                                "description" => "Select the tone for your content",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie den Ton für Ihren Inhalt aus',
+                                    'en' => 'Select the tone for your content',
+                                    'fr' => 'Sélectionnez le ton pour votre contenu',
+                                    'hi' => 'अपनी सामग्री के लिए टोन का चयन करें',
+                                    'ja' => 'コンテンツのトーンを選択してください',
+                                    'ko' => '콘텐츠의 톤을 선택하세요',
+                                    'pt' => 'Selecione o tom para o seu conteúdo',
+                                    'th' => 'เลือกโทนเสียงสำหรับเนื้อหาของคุณ',
+                                    'tl' => 'Piliin ang tono para sa iyong nilalaman',
+                                    'zh' => '选择您内容的语气',
+                                ]),
                                 "type" => "radio",
-                                "options" => "General, Formal, Friendly, Critical, Humorous, Inspirational",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Allgemein, Formal, Freundlich, Kritisch, Humorvoll, Inspirierend, Professionell, Sachlich, Kreativ, Überzeugend',
+                                    'en' => 'General, Formal, Friendly, Critical, Humorous, Inspirational, Professional, Neutral, Creative, Persuasive',
+                                    'fr' => 'Général, Formel, Amical, Critique, Humoristique, Inspirant, Professionnel, Neutre, Créatif, Persuasif',
+                                    'hi' => 'सामान्य, औपचारिक, मैत्रीपूर्ण, आलोचनात्मक, हास्यपूर्ण, प्रेरणादायक, पेशेवर, तटस्थ, रचनात्मक, प्रेरक',
+                                    'ja' => '一般, フォーマル, フレンドリー, 批判的, ユーモラス, インスピレーショナル, プロフェッショナル, 中立的, クリエイティブ, 説得力のある',
+                                    'ko' => '일반, 공식적인, 친근한, 비판적인, 유머러스한, 영감을 주는, 전문적인, 중립적인, 창의적인, 설득력 있는',
+                                    'pt' => 'Geral, Formal, Amigável, Crítico, Humorístico, Inspirador, Profissional, Neutro, Criativo, Persuasivo',
+                                    'th' => 'ทั่วไป, เป็นทางการ, เป็นมิตร, วิพากษ์วิจารณ์, ตลกขบขัน, สร้างแรงบันดาลใจ, เป็นมืออาชีพ, เป็นกลาง, สร้างสรรค์, โน้มน้าวใจ',
+                                    'tl' => 'Pangkalahatan, Pormal, Magiliw, Kritikal, Nakakatawa, Nakaka-inspire, Propesyonal, Walang kinikilingan, Malikhain, Mapanghikayat',
+                                    'zh' => '通用, 正式, 友好, 批判, 幽默, 鼓舞人心, 专业, 中性, 创意, 说服力',
+                                ]),
                                 "file_type" => null
                             ]
                         ]
@@ -1065,8 +1330,30 @@ Context
                 'updated_at' => now(),
             ], 
             [
-                'name' => 'Email Response Generator',
-                'description' => 'Email context input > Strategic analysis > Tailored email response generation',
+              'name' => $this->getLocalizedText([
+                    'de' => 'E-Mail-Antwort-Generator',
+                    'en' => 'Email Response Generator',
+                    'fr' => 'Générateur de réponses par e-mail',
+                    'hi' => 'ईमेल प्रतिक्रिया जनरेटर',
+                    'ja' => 'メール返信生成ツール',
+                    'ko' => '이메일 응답 생성기',
+                    'pt' => 'Gerador de Respostas de E-mail',
+                    'th' => 'เครื่องมือสร้างการตอบกลับอีเมล',
+                    'tl' => 'Tagabuo ng Tugon sa Email',
+                    'zh' => '电子邮件回复生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'E-Mail-Kontext-Eingabe > Strategische Analyse > Maßgeschneiderte E-Mail-Antwort-Generierung',
+                    'en' => 'Email context input > Strategic analysis > Tailored email response generation',
+                    'fr' => 'Saisie du contexte de l\'e-mail > Analyse stratégique > Génération de réponse e-mail personnalisée',
+                    'hi' => 'ईमेल संदर्भ इनपुट > रणनीतिक विश्लेषण > अनुकूलित ईमेल प्रतिक्रिया उत्पादन',
+                    'ja' => 'メールコンテキスト入力 > 戦略的分析 > カスタマイズされたメール返信生成',
+                    'ko' => '이메일 맥락 입력 > 전략적 분석 > 맞춤형 이메일 응답 생성',
+                    'pt' => 'Entrada de contexto do e-mail > Análise estratégica > Geração de resposta de e-mail personalizada',
+                    'th' => 'ป้อนบริบทอีเมล > การวิเคราะห์เชิงกลยุทธ์ > การสร้างการตอบกลับอีเมลที่ปรับแต่ง',
+                    'tl' => 'Input ng konteksto ng email > Estratehikong pagsusuri > Paggawa ng naka-customize na tugon sa email',
+                    'zh' => '电子邮件上下文输入 > 策略分析 > 定制电子邮件回复生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1075,21 +1362,54 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "sender",
-                                "description" => "Name of the person or service sending the reply",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Name der Person oder des Dienstes, der die Antwort sendet',
+                                    'en' => 'Name of the person or service sending the reply',
+                                    'fr' => 'Nom de la personne ou du service qui envoie la réponse',
+                                    'hi' => 'उत्तर भेजने वाले व्यक्ति या सेवा का नाम',
+                                    'ja' => '返信を送信する人物またはサービスの名前',
+                                    'ko' => '답장을 보내는 사람 또는 서비스의 이름',
+                                    'pt' => 'Nome da pessoa ou serviço que está enviando a resposta',
+                                    'th' => 'ชื่อของบุคคลหรือบริการที่ส่งการตอบกลับ',
+                                    'tl' => 'Pangalan ng tao o serbisyo na nagpapadala ng tugon',
+                                    'zh' => '发送回复的人员或服务的名称',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
                             ],
                             [
                                 "label" => "recipient",
-                                "description" => "Name of the person or service receiving the reply",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Name der Person oder des Dienstes, der die Antwort erhält',
+                                    'en' => 'Name of the person or service receiving the reply',
+                                    'fr' => 'Nom de la personne ou du service qui reçoit la réponse',
+                                    'hi' => 'उत्तर प्राप्त करने वाले व्यक्ति या सेवा का नाम',
+                                    'ja' => '返信を受け取る人物またはサービスの名前',
+                                    'ko' => '답장을 받는 사람 또는 서비스의 이름',
+                                    'pt' => 'Nome da pessoa ou serviço que está recebendo a resposta',
+                                    'th' => 'ชื่อของบุคคลหรือบริการที่รับการตอบกลับ',
+                                    'tl' => 'Pangalan ng tao o serbisyo na tumatanggap ng tugon',
+                                    'zh' => '接收回复的人员或服务的名称',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
                             ],
                             [
                                 "label" => "email_content",
-                                "description" => "Content of the original email to be replied to",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Inhalt der ursprünglichen E-Mail, auf die geantwortet werden soll',
+                                    'en' => 'Content of the original email to be replied to',
+                                    'fr' => 'Contenu de l\'e-mail original auquel il faut répondre',
+                                    'hi' => 'मूल ईमेल का विषय जिसका जवाब दिया जाना है',
+                                    'ja' => '返信する元のメールの内容',
+                                    'ko' => '답장할 원본 이메일의 내용',
+                                    'pt' => 'Conteúdo do e-mail original a ser respondido',
+                                    'th' => 'เนื้อหาของอีเมลต้นฉบับที่จะตอบกลับ',
+                                    'tl' => 'Nilalaman ng orihinal na email na sasagutin',
+                                    'zh' => '需要回复的原始电子邮件内容',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -1125,8 +1445,30 @@ Context
             ],
             // 요약
             [
-                'name' => 'PDF Document Summarizer',
-                'description' => 'PDF document input > Comprehensive summary generation with key points and explanations',
+                'name' => $this->getLocalizedText([
+                    'de' => 'PDF-Dokument-Zusammenfasser',
+                    'en' => 'PDF Document Summarizer',
+                    'fr' => 'Résumeur de documents PDF',
+                    'hi' => 'पीडीएफ दस्तावेज़ सारांशक',
+                    'ja' => 'PDF文書要約ツール',
+                    'ko' => 'PDF 문서 요약기',
+                    'pt' => 'Resumidor de Documentos PDF',
+                    'th' => 'เครื่องมือสรุปเอกสาร PDF',
+                    'tl' => 'Tagabuod ng Dokumentong PDF',
+                    'zh' => 'PDF文档摘要生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'PDF-Dokument-Eingabe > Umfassende Zusammenfassungsgenerierung mit Kernpunkten und Erklärungen',
+                    'en' => 'PDF document input > Comprehensive summary generation with key points and explanations',
+                    'fr' => 'Saisie de document PDF > Génération de résumé complet avec points clés et explications',
+                    'hi' => 'पीडीएफ दस्तावेज़ इनपुट > मुख्य बिंदुओं और व्याख्याओं के साथ व्यापक सारांश उत्पादन',
+                    'ja' => 'PDF文書入力 > 要点と説明を含む包括的な要約生成',
+                    'ko' => 'PDF 문서 입력 > 주요 포인트와 설명이 포함된 종합적인 요약 생성',
+                    'pt' => 'Entrada de documento PDF > Geração de resumo abrangente com pontos-chave e explicações',
+                    'th' => 'ป้อนเอกสาร PDF > การสร้างสรุปที่ครอบคลุมพร้อมประเด็นสำคัญและคำอธิบาย',
+                    'tl' => 'Input ng dokumentong PDF > Komprehensibong paggawa ng buod na may pangunahing punto at paliwanag',
+                    'zh' => 'PDF文档输入 > 生成包含关键点和解释的综合摘要',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1135,7 +1477,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "file",
-                                "description" => "Upload the PDF document to be summarized",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Laden Sie das zu zusammenfassende PDF-Dokument hoch',
+                                    'en' => 'Upload the PDF document to be summarized',
+                                    'fr' => 'Téléchargez le document PDF à résumer',
+                                    'hi' => 'सारांश किए जाने वाले पीडीएफ दस्तावेज़ को अपलोड करें',
+                                    'ja' => '要約するPDF文書をアップロードしてください',
+                                    'ko' => '요약할 PDF 문서를 업로드하세요',
+                                    'pt' => 'Faça o upload do documento PDF a ser resumido',
+                                    'th' => 'อัปโหลดเอกสาร PDF ที่ต้องการสรุป',
+                                    'tl' => 'I-upload ang dokumentong PDF na bubuuin',
+                                    'zh' => '上传需要摘要的PDF文档',
+                                ]),
                                 "type" => "file",
                                 "options" => null,
                                 "file_type" => "document"
@@ -1192,8 +1545,30 @@ Context
                 'updated_at' => now(),
             ],
             [
-                'name' => 'PPT Document Summarizer',
-                'description' => 'PPT document input > Comprehensive summary generation with key points and explanations',
+                'name' => $this->getLocalizedText([
+                    'de' => 'PPT-Dokument-Zusammenfasser',
+                    'en' => 'PPT Document Summarizer',
+                    'fr' => 'Résumeur de documents PPT',
+                    'hi' => 'PPT दस्तावेज़ सारांश',
+                    'ja' => 'PPT文書要約ツール',
+                    'ko' => 'PPT 문서 요약기',
+                    'pt' => 'Resumidor de Documentos PPT',
+                    'th' => 'เครื่องมือสรุปเอกสาร PPT',
+                    'tl' => 'Tagabuod ng Dokumentong PPT',
+                    'zh' => 'PPT文档摘要生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'PPT-Dokument-Eingabe > Umfassende Zusammenfassungsgenerierung mit Kernpunkten und Erklärungen',
+                    'en' => 'PPT document input > Comprehensive summary generation with key points and explanations',
+                    'fr' => 'Saisie de document PPT > Génération de résumé complet avec points clés et explications',
+                    'hi' => 'पीपीटी दस्तावेज़ इनपुट > प्रमुख बिंदुओं और स्पष्टीकरणों के साथ व्यापक सारांश उत्पादन',
+                    'ja' => 'PPT文書入力 > 要点と説明を含む包括的な要約生成',
+                    'ko' => 'PPT 문서 입력 > 주요 포인트와 설명이 포함된 종합적인 요약 생성',
+                    'pt' => 'Entrada de documento PPT > Geração de resumo abrangente com pontos-chave e explicações',
+                    'th' => 'ป้อนเอกสาร PPT > การสร้างสรุปที่ครอบคลุมพร้อมประเด็นสำคัญและคำอธิบาย',
+                    'tl' => 'Input ng dokumentong PPT > Komprehensibong paggawa ng buod na may pangunahing punto at paliwanag',
+                    'zh' => 'PPT文档输入 > 生成包含关键点和解释的综合摘要',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1202,7 +1577,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "file",
-                                "description" => "Upload the PPT document to be summarized",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Laden Sie das zu zusammenfassende PPT-Dokument hoch',
+                                    'en' => 'Upload the PPT document to be summarized',
+                                    'fr' => 'Téléchargez le document PPT à résumer',
+                                    'hi' => 'सारांशित करने के लिए PPT दस्तावेज अपलोड करें',
+                                    'ja' => '要約するPPT文書をアップロードしてください',
+                                    'ko' => '요약할 PPT 문서를 업로드하세요',
+                                    'pt' => 'Faça o upload do documento PPT a ser resumido',
+                                    'th' => 'อัปโหลดเอกสาร PPT ที่ต้องการสรุป',
+                                    'tl' => 'I-upload ang dokumentong PPT na bubuuin',
+                                    'zh' => '上传需要摘要的PPT文档',
+                                ]),
                                 "type" => "file",
                                 "options" => null,
                                 "file_type" => "presentation"
@@ -1259,8 +1645,30 @@ Context
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Audio Summarizer',
-                'description' => 'Audio file input > Comprehensive summary generation with key points and explanations',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Audio-Zusammenfasser',
+                    'en' => 'Audio Summarizer',
+                    'fr' => 'Résumeur Audio',
+                    'hi' => 'ऑडियो सारांशक',
+                    'ja' => '音声要約ツール',
+                    'ko' => '오디오 요약기',
+                    'pt' => 'Resumidor de Áudio',
+                    'th' => 'เครื่องมือสรุปเสียง',
+                    'tl' => 'Tagabuod ng Audio',
+                    'zh' => '音频摘要生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Audiodatei-Eingabe > Umfassende Zusammenfassungsgenerierung mit Kernpunkten und Erklärungen',
+                    'en' => 'Audio file input > Comprehensive summary generation with key points and explanations',
+                    'fr' => 'Entrée de fichier audio > Génération de résumé complet avec points clés et explications',
+                    'hi' => 'ऑडियो फ़ाइल इनपुट > मुख्य बिंदुओं और व्याख्याओं के साथ व्यापक सारांश उत्पादन',
+                    'ja' => '音声ファイル入力 > 要点と説明を含む包括的な要約生成',
+                    'ko' => '오디오 파일 입력 > 주요 포인트와 설명이 포함된 종합적인 요약 생성',
+                    'pt' => 'Entrada de arquivo de áudio > Geração de resumo abrangente com pontos-chave e explicações',
+                    'th' => 'ป้อนไฟล์เสียง > การสร้างสรุปที่ครอบคลุมพร้อมประเด็นสำคัญและคำอธิบาย',
+                    'tl' => 'Input ng file ng audio > Komprehensibong paggawa ng buod na may pangunahing punto at paliwanag',
+                    'zh' => '音频文件输入 > 生成包含关键点和解释的综合摘要',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1269,7 +1677,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "file",
-                                "description" => "Upload the audio file to be summarized",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Laden Sie die zu zusammenfassende Audiodatei hoch',
+                                    'en' => 'Upload the audio file to be summarized',
+                                    'fr' => 'Téléchargez le fichier audio à résumer',
+                                    'hi' => 'सारांश किए जाने वाली ऑडियो फ़ाइल अपलोड करें',
+                                    'ja' => '要約する音声ファイルをアップロードしてください',
+                                    'ko' => '요약할 오디오 파일을 업로드하세요',
+                                    'pt' => 'Faça o upload do arquivo de áudio a ser resumido',
+                                    'th' => 'อัปโหลดไฟล์เสียงที่ต้องการสรุป',
+                                    'tl' => 'I-upload ang file ng audio na bubuuin',
+                                    'zh' => '上传需要摘要的音频文件',
+                                ]),
                                 "type" => "file",
                                 "options" => null,
                                 "file_type" => "audio"
@@ -1329,8 +1748,30 @@ Context
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Audio Meeting Minutes Generator',
-                'description' => 'Audio file input > Comprehensive meeting minutes generation with key points, action items, and conclusions',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Audio-Besprechungsprotokoll-Generator',
+                    'en' => 'Audio Meeting Minutes Generator',
+                    'fr' => 'Générateur de Procès-verbal Audio de Réunion',
+                    'hi' => 'ऑडियो बैठक कार्यवृत्त जनरेटर',
+                    'ja' => '音声会議議事録生成ツール',
+                    'ko' => '오디오 회의록 생성기',
+                    'pt' => 'Gerador de Atas de Reunião em Áudio',
+                    'th' => 'เครื่องมือสร้างรายงานการประชุมจากไฟล์เสียง',
+                    'tl' => 'Tagabuo ng Minutas ng Pulong mula sa Audio',
+                    'zh' => '音频会议纪要生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Audiodatei-Eingabe > Umfassende Generierung von Besprechungsprotokollen mit Kernpunkten, Aktionspunkten und Schlussfolgerungen',
+                    'en' => 'Audio file input > Comprehensive meeting minutes generation with key points, action items, and conclusions',
+                    'fr' => 'Entrée de fichier audio > Génération complète de procès-verbal de réunion avec points clés, actions à mener et conclusions',
+                    'hi' => 'ऑडियो फ़ाइल इनपुट > मुख्य बिंदुओं, कार्य वस्तुओं और निष्कर्षों के साथ व्यापक बैठक कार्यवृत्त उत्पादन',
+                    'ja' => '音声ファイル入力 > 主要ポイント、アクションアイテム、結論を含む包括的な会議議事録の生成',
+                    'ko' => '오디오 파일 입력 > 주요 포인트, 액션 아이템 및 결론이 포함된 종합적인 회의록 생성',
+                    'pt' => 'Entrada de arquivo de áudio > Geração abrangente de atas de reunião com pontos-chave, itens de ação e conclusões',
+                    'th' => 'ป้อนไฟล์เสียง > การสร้างรายงานการประชุมที่ครอบคลุมพร้อมประเด็นสำคัญ รายการที่ต้องดำเนินการ และข้อสรุป',
+                    'tl' => 'Input ng file ng audio > Komprehensibong paggawa ng minutas ng pulong na may pangunahing punto, mga bagay na dapat gawin, at konklusyon',
+                    'zh' => '音频文件输入 > 生成包含关键点、行动项目和结论的综合会议纪要',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1339,7 +1780,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "file",
-                                "description" => "Upload the audio file of the meeting to be analyzed",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Laden Sie die zu analysierende Audiodatei der Besprechung hoch',
+                                    'en' => 'Upload the audio file of the meeting to be analyzed',
+                                    'fr' => 'Téléchargez le fichier audio de la réunion à analyser',
+                                    'hi' => 'विश्लेषण के लिए बैठक की ऑडियो फ़ाइल अपलोड करें',
+                                    'ja' => '分析する会議の音声ファイルをアップロードしてください',
+                                    'ko' => '회의록을 생성할 미팅 오디오 파일을 업로드하세요',
+                                    'pt' => 'Faça o upload do arquivo de áudio da reunião a ser analisada',
+                                    'th' => 'อัปโหลดไฟล์เสียงของการประชุมที่ต้องการวิเคราะห์',
+                                    'tl' => 'I-upload ang file ng audio ng pulong na susuriin',
+                                    'zh' => '上传需要分析的会议音频文件',
+                                ]),
                                 "type" => "file",
                                 "options" => null,
                                 "file_type" => "audio"
@@ -1402,8 +1854,30 @@ Context
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Web Page Summarizer',
-                'description' => 'URL input > Web page scraping > Comprehensive summary generation with key points and analysis',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Webseiten-Zusammenfasser',
+                    'en' => 'Web Page Summarizer',
+                    'fr' => 'Résumeur de Page Web',
+                    'hi' => 'वेब पेज सारांशक',
+                    'ja' => 'ウェブページ要約ツール',
+                    'ko' => '웹 페이지 요약기',
+                    'pt' => 'Resumidor de Página Web',
+                    'th' => 'เครื่องมือสรุปหน้าเว็บ',
+                    'tl' => 'Tagabuod ng Webpage',
+                    'zh' => '网页摘要生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'URL-Eingabe > Webseiten-Scraping > Umfassende Zusammenfassungsgenerierung mit Kernpunkten und Analyse',
+                    'en' => 'URL input > Web page scraping > Comprehensive summary generation with key points and analysis',
+                    'fr' => 'Saisie d\'URL > Extraction de page Web > Génération de résumé complet avec points clés et analyse',
+                    'hi' => 'URL इनपुट > वेब पेज स्क्रैपिंग > मुख्य बिंदुओं और विश्लेषण के साथ व्यापक सारांश उत्पादन',
+                    'ja' => 'URL入力 > ウェブページスクレイピング > 要点と分析を含む包括的な要約生成',
+                    'ko' => 'URL 입력 > 웹 페이지 스크래핑 > 주요 포인트와 분석이 포함된 종합적인 요약 생성',
+                    'pt' => 'Entrada de URL > Raspagem de página web > Geração de resumo abrangente com pontos-chave e análise',
+                    'th' => 'ป้อน URL > การดึงข้อมูลหน้าเว็บ > การสร้างสรุปที่ครอบคลุมพร้อมประเด็นสำคัญและการวิเคราะห์',
+                    'tl' => 'Input ng URL > Pag-scrape ng webpage > Komprehensibong paggawa ng buod na may pangunahing punto at pagsusuri',
+                    'zh' => 'URL输入 > 网页抓取 > 生成包含关键点和分析的综合摘要',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1412,7 +1886,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "url",
-                                "description" => "Enter the URL of the web page to be summarized",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie die URL der zusammenzufassenden Webseite ein',
+                                    'en' => 'Enter the URL of the web page to be summarized',
+                                    'fr' => 'Saisissez l\'URL de la page web à résumer',
+                                    'hi' => 'सारांश किए जाने वाले वेब पेज का URL दर्ज करें',
+                                    'ja' => '要約するウェブページのURLを入力してください',
+                                    'ko' => '요약할 웹 페이지의 URL을 입력하세요',
+                                    'pt' => 'Digite o URL da página web a ser resumida',
+                                    'th' => 'ป้อน URL ของหน้าเว็บที่ต้องการสรุป',
+                                    'tl' => 'Ilagay ang URL ng webpage na bubuuin',
+                                    'zh' => '输入需要摘要的网页URL',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                             ]
@@ -1480,8 +1965,30 @@ Context
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Web Page Content Regenerator',
-                'description' => 'URL input > Web page scraping > High-quality content regeneration based on scraped content',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Webseiten-Inhalts-Regenerator',
+                    'en' => 'Web Page Content Regenerator',
+                    'fr' => 'Régénérateur de Contenu de Page Web',
+                    'hi' => 'वेब पेज सामग्री पुनर्जनक',
+                    'ja' => 'ウェブページコンテンツ再生成ツール',
+                    'ko' => '웹 페이지 콘텐츠 재생성기',
+                    'pt' => 'Regenerador de Conteúdo de Página Web',
+                    'th' => 'เครื่องมือสร้างเนื้อหาหน้าเว็บใหม่',
+                    'tl' => 'Tagabuo Muli ng Nilalaman ng Webpage',
+                    'zh' => '网页内容重生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'URL-Eingabe > Webseiten-Scraping > Hochwertige Inhaltsregenerierung basierend auf gescrapten Inhalten',
+                    'en' => 'URL input > Web page scraping > High-quality content regeneration based on scraped content',
+                    'fr' => 'Saisie d\'URL > Extraction de page Web > Régénération de contenu de haute qualité basée sur le contenu extrait',
+                    'hi' => 'URL इनपुट > वेब पेज स्क्रैपिंग > स्क्रैप की गई सामग्री के आधार पर उच्च-गुणवत्ता वाली सामग्री पुनर्जनन',
+                    'ja' => 'URL入力 > ウェブページスクレイピング > スクレイピングされたコンテンツに基づく高品質なコンテンツの再生成',
+                    'ko' => 'URL 입력 > 웹 페이지 스크래핑 > 스크래핑된 콘텐츠를 기반으로 한 고품질 콘텐츠 재생성',
+                    'pt' => 'Entrada de URL > Raspagem de página web > Regeneração de conteúdo de alta qualidade baseada no conteúdo raspado',
+                    'th' => 'ป้อน URL > การดึงข้อมูลหน้าเว็บ > การสร้างเนื้อหาคุณภาพสูงใหม่บนพื้นฐานของเนื้อหาที่ดึงมา',
+                    'tl' => 'Input ng URL > Pag-scrape ng webpage > Muling paggawa ng mataas na kalidad na nilalaman batay sa na-scrape na content',
+                    'zh' => 'URL输入 > 网页抓取 > 基于抓取内容的高质量内容重新生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1490,7 +1997,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "url",
-                                "description" => "Enter the URL of the web page to be used as a basis for content regeneration",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie die URL der Webseite ein, die als Grundlage für die Inhaltsregenerierung verwendet werden soll',
+                                    'en' => 'Enter the URL of the web page to be used as a basis for content regeneration',
+                                    'fr' => 'Saisissez l\'URL de la page web à utiliser comme base pour la régénération de contenu',
+                                    'hi' => 'सामग्री पुनर्जनन के लिए आधार के रूप में उपयोग किए जाने वाले वेब पेज का URL दर्ज करें',
+                                    'ja' => 'コンテンツ再生成の基礎として使用するウェブページのURLを入力してください',
+                                    'ko' => '콘텐츠 재생성의 기반으로 사용될 웹 페이지의 URL을 입력하세요',
+                                    'pt' => 'Digite o URL da página web a ser usada como base para a regeneração de conteúdo',
+                                    'th' => 'ป้อน URL ของหน้าเว็บที่จะใช้เป็นพื้นฐานสำหรับการสร้างเนื้อหาใหม่',
+                                    'tl' => 'Ilagay ang URL ng webpage na gagamitin bilang batayan para sa muling paggawa ng nilalaman',
+                                    'zh' => '输入作为内容重新生成基础的网页URL',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                             ]
@@ -1599,8 +2117,30 @@ Context
             ],
             // UI/UX
             [
-                'name' => '[image-to-code] UI/UX Code Generator',
-                'description' => 'Image input > Generate UI/UX code using Tailwind CSS based on the uploaded image',
+                'name' => $this->getLocalizedText([
+                    'de' => '[Bild-zu-Code] UI/UX-Code-Generator',
+                    'en' => '[image-to-code] UI/UX Code Generator',
+                    'fr' => 'Générateur de Code UI/UX [image-vers-code]',
+                    'hi' => '[छवि-से-कोड] UI/UX कोड जनरेटर',
+                    'ja' => '[画像からコード] UI/UXコードジェネレーター',
+                    'ko' => '[이미지-코드 변환] UI/UX 코드 생성기',
+                    'pt' => 'Gerador de Código UI/UX [imagem-para-código]',
+                    'th' => 'เครื่องมือสร้างโค้ด UI/UX [รูปภาพเป็นโค้ด]',
+                    'tl' => 'Tagabuo ng Code ng UI/UX [larawan-patungong-code]',
+                    'zh' => '[图像转代码] UI/UX代码生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Bildeingabe > Generierung von UI/UX-Code mit Tailwind CSS basierend auf dem hochgeladenen Bild',
+                    'en' => 'Image input > Generate UI/UX code using Tailwind CSS based on the uploaded image',
+                    'fr' => 'Entrée d\'image > Génération de code UI/UX utilisant Tailwind CSS basé sur l\'image téléchargée',
+                    'hi' => 'छवि इनपुट > अपलोड की गई छवि के आधार पर Tailwind CSS का उपयोग करके UI/UX कोड उत्पन्न करें',
+                    'ja' => '画像入力 > アップロードされた画像に基づいてTailwind CSSを使用してUI/UXコードを生成',
+                    'ko' => '이미지 입력 > 업로드된 이미지를 바탕으로 Tailwind CSS를 사용하여 UI/UX 코드 생성',
+                    'pt' => 'Entrada de imagem > Gerar código UI/UX usando Tailwind CSS com base na imagem carregada',
+                    'th' => 'ป้อนรูปภาพ > สร้างโค้ด UI/UX โดยใช้ Tailwind CSS ตามรูปภาพที่อัปโหลด',
+                    'tl' => 'Input ng larawan > Bumuo ng code ng UI/UX gamit ang Tailwind CSS batay sa na-upload na larawan',
+                    'zh' => '图像输入 > 基于上传的图像使用Tailwind CSS生成UI/UX代码',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1609,7 +2149,18 @@ Context
                         "input_fields" => [
                             [
                                 "label" => "file",
-                                "description" => "Upload the image of the UI/UX design",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Laden Sie das Bild des UI/UX-Designs hoch',
+                                    'en' => 'Upload the image of the UI/UX design',
+                                    'fr' => 'Téléchargez l\'image du design UI/UX',
+                                    'hi' => 'UI/UX डिज़ाइन की छवि अपलोड करें',
+                                    'ja' => 'UI/UXデザインの画像をアップロードしてください',
+                                    'ko' => 'UI/UX 디자인의 이미지를 업로드하세요',
+                                    'pt' => 'Faça o upload da imagem do design UI/UX',
+                                    'th' => 'อัปโหลดรูปภาพของการออกแบบ UI/UX',
+                                    'tl' => 'I-upload ang larawan ng disenyo ng UI/UX',
+                                    'zh' => '上传UI/UX设计的图像',
+                                ]),
                                 "type" => "file",
                                 "options" => null,
                                 "file_type" => "image"
@@ -1622,34 +2173,34 @@ Context
                         "uuid" => $generateUuid(),
                         "prompt" => "Analyze the uploaded image of a UI/UX design and generate only the corresponding HTML code using Tailwind CSS classes to recreate this design. Follow these guidelines:
 
-1. Generate a complete HTML structure including <!DOCTYPE html>, <html>, <head>, and <body> tags.
+                            1. Generate a complete HTML structure including <!DOCTYPE html>, <html>, <head>, and <body> tags.
 
-2. In the <head> section:
-   - Include a meta viewport tag for responsiveness.
-   - Link to the Tailwind CSS CDN.
-   - If necessary, include a <style> tag for any custom styles using @apply directives.
+                            2. In the <head> section:
+                            - Include a meta viewport tag for responsiveness.
+                            - Link to the Tailwind CSS CDN.
+                            - If necessary, include a <style> tag for any custom styles using @apply directives.
 
-3. In the <body> section:
-   - Use semantic HTML5 tags where appropriate (e.g., <header>, <nav>, <main>, <footer>).
-   - Apply Tailwind utility classes for all styling, including layout, spacing, colors, typography, and responsive design.
-   - Implement a mobile-first responsive design approach using Tailwind's responsive prefixes (sm:, md:, lg:, xl:).
-   - Ensure the layout closely matches the uploaded image, including positioning, sizing, and overall structure.
+                            3. In the <body> section:
+                            - Use semantic HTML5 tags where appropriate (e.g., <header>, <nav>, <main>, <footer>).
+                            - Apply Tailwind utility classes for all styling, including layout, spacing, colors, typography, and responsive design.
+                            - Implement a mobile-first responsive design approach using Tailwind's responsive prefixes (sm:, md:, lg:, xl:).
+                            - Ensure the layout closely matches the uploaded image, including positioning, sizing, and overall structure.
 
-4. Color and Typography:
-   - Use Tailwind's color classes that most closely match the colors in the image.
-   - Apply appropriate text styles (size, weight, line height) using Tailwind classes to match the design.
+                            4. Color and Typography:
+                            - Use Tailwind's color classes that most closely match the colors in the image.
+                            - Apply appropriate text styles (size, weight, line height) using Tailwind classes to match the design.
 
-5. For any necessary interactive elements visible in the image:
-   - Include minimal JavaScript within a <script> tag at the end of the <body> section.
-   - Use vanilla JavaScript or Alpine.js (linked via CDN if used) for simplicity.
+                            5. For any necessary interactive elements visible in the image:
+                            - Include minimal JavaScript within a <script> tag at the end of the <body> section.
+                            - Use vanilla JavaScript or Alpine.js (linked via CDN if used) for simplicity.
 
-6. Add brief comments only where absolutely necessary to explain complex structures or functionality that may not be immediately obvious from the HTML structure alone.
+                            6. Add brief comments only where absolutely necessary to explain complex structures or functionality that may not be immediately obvious from the HTML structure alone.
 
-7. Ensure the code is well-structured, properly indented, and follows current HTML5 and Tailwind CSS best practices.
+                            7. Ensure the code is well-structured, properly indented, and follows current HTML5 and Tailwind CSS best practices.
 
-8. The output should be solely the HTML code, without any additional explanations, summaries, or suggestions outside of the HTML structure.
+                            8. The output should be solely the HTML code, without any additional explanations, summaries, or suggestions outside of the HTML structure.
 
-Generate only the HTML code with Tailwind CSS classes based on the uploaded UI/UX design image, aiming to recreate the visual design as accurately as possible.",
+                            Generate only the HTML code with Tailwind CSS classes based on the uploaded UI/UX design image, aiming to recreate the visual design as accurately as possible.",
                         "background_information" => "You are an expert front-end developer and UI/UX specialist with extensive experience in Tailwind CSS. Your skills include a deep understanding of HTML5, CSS3, modern JavaScript, and you're particularly adept at leveraging Tailwind's utility-first approach to rapidly build custom designs. You have a keen eye for design details and can efficiently translate complex layouts and interactions into Tailwind classes. Your code is always clean, well-commented, and follows best practices for performance, accessibility, and responsive design. You're also familiar with current web design trends and can suggest modern alternatives or improvements to older design patterns when appropriate, always within the context of Tailwind CSS.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -1662,8 +2213,30 @@ Generate only the HTML code with Tailwind CSS classes based on the uploaded UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => '[text-to-code] UI/UX Code Generator',
-                'description' => 'Text description input > Generate UI/UX HTML code using Tailwind CSS based on the provided description',
+                'name' => $this->getLocalizedText([
+                    'de' => '[Text-zu-Code] UI/UX-Code-Generator',
+                    'en' => '[text-to-code] UI/UX Code Generator',
+                    'fr' => 'Générateur de Code UI/UX [texte-vers-code]',
+                    'hi' => '[पाठ-से-कोड] UI/UX कोड जनरेटर',
+                    'ja' => '[テキストからコード] UI/UXコードジェネレーター',
+                    'ko' => '[텍스트-코드 변환] UI/UX 코드 생성기',
+                    'pt' => 'Gerador de Código UI/UX [texto-para-código]',
+                    'th' => 'เครื่องมือสร้างโค้ด UI/UX [ข้อความเป็นโค้ด]',
+                    'tl' => 'Tagabuo ng Code ng UI/UX [teksto-patungong-code]',
+                    'zh' => '[文本转代码] UI/UX代码生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Texteingabe der Beschreibung > Generierung von UI/UX HTML-Code mit Tailwind CSS basierend auf der bereitgestellten Beschreibung',
+                    'en' => 'Text description input > Generate UI/UX HTML code using Tailwind CSS based on the provided description',
+                    'fr' => 'Saisie de la description textuelle > Génération de code HTML UI/UX utilisant Tailwind CSS basé sur la description fournie',
+                    'hi' => 'पाठ विवरण इनपुट > प्रदान किए गए विवरण के आधार पर Tailwind CSS का उपयोग करके UI/UX HTML कोड उत्पन्न करें',
+                    'ja' => 'テキスト説明入力 > 提供された説明に基づいてTailwind CSSを使用してUI/UX HTMLコードを生成',
+                    'ko' => '텍스트 설명 입력 > 제공된 설명을 바탕으로 Tailwind CSS를 사용하여 UI/UX HTML 코드 생성',
+                    'pt' => 'Entrada de descrição de texto > Gerar código HTML UI/UX usando Tailwind CSS com base na descrição fornecida',
+                    'th' => 'ป้อนคำอธิบายเป็นข้อความ > สร้างโค้ด HTML UI/UX โดยใช้ Tailwind CSS ตามคำอธิบายที่ให้มา',
+                    'tl' => 'Input ng paglalarawan sa teksto > Bumuo ng code ng HTML UI/UX gamit ang Tailwind CSS batay sa ibinigay na paglalarawan',
+                    'zh' => '文本描述输入 > 基于提供的描述使用Tailwind CSS生成UI/UX HTML代码',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -1672,7 +2245,18 @@ Generate only the HTML code with Tailwind CSS classes based on the uploaded UI/U
                         "input_fields" => [
                             [
                                 "label" => "UI/UX Description",
-                                "description" => "Provide a detailed description of the UI/UX design you want to create",
+                                "description"=> $this->getLocalizedText([
+                                    'de' => 'Geben Sie eine detaillierte Beschreibung des UI/UX-Designs ein, das Sie erstellen möchten',
+                                    'en' => 'Provide a detailed description of the UI/UX design you want to create',
+                                    'fr' => 'Fournissez une description détaillée du design UI/UX que vous souhaitez créer',
+                                    'hi' => 'आप जो UI/UX डिज़ाइन बनाना चाहते हैं उसका विस्तृत विवरण प्रदान करें',
+                                    'ja' => '作成したいUI/UXデザインの詳細な説明を提供してください',
+                                    'ko' => '만들고자 하는 UI/UX 디자인에 대한 자세한 설명을 제공하세요',
+                                    'pt' => 'Forneça uma descrição detalhada do design UI/UX que você deseja criar',
+                                    'th' => 'ให้คำอธิบายโดยละเอียดเกี่ยวกับการออกแบบ UI/UX ที่คุณต้องการสร้าง',
+                                    'tl' => 'Magbigay ng detalyadong paglalarawan ng disenyo ng UI/UX na gusto mong likhain',
+                                    'zh' => '提供你想要创建的UI/UX设计的详细描述',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "placeholder" => "Describe the layout, colors, components, and any specific features of your UI/UX design..."
@@ -1684,31 +2268,31 @@ Generate only the HTML code with Tailwind CSS classes based on the uploaded UI/U
                         "step_number" => 2,
                         "uuid" => $generateUuid(),
                         "prompt" => "Based on the provided UI/UX design description, generate only the corresponding HTML code using Tailwind CSS classes to create this design. Here's the UI/UX description:
-{{step1.input.UI/UX_Description}}
-Follow these guidelines:
+                            {{step1.input.UI/UX_Description}}
+                            Follow these guidelines:
 
-1. Generate a complete HTML structure including <!DOCTYPE html>, <html>, <head>, and <body> tags.
+                            1. Generate a complete HTML structure including <!DOCTYPE html>, <html>, <head>, and <body> tags.
 
-2. In the <head> section:
-- Include a meta viewport tag for responsiveness.
-- Link to the Tailwind CSS CDN.
-- If necessary, include a <style> tag for any custom styles using @apply directives.
+                            2. In the <head> section:
+                            - Include a meta viewport tag for responsiveness.
+                            - Link to the Tailwind CSS CDN.
+                            - If necessary, include a <style> tag for any custom styles using @apply directives.
 
 
-3. In the <body> section:
-- Use semantic HTML5 tags where appropriate (e.g., <header>, <nav>, <main>, <footer>).
-- Apply Tailwind utility classes for all styling, including layout, spacing, colors, typography, and responsive design.
-- Implement a mobile-first responsive design approach using Tailwind's responsive prefixes (sm:, md:, lg:, xl:).
+                            3. In the <body> section:
+                            - Use semantic HTML5 tags where appropriate (e.g., <header>, <nav>, <main>, <footer>).
+                            - Apply Tailwind utility classes for all styling, including layout, spacing, colors, typography, and responsive design.
+                            - Implement a mobile-first responsive design approach using Tailwind's responsive prefixes (sm:, md:, lg:, xl:).
 
-4. For any necessary interactive elements:
-- Include minimal JavaScript within a <script> tag at the end of the <body> section.
-- Use vanilla JavaScript or Alpine.js (linked via CDN if used) for simplicity.
+                            4. For any necessary interactive elements:
+                            - Include minimal JavaScript within a <script> tag at the end of the <body> section.
+                            - Use vanilla JavaScript or Alpine.js (linked via CDN if used) for simplicity.
 
-5. Add brief comments only where absolutely necessary to explain complex structures or functionality.
-6. Ensure the code is well-structured, properly indented, and follows current HTML5 and Tailwind CSS best practices.
-7. The output should be solely the HTML code, without any additional explanations, summaries, or suggestions outside of the HTML structure.
+                            5. Add brief comments only where absolutely necessary to explain complex structures or functionality.
+                            6. Ensure the code is well-structured, properly indented, and follows current HTML5 and Tailwind CSS best practices.
+                            7. The output should be solely the HTML code, without any additional explanations, summaries, or suggestions outside of the HTML structure.
 
-Generate only the HTML code with Tailwind CSS classes based on the provided UI/UX design description.",
+                            Generate only the HTML code with Tailwind CSS classes based on the provided UI/UX design description.",
                         "background_information" => "You are an expert front-end developer specializing in creating clean, efficient HTML markup with Tailwind CSS. Your task is to translate textual UI/UX descriptions into complete, ready-to-use HTML documents. You excel at interpreting design requirements and implementing them using Tailwind's utility classes, ensuring responsive and accessible designs. Your output is always valid HTML5, optimized for immediate use, and requires no further explanation or context.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -1722,34 +2306,98 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
             ],
             // 엑셀
             [
-                'name' => 'Development Requirements Spec Excel Generator',
-                'description' => 'Generate a detailed Excel-format Development Requirements Specification based on project type and required features',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Entwicklungsanforderungen-Spezifikation Excel-Generator',
+                    'en' => 'Development Requirements Spec Excel Generator',
+                    'fr' => 'Générateur Excel de Spécifications des Exigences de Développement',
+                    'hi' => 'विकास आवश्यकताओं की विशिष्टता एक्सेल जनरेटर',
+                    'ja' => '開発要件仕様Excelジェネレーター',
+                    'ko' => '개발 요구사항 정의서 Excel 생성기',
+                    'pt' => 'Gerador Excel de Especificações de Requisitos de Desenvolvimento',
+                    'th' => 'เครื่องมือสร้างข้อกำหนดความต้องการการพัฒนาในรูปแบบ Excel',
+                    'tl' => 'Tagabuo ng Excel para sa Mga Detalyadong Kinakailangan sa Pagbuo',
+                    'zh' => '开发需求规格Excel生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Generieren Sie eine detaillierte Entwicklungsanforderungen-Spezifikation im Excel-Format basierend auf Projekttyp und erforderlichen Funktionen',
+                    'en' => 'Generate a detailed Excel-format Development Requirements Specification based on project type and required features',
+                    'fr' => 'Générez une spécification détaillée des exigences de développement au format Excel basée sur le type de projet et les fonctionnalités requises',
+                    'hi' => 'परियोजना के प्रकार और आवश्यक सुविधाओं के आधार पर विस्तृत एक्सेल-प्रारूप विकास आवश्यकता विनिर्देश उत्पन्न करें',
+                    'ja' => 'プロジェクトタイプと必要な機能に基づいて、詳細なExcel形式の開発要件仕様を生成します',
+                    'ko' => '프로젝트 유형과 필요한 기능을 기반으로 상세한 Excel 형식의 개발 요구사항 정의서를 생성합니다',
+                    'pt' => 'Gere uma Especificação de Requisitos de Desenvolvimento detalhada em formato Excel com base no tipo de projeto e recursos necessários',
+                    'th' => 'สร้างข้อกำหนดความต้องการการพัฒนาแบบละเอียดในรูปแบบ Excel ตามประเภทโครงการและคุณสมบัติที่ต้องการ',
+                    'tl' => 'Bumuo ng detalyadong Espesipikasyon ng Mga Kinakailangan sa Pagbuo sa format ng Excel batay sa uri ng proyekto at kinakailangang mga tampok',
+                    'zh' => '根据项目类型和所需功能生成详细的Excel格式开发需求规格',
+                ]),
                 'steps' => json_encode([
                 [
                 "type" => "input",
                 "step_number" => 1,
-                "uuid" => "66e39491a30ee",
+                "uuid" => $generateUuid(),
                 "input_fields" => [
                 [
                 "label" => "Project Type",
-                "description" => "Select the type of project you're developing",
+                "description" => $this->getLocalizedText([
+                    'de' => 'Wählen Sie den Typ des Projekts aus, das Sie entwickeln',
+                    'en' => "Select the type of project you're developing",
+                    'fr' => 'Sélectionnez le type de projet que vous développez',
+                    'hi' => 'आप जो परियोजना विकसित कर रहे हैं उसका प्रकार चुनें',
+                    'ja' => '開発しているプロジェクトのタイプを選択してください',
+                    'ko' => '개발 중인 프로젝트의 유형을 선택하세요',
+                    'pt' => 'Selecione o tipo de projeto que você está desenvolvendo',
+                    'th' => 'เลือกประเภทของโครงการที่คุณกำลังพัฒนา',
+                    'tl' => 'Piliin ang uri ng proyekto na iyong binubuo',
+                    'zh' => '选择您正在开发的项目类型',
+                ]),
                 "type" => "radio",
-                "options" => "Web Application,Mobile App,Responsive Web App,Game,Community Platform,E-Commerce Platform,Enterprise Software,IoT Application,AI/ML Solution,Blockchain Application",
-                "placeholder" => "Choose the most appropriate project type..."
+                "options" => $this->getLocalizedText([
+                    'de' => 'Webanwendung, Mobile App, Responsive Web App, Spiel, Community-Plattform, E-Commerce-Plattform, Unternehmenssoftware, IoT-Anwendung, KI/ML-Lösung, Blockchain-Anwendung',
+                    'en' => 'Web Application, Mobile App, Responsive Web App, Game, Community Platform, E-Commerce Platform, Enterprise Software, IoT Application, AI/ML Solution, Blockchain Application',
+                    'fr' => 'Application Web, Application mobile, Application Web responsive, Jeu, Plateforme communautaire, Plateforme E-Commerce, Logiciel d\'entreprise, Application IoT, Solution IA/ML, Application Blockchain',
+                    'hi' => 'वेब एप्लिकेशन, मोबाइल ऐप, रिस्पॉन्सिव वेब ऐप, गेम, कम्युनिटी प्लेटफ़ॉर्म, ई-कॉमर्स प्लेटफ़ॉर्म, एंटरप्राइज़ सॉफ़्टवेयर, IoT एप्लिकेशन, AI/ML समाधान, ब्लॉकचेन एप्लिकेशन',
+                    'ja' => 'Webアプリケーション, モバイルアプリ, レスポンシブWebアプリ, ゲーム, コミュニティプラットフォーム, Eコマースプラットフォーム, 企業向けソフトウェア, IoTアプリケーション, AI/MLソリューション, ブロックチェーンアプリケーション',
+                    'ko' => '웹 애플리케이션, 모바일 앱, 반응형 웹 앱, 게임, 커뮤니티 플랫폼, 전자상거래 플랫폼, 기업용 소프트웨어, IoT 애플리케이션, AI/ML 솔루션, 블록체인 애플리케이션',
+                    'pt' => 'Aplicação Web, Aplicativo Móvel, Aplicação Web Responsiva, Jogo, Plataforma Comunitária, Plataforma de E-Commerce, Software Empresarial, Aplicação IoT, Solução de IA/ML, Aplicação Blockchain',
+                    'th' => 'แอปพลิเคชันเว็บ, แอปมือถือ, แอปเว็บที่ตอบสนอง, เกม, แพลตฟอร์มชุมชน, แพลตฟอร์มอีคอมเมิร์ซ, ซอฟต์แวร์องค์กร, แอปพลิเคชัน IoT, โซลูชัน AI/ML, แอปพลิเคชันบล็อกเชน',
+                    'tl' => 'Web Application, Mobile App, Responsive Web App, Laro, Community Platform, E-Commerce Platform, Enterprise Software, IoT Application, AI/ML Solution, Blockchain Application',
+                    'zh' => 'Web 应用程序, 移动应用程序, 响应式 Web 应用程序, 游戏, 社区平台, 电子商务平台, 企业软件, 物联网应用, AI/ML 解决方案, 区块链应用程序',
+                ]),
                 ],
                 [
                 "label" => "Key Features",
-                "description" => "Select the main features required for your project",
+                "description" => $this->getLocalizedText([
+                    'de' => 'Wählen Sie die Hauptfunktionen aus, die für Ihr Projekt erforderlich sind',
+                    'en' => 'Select the main features required for your project',
+                    'fr' => 'Sélectionnez les principales fonctionnalités requises pour votre projet',
+                    'hi' => 'अपनी परियोजना के लिए आवश्यक मुख्य सुविधाओं का चयन करें',
+                    'ja' => 'プロジェクトに必要な主な機能を選択してください',
+                    'ko' => '프로젝트에 필요한 주요 기능을 선택하세요',
+                    'pt' => 'Selecione as principais características necessárias para o seu projeto',
+                    'th' => 'เลือกคุณสมบัติหลักที่จำเป็นสำหรับโครงการของคุณ',
+                    'tl' => 'Piliin ang mga pangunahing tampok na kinakailangan para sa iyong proyekto',
+                    'zh' => '选择项目所需的主要功能',
+                ]),
                 "type" => "multiselect",
-                "options" => "User Authentication,Social Media Integration,Real-time Messaging,Payment Gateway,Content Management System,Search Functionality,User Profiles,Analytics Dashboard,Notification System,Geolocation Services,File Upload/Download,Multi-language Support,API Integration,Admin Panel,User Reviews/Ratings,Subscription Management,Inventory Management,Booking/Reservation System,Social Sharing,Video Streaming",
-                "placeholder" => "Select all applicable key features for your project..."
+                "options" => $this->getLocalizedText([
+                    'de' => 'Benutzerauthentifizierung, Integration von sozialen Medien, Echtzeit-Messaging, Zahlungsgateway, Content-Management-System, Suchfunktion, Benutzerprofile, Analyse-Dashboard, Benachrichtigungssystem, Geolokalisierungsdienste, Datei-Upload/Download, Mehrsprachige Unterstützung, API-Integration, Admin-Panel, Benutzerbewertungen/Bewertungen, Abonnementverwaltung, Bestandsverwaltung, Buchungs-/Reservierungssystem, Soziales Teilen, Videostreaming, Chat-Support, Sicherheitsfunktionen, Leistungsüberwachung',
+                    'en' => 'User Authentication, Social Media Integration, Real-time Messaging, Payment Gateway, Content Management System, Search Functionality, User Profiles, Analytics Dashboard, Notification System, Geolocation Services, File Upload/Download, Multi-language Support, API Integration, Admin Panel, User Reviews/Ratings, Subscription Management, Inventory Management, Booking/Reservation System, Social Sharing, Video Streaming, Chat Support, Security Features, Performance Monitoring',
+                    'fr' => 'Authentification des utilisateurs, Intégration des médias sociaux, Messagerie en temps réel, Passerelle de paiement, Système de gestion de contenu, Fonctionnalité de recherche, Profils utilisateur, Tableau de bord analytique, Système de notification, Services de géolocalisation, Téléchargement/partage de fichiers, Prise en charge multilingue, Intégration API, Panneau d\'administration, Avis/évaluations des utilisateurs, Gestion des abonnements, Gestion des stocks, Système de réservation, Partage social, Streaming vidéo, Support de chat, Fonctionnalités de sécurité, Surveillance des performances',
+                    'hi' => 'उपयोगकर्ता प्रमाणीकरण, सोशल मीडिया एकीकरण, रियल-टाइम मैसेजिंग, भुगतान गेटवे, कंटेंट मैनेजमेंट सिस्टम, खोज कार्यक्षमता, उपयोगकर्ता प्रोफाइल, विश्लेषण डैशबोर्ड, सूचनात्मक प्रणाली, जियोलोकेशन सेवाएं, फाइल अपलोड/डाउनलोड, बहु-भाषा समर्थन, एपीआई एकीकरण, एडमिन पैनल, उपयोगकर्ता समीक्षाएं/रेटिंग्स, सदस्यता प्रबंधन, इन्वेंट्री प्रबंधन, बुकिंग/रिजर्वेशन सिस्टम, सामाजिक साझाकरण, वीडियो स्ट्रीमिंग, चैट समर्थन, सुरक्षा सुविधाएँ, प्रदर्शन निगरानी',
+                    'ja' => 'ユーザー認証, ソーシャルメディア統合, リアルタイムメッセージング, 支払いゲートウェイ, コンテンツ管理システム, 検索機能, ユーザープロファイル, 分析ダッシュボード, 通知システム, ジオロケーションサービス, ファイルのアップロード/ダウンロード, 多言語対応, API統合, 管理パネル, ユーザーレビュー/評価, サブスクリプション管理, 在庫管理, 予約システム, ソーシャル共有, ビデオストリーミング, チャットサポート, セキュリティ機能, パフォーマンス監視',
+                    'ko' => '사용자 인증, 소셜 미디어 통합, 실시간 메시징, 결제 게이트웨이, 콘텐츠 관리 시스템, 검색 기능, 사용자 프로필, 분석 대시보드, 알림 시스템, 지리적 위치 서비스, 파일 업로드/다운로드, 다국어 지원, API 통합, 관리자 패널, 사용자 리뷰/평점, 구독 관리, 재고 관리, 예약 시스템, 소셜 공유, 비디오 스트리밍, 채팅 지원, 보안 기능, 성능 모니터링',
+                    'pt' => 'Autenticação de Usuários, Integração de Mídias Sociais, Mensagens em Tempo Real, Gateway de Pagamento, Sistema de Gerenciamento de Conteúdo, Funcionalidade de Pesquisa, Perfis de Usuário, Painel de Análise, Sistema de Notificação, Serviços de Geolocalização, Upload/Download de Arquivos, Suporte Multilíngue, Integração de API, Painel de Administração, Avaliações/Resenhas de Usuários, Gerenciamento de Assinaturas, Gerenciamento de Inventário, Sistema de Reserva/Agendamento, Compartilhamento Social, Transmissão de Vídeo, Suporte de Chat, Funcionalidades de Segurança, Monitoramento de Desempenho',
+                    'th' => 'การรับรองความถูกต้องของผู้ใช้, การรวมโซเชียลมีเดีย, การส่งข้อความแบบเรียลไทม์, เกตเวย์การชำระเงิน, ระบบการจัดการเนื้อหา, ฟังก์ชันการค้นหา, โปรไฟล์ผู้ใช้, แดชบอร์ดการวิเคราะห์, ระบบการแจ้งเตือน, บริการระบุตำแหน่งทางภูมิศาสตร์, อัปโหลด/ดาวน์โหลดไฟล์, รองรับหลายภาษา, การรวม API, แผงควบคุม, รีวิว/การให้คะแนนของผู้ใช้, การจัดการการสมัครสมาชิก, การจัดการสินค้าคงคลัง, ระบบการจอง, การแชร์บนโซเชียล, สตรีมวิดีโอ, การสนับสนุนการแชท, ฟีเจอร์ด้านความปลอดภัย, การตรวจสอบประสิทธิภาพ',
+                    'tl' => 'Pagpapatunay ng User, Pagsasama ng Social Media, Pagmemensahe sa Real-time, Payment Gateway, Content Management System, Functionality sa Paghahanap, Mga Profile ng User, Dashboard ng Analytics, Sistema ng Pag-abiso, Mga Serbisyo ng Geolocation, Pag-upload/Pag-download ng File, Suporta sa Multi-language, Pagsasama ng API, Admin Panel, Mga Review/Ratings ng User, Pamamahala sa Subscription, Pamamahala ng Imbentaryo, Booking/Reservation System, Social Sharing, Video Streaming, Suporta ng Chat, Mga Tampok sa Seguridad, Pagmamanman ng Pagganap',
+                    'zh' => '用户认证, 社交媒体集成, 实时消息传递, 支付网关, 内容管理系统, 搜索功能, 用户资料, 分析仪表盘, 通知系统, 地理定位服务, 文件上传/下载, 多语言支持, API 集成, 管理面板, 用户评论/评分, 订阅管理, 库存管理, 预订系统, 社交分享, 视频流媒体, 聊天支持, 安全功能, 性能监控',
+                ]),
                 ]
                 ]
                 ],
                 [
                 "type" => "generate_excel",
                 "step_number" => 2,
-                "uuid" => "66e39491a30f1",
+                "uuid" => $generateUuid(),
                 "prompt" => "Generate a comprehensive Development Requirements Specification for a {{step1.input.Project_Type}} project incorporating {{step1.input.Key_Features}}. Follow these guidelines:
                 
                 User Roles: Define clear user roles (e.g., End-User, Administrator, Moderator) based on the project type and features.
@@ -1884,33 +2532,121 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Project Plan Excel Generator',
-                'description' => 'Generate a comprehensive Excel-format Project Plan based on project type, scale, and key objectives',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Projektplan Excel-Generator',
+                    'en' => 'Project Plan Excel Generator',
+                    'fr' => 'Générateur Excel de Plan de Projet',
+                    'hi' => 'परियोजना योजना एक्सेल जनरेटर',
+                    'ja' => 'プロジェクト計画Excelジェネレーター',
+                    'ko' => '프로젝트 계획 Excel 생성기',
+                    'pt' => 'Gerador Excel de Plano de Projeto',
+                    'th' => 'เครื่องมือสร้างแผนโครงการในรูปแบบ Excel',
+                    'tl' => 'Tagabuo ng Excel para sa Plano ng Proyekto',
+                    'zh' => '项目计划Excel生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Generieren Sie einen umfassenden Projektplan im Excel-Format basierend auf Projekttyp, Umfang und Hauptzielen',
+                    'en' => 'Generate a comprehensive Excel-format Project Plan based on project type, scale, and key objectives',
+                    'fr' => 'Générez un plan de projet complet au format Excel basé sur le type de projet, l\'échelle et les objectifs clés',
+                    'hi' => 'परियोजना के प्रकार, पैमाने और प्रमुख उद्देश्यों के आधार पर एक व्यापक एक्सेल-प्रारूप परियोजना योजना उत्पन्न करें',
+                    'ja' => 'プロジェクトタイプ、規模、主要目標に基づいて包括的なExcel形式のプロジェクト計画を生成します',
+                    'ko' => '프로젝트 유형, 규모 및 주요 목표를 기반으로 포괄적인 Excel 형식의 프로젝트 계획을 생성합니다',
+                    'pt' => 'Gere um Plano de Projeto abrangente em formato Excel com base no tipo de projeto, escala e objetivos principais',
+                    'th' => 'สร้างแผนโครงการแบบครอบคลุมในรูปแบบ Excel ตามประเภทโครงการ ขนาด และวัตถุประสงค์หลัก',
+                    'tl' => 'Bumuo ng komprehensibong Plano ng Proyekto sa format ng Excel batay sa uri ng proyekto, saklaw, at pangunahing mga layunin',
+                    'zh' => '根据项目类型、规模和关键目标生成全面的Excel格式项目计划',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
                         "step_number" => 1,
-                        "uuid" => "66e39491a30ee",
+                        "uuid" => $generateUuid(),
                         "input_fields" => [
                             [
                                 "label" => "Project Type",
-                                "description" => "Select the type of project you're planning",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie den Typ des Projekts aus, das Sie planen',
+                                    'en' => "Select the type of project you're planning",
+                                    'fr' => 'Sélectionnez le type de projet que vous planifiez',
+                                    'hi' => 'आप जिस प्रकार की परियोजना की योजना बना रहे हैं, उसका चयन करें',
+                                    'ja' => '計画しているプロジェクトのタイプを選択してください',
+                                    'ko' => '계획 중인 프로젝트의 유형을 선택하세요',
+                                    'pt' => 'Selecione o tipo de projeto que você está planejando',
+                                    'th' => 'เลือกประเภทของโครงการที่คุณกำลังวางแผน',
+                                    'tl' => 'Piliin ang uri ng proyekto na iyong pinaplano',
+                                    'zh' => '选择您正在计划的项目类型',
+                                ]),
                                 "type" => "radio",
-                                "options" => "Software Development,Marketing Campaign,Product Launch,Business Expansion,Research Project,Event Planning,Infrastructure Upgrade,Organizational Restructuring,Merger and Acquisition,Compliance Implementation",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Softwareentwicklung, Marketingkampagne, Produkteinführung, Geschäftsausweitung, Forschungsprojekt, Eventplanung, Infrastruktur-Upgrade, Organisationsrestrukturierung, Fusion und Übernahme, Compliance-Implementierung, Digitale Transformation, Markteintritt, Kundenbindungsstrategie',
+                                    'en' => 'Software Development, Marketing Campaign, Product Launch, Business Expansion, Research Project, Event Planning, Infrastructure Upgrade, Organizational Restructuring, Merger and Acquisition, Compliance Implementation, Digital Transformation, New Market Entry, Customer Engagement Strategy',
+                                    'fr' => 'Développement de logiciel, Campagne marketing, Lancement de produit, Expansion commerciale, Projet de recherche, Planification d\'événement, Mise à niveau de l\'infrastructure, Restructuration organisationnelle, Fusion et acquisition, Mise en conformité, Transformation numérique, Entrée sur un nouveau marché, Stratégie d\'engagement client',
+                                    'hi' => 'सॉफ़्टवेयर विकास, मार्केटिंग अभियान, उत्पाद लॉन्च, व्यापार विस्तार, शोध परियोजना, इवेंट योजना, इन्फ्रास्ट्रक्चर अपग्रेड, संगठनात्मक पुनर्गठन, विलय और अधिग्रहण, अनुपालन कार्यान्वयन, डिजिटल परिवर्तन, नए बाजार में प्रवेश, ग्राहक सहभागिता रणनीति',
+                                    'ja' => 'ソフトウェア開発, マーケティングキャンペーン, 製品ローンチ, 事業拡大, 研究プロジェクト, イベント計画, インフラアップグレード, 組織再編, 合併と買収, コンプライアンスの実施, デジタルトランスフォーメーション, 新市場参入, 顧客エンゲージメント戦略',
+                                    'ko' => '소프트웨어 개발, 마케팅 캠페인, 제품 출시, 비즈니스 확장, 연구 프로젝트, 이벤트 기획, 인프라 업그레이드, 조직 재구성, 인수 합병, 컴플라이언스 구현, 디지털 전환, 신시장 진입, 고객 참여 전략',
+                                    'pt' => 'Desenvolvimento de Software, Campanha de Marketing, Lançamento de Produto, Expansão de Negócios, Projeto de Pesquisa, Planejamento de Eventos, Atualização de Infraestrutura, Reestruturação Organizacional, Fusão e Aquisição, Implementação de Compliance, Transformação Digital, Entrada em Novo Mercado, Estratégia de Engajamento do Cliente',
+                                    'th' => 'การพัฒนาซอฟต์แวร์, แคมเปญการตลาด, การเปิดตัวผลิตภัณฑ์, การขยายธุรกิจ, โครงการวิจัย, การวางแผนกิจกรรม, การอัปเกรดโครงสร้างพื้นฐาน, การปรับโครงสร้างองค์กร, การควบรวมกิจการ, การดำเนินการปฏิบัติตามกฎระเบียบ, การเปลี่ยนแปลงทางดิจิทัล, การเข้าสู่ตลาดใหม่, กลยุทธ์การมีส่วนร่วมของลูกค้า',
+                                    'tl' => 'Pag-unlad ng Software, Kampanya sa Marketing, Paglulunsad ng Produkto, Pagpapalawak ng Negosyo, Proyekto sa Pananaliksik, Pagpaplano ng Kaganapan, Pag-upgrade ng Imprastruktura, Pagbabagong Pampangkat, Pagsasama at Pagkuha, Pagpapatupad ng Pagsunod, Digital na Pagbabago, Pagpasok sa Bagong Pamilihan, Estratehiya ng Pakikipag-ugnayan ng Customer',
+                                    'zh' => '软件开发, 营销活动, 产品发布, 业务扩展, 研究项目, 活动策划, 基础设施升级, 组织重组, 并购, 合规实施, 数字化转型, 新市场进入, 客户参与策略',
+                                ]),
                                 "placeholder" => "Choose the most appropriate project type..."
                             ],
                             [
                                 "label" => "Project Scale",
-                                "description" => "Select the scale of your project",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie den Umfang Ihres Projekts aus',
+                                    'en' => 'Select the scale of your project',
+                                    'fr' => 'Sélectionnez l\'échelle de votre projet',
+                                    'hi' => 'अपनी परियोजना के पैमाने का चयन करें',
+                                    'ja' => 'プロジェクトの規模を選択してください',
+                                    'ko' => '프로젝트의 규모를 선택하세요',
+                                    'pt' => 'Selecione a escala do seu projeto',
+                                    'th' => 'เลือกขนาดของโครงการของคุณ',
+                                    'tl' => 'Piliin ang saklaw ng iyong proyekto',
+                                    'zh' => '选择您项目的规模',
+                                ]),
                                 "type" => "radio",
-                                "options" => "Small (1-3 months),Medium (3-6 months),Large (6-12 months),Enterprise (1+ years)",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Klein (1-3 Monate), Mittel (3-6 Monate), Groß (6-12 Monate), Enterprise (1+ Jahre)',
+                                    'en' => 'Small (1-3 months), Medium (3-6 months), Large (6-12 months), Enterprise (1+ years)',
+                                    'fr' => 'Petit (1-3 mois), Moyen (3-6 mois), Grand (6-12 mois), Entreprise (1+ ans)',
+                                    'hi' => 'छोटा (1-3 महीने), मध्यम (3-6 महीने), बड़ा (6-12 महीने), एंटरप्राइज (1+ साल)',
+                                    'ja' => '小規模 (1-3ヶ月), 中規模 (3-6ヶ月), 大規模 (6-12ヶ月), エンタープライズ (1年以上)',
+                                    'ko' => '소규모 (1-3개월), 중간 규모 (3-6개월), 대규모 (6-12개월), 엔터프라이즈 (1년 이상)',
+                                    'pt' => 'Pequeno (1-3 meses), Médio (3-6 meses), Grande (6-12 meses), Empresarial (1+ anos)',
+                                    'th' => 'ขนาดเล็ก (1-3 เดือน), ขนาดกลาง (3-6 เดือน), ขนาดใหญ่ (6-12 เดือน), องค์กร (1+ ปี)',
+                                    'tl' => 'Maliit (1-3 buwan), Katamtaman (3-6 buwan), Malaki (6-12 buwan), Pang-enterprise (1+ taon)',
+                                    'zh' => '小型 (1-3个月), 中型 (3-6个月), 大型 (6-12个月), 企业级 (1年以上)',
+                                ]),
                                 "placeholder" => "Select the project scale..."
                             ],
                             [
                                 "label" => "Key Objectives",
-                                "description" => "Select the main objectives of your project",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie die Hauptziele Ihres Projekts aus',
+                                    'en' => 'Select the main objectives of your project',
+                                    'fr' => 'Sélectionnez les principaux objectifs de votre projet',
+                                    'hi' => 'अपनी परियोजना के मुख्य उद्देश्यों का चयन करें',
+                                    'ja' => 'プロジェクトの主要な目標を選択してください',
+                                    'ko' => '프로젝트의 주요 목표를 선택하세요',
+                                    'pt' => 'Selecione os principais objetivos do seu projeto',
+                                    'th' => 'เลือกวัตถุประสงค์หลักของโครงการของคุณ',
+                                    'tl' => 'Piliin ang mga pangunahing layunin ng iyong proyekto',
+                                    'zh' => '选择您项目的主要目标',
+                                ]),
                                 "type" => "multiselect",
-                                "options" => "Increase Revenue,Reduce Costs,Improve Efficiency,Enhance Customer Satisfaction,Expand Market Share,Develop New Product/Service,Improve Quality,Increase Productivity,Ensure Regulatory Compliance,Enhance Brand Awareness,Implement New Technology,Improve Employee Satisfaction,Reduce Environmental Impact,Increase Innovation,Improve Safety Standards",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Umsatz steigern, Kosten senken, Effizienz verbessern, Kundenzufriedenheit erhöhen, Marktanteil ausbauen, Neues Produkt/Dienstleistung entwickeln, Qualität verbessern, Produktivität steigern, Einhaltung von Vorschriften sicherstellen, Markenbekanntheit steigern, Neue Technologien implementieren, Mitarbeiterzufriedenheit verbessern, Umweltauswirkungen reduzieren, Innovation steigern, Sicherheitsstandards verbessern, Sicherheit erhöhen, Stakeholder-Engagement verbessern, Ressourcenoptimierung',  
+                                    'en' => 'Increase Revenue, Reduce Costs, Improve Efficiency, Enhance Customer Satisfaction, Expand Market Share, Develop New Product/Service, Improve Quality, Increase Productivity, Ensure Regulatory Compliance, Enhance Brand Awareness, Implement New Technology, Improve Employee Satisfaction, Reduce Environmental Impact, Increase Innovation, Improve Safety Standards, Enhance Security, Improve Stakeholder Engagement, Optimize Resource Allocation',
+                                    'fr' => 'Augmenter les revenus, Réduire les coûts, Améliorer l\'efficacité, Améliorer la satisfaction client, Augmenter la part de marché, Développer un nouveau produit/service, Améliorer la qualité, Augmenter la productivité, Assurer la conformité réglementaire, Augmenter la notoriété de la marque, Mettre en œuvre de nouvelles technologies, Améliorer la satisfaction des employés, Réduire l\'impact environnemental, Stimuler l\'innovation, Améliorer les normes de sécurité, Renforcer la sécurité, Améliorer l\'engagement des parties prenantes, Optimiser l\'allocation des ressources',
+                                    'hi' => 'राजस्व बढ़ाएं, लागत कम करें, दक्षता में सुधार करें, ग्राहक संतुष्टि बढ़ाएं, बाजार हिस्सेदारी बढ़ाएं, नया उत्पाद/सेवा विकसित करें, गुणवत्ता में सुधार करें, उत्पादकता बढ़ाएं, नियामक अनुपालन सुनिश्चित करें, ब्रांड जागरूकता बढ़ाएं, नई तकनीक लागू करें, कर्मचारी संतुष्टि में सुधार करें, पर्यावरणीय प्रभाव कम करें, नवाचार बढ़ाएं, सुरक्षा मानकों में सुधार करें, सुरक्षा में वृद्धि करें, हितधारक सहभागिता में सुधार करें, संसाधन आवंटन का अनुकूलन करें',
+                                    'ja' => '収益を増やす, コストを削減する, 効率を向上させる, 顧客満足度を高める, 市場シェアを拡大する, 新製品/サービスを開発する, 品質を向上させる, 生産性を向上させる, 規制遵守を確保する, ブランド認知度を向上させる, 新技術を導入する, 従業員満足度を向上させる, 環境への影響を減らす, イノベーションを促進する, 安全基準を改善する, セキュリティを強化する, ステークホルダーエンゲージメントを改善する, リソース配分を最適化する',
+                                    'ko' => '수익 증대, 비용 절감, 효율성 개선, 고객 만족도 향상, 시장 점유율 확대, 신제품/서비스 개발, 품질 개선, 생산성 증대, 규정 준수 보장, 브랜드 인지도 향상, 새로운 기술 구현, 직원 만족도 향상, 환경 영향 감소, 혁신 증가, 안전 기준 개선, 보안 강화, 이해관계자 참여 개선, 자원 할당 최적화',
+                                    'pt' => 'Aumentar a Receita, Reduzir Custos, Melhorar a Eficiência, Aumentar a Satisfação do Cliente, Expandir a Participação no Mercado, Desenvolver Novo Produto/Serviço, Melhorar a Qualidade, Aumentar a Produtividade, Garantir a Conformidade Regulatória, Aumentar a Conscientização da Marca, Implementar Nova Tecnologia, Melhorar a Satisfação dos Funcionários, Reduzir o Impacto Ambiental, Aumentar a Inovação, Melhorar os Padrões de Segurança, Aumentar a Segurança, Melhorar o Envolvimento das Partes Interessadas, Otimizar a Alocação de Recursos',
+                                    'th' => 'เพิ่มรายได้, ลดต้นทุน, ปรับปรุงประสิทธิภาพ, ยกระดับความพึงพอใจของลูกค้า, ขยายส่วนแบ่งการตลาด, พัฒนาผลิตภัณฑ์/บริการใหม่, ปรับปรุงคุณภาพ, เพิ่มผลผลิต, มั่นใจในการปฏิบัติตามกฎระเบียบ, เพิ่มการรับรู้แบรนด์, นำเทคโนโลยีใหม่มาใช้, เพิ่มความพึงพอใจของพนักงาน, ลดผลกระทบต่อสิ่งแวดล้อม, เพิ่มนวัตกรรม, ปรับปรุงมาตรฐานความปลอดภัย, เพิ่มความปลอดภัย, ปรับปรุงการมีส่วนร่วมของผู้มีส่วนได้ส่วนเสีย, เพิ่มประสิทธิภาพการจัดสรรทรัพยากร',
+                                    'tl' => 'Dagdagan ang Kita, Bawasan ang Gastos, Pagbutihin ang Kahusayan, Palakasin ang Kasiyahan ng Customer, Palawakin ang Pagbabahagi ng Merkado, Bumuo ng Bagong Produkto/Serbisyo, Pagbutihin ang Kalidad, Dagdagan ang Produktibo, Tiyakin ang Pagsunod sa Regulasyon, Pagbutihin ang Kamalayan ng Brand, Magpatupad ng Bagong Teknolohiya, Pagbutihin ang Kasiyahan ng Empleyado, Bawasan ang Epekto sa Kapaligiran, Dagdagan ang Inobasyon, Pagbutihin ang mga Pamantayan ng Kaligtasan, Pagandahin ang Seguridad, Pagbutihin ang Pakikipag-ugnayan ng Stakeholder, I-optimize ang Alokasyon ng Mapagkukunan',
+                                    'zh' => '增加收入, 降低成本, 提高效率, 提升客户满意度, 扩大市场份额, 开发新产品/服务, 提高质量, 提高生产力, 确保合规, 提升品牌知名度, 实施新技术, 提高员工满意度, 减少环境影响, 增加创新, 提高安全标准, 增强安全性, 改善利益相关者参与, 优化资源分配',
+                                ]),
                                 "placeholder" => "Select one or more key objectives for your project..."
                             ]
                         ]
@@ -1918,7 +2654,7 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                     [
                         "type" => "generate_excel",
                         "step_number" => 2,
-                        "uuid" => "66e39491a30f1",
+                        "uuid" => $generateUuid(),
                         "prompt" => "Generate a comprehensive Project Plan for a {{step1.input.Project_Type}} project of {{step1.input.Project_Scale}} scale with the following key objectives: {{step1.input.Key_Objectives}}. Follow these guidelines:
             
                         1. Executive Summary: Provide a brief overview of the project, its goals, and expected outcomes.
@@ -2033,40 +2769,150 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Marketing Strategy Excel Generator',
-                'description' => 'Generate a comprehensive Excel-format Marketing Strategy Document based on campaign type, target audience, budget, and key objectives',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Marketing-Strategie Excel-Generator',
+                    'en' => 'Marketing Strategy Excel Generator',
+                    'fr' => 'Générateur Excel de Stratégie Marketing',
+                    'hi' => 'मार्केटिंग रणनीति एक्सेल जनरेटर',
+                    'ja' => 'マーケティング戦略Excelジェネレーター',
+                    'ko' => '마케팅 전략 Excel 생성기',
+                    'pt' => 'Gerador Excel de Estratégia de Marketing',
+                    'th' => 'เครื่องมือสร้างกลยุทธ์การตลาดในรูปแบบ Excel',
+                    'tl' => 'Tagabuo ng Excel para sa Istratehiya ng Marketing',
+                    'zh' => '营销策略Excel生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Generieren Sie ein umfassendes Marketing-Strategiedokument im Excel-Format basierend auf Kampagnentyp, Zielgruppe, Budget und Hauptzielen',
+                    'en' => 'Generate a comprehensive Excel-format Marketing Strategy Document based on campaign type, target audience, budget, and key objectives',
+                    'fr' => 'Générez un document de stratégie marketing complet au format Excel basé sur le type de campagne, le public cible, le budget et les objectifs clés',
+                    'hi' => 'अभियान प्रकार, लक्षित दर्शकों, बजट और प्रमुख उद्देश्यों के आधार पर एक व्यापक एक्सेल-प्रारूप मार्केटिंग रणनीति दस्तावेज़ उत्पन्न करें',
+                    'ja' => 'キャンペーンタイプ、ターゲット層、予算、主要目標に基づいて包括的なExcel形式のマーケティング戦略文書を生成します',
+                    'ko' => '캠페인 유형, 대상 고객, 예산 및 주요 목표를 기반으로 포괄적인 Excel 형식의 마케팅 전략 문서를 생성합니다',
+                    'pt' => 'Gere um Documento de Estratégia de Marketing abrangente em formato Excel com base no tipo de campanha, público-alvo, orçamento e objetivos principais',
+                    'th' => 'สร้างเอกสารกลยุทธ์การตลาดแบบครอบคลุมในรูปแบบ Excel ตามประเภทแคมเปญ กลุ่มเป้าหมาย งบประมาณ และวัตถุประสงค์หลัก',
+                    'tl' => 'Bumuo ng komprehensibong Dokumento ng Istratehiya sa Marketing sa format ng Excel batay sa uri ng kampanya, target na audience, badyet, at pangunahing mga layunin',
+                    'zh' => '根据营销活动类型、目标受众、预算和关键目标生成全面的Excel格式营销策略文档',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
                         "step_number" => 1,
-                        "uuid" => "66e39491a30ef",
+                        "uuid" => $generateUuid(),
                         "input_fields" => [
                             [
                                 "label" => "Campaign Type",
-                                "description" => "Select the type of marketing campaign",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie den Typ der Marketingkampagne aus',
+                                    'en' => 'Select the type of marketing campaign',
+                                    'fr' => 'Sélectionnez le type de campagne marketing',
+                                    'hi' => 'मार्केटिंग अभियान का प्रकार चुनें',
+                                    'ja' => 'マーケティングキャンペーンのタイプを選択してください',
+                                    'ko' => '마케팅 캠페인의 유형을 선택하세요',
+                                    'pt' => 'Selecione o tipo de campanha de marketing',
+                                    'th' => 'เลือกประเภทของแคมเปญการตลาด',
+                                    'tl' => 'Piliin ang uri ng kampanya sa marketing',
+                                    'zh' => '选择营销活动的类型',
+                                ]),
                                 "type" => "radio",
-                                "options" => "Product Launch,Brand Awareness,Lead Generation,Customer Retention,Sales Promotion,Content Marketing,Social Media Campaign,Email Marketing,SEO/SEM Campaign,Influencer Marketing",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Produkteinführung, Markenbekanntheit, Lead-Generierung, Kundenbindung, Verkaufsförderung, Content-Marketing, Social-Media-Kampagne, E-Mail-Marketing, SEO/SEM-Kampagne, Influencer-Marketing, Event-Marketing, Affiliate-Marketing, Empfehlungsprogramm',
+                                    'en' => 'Product Launch, Brand Awareness, Lead Generation, Customer Retention, Sales Promotion, Content Marketing, Social Media Campaign, Email Marketing, SEO/SEM Campaign, Influencer Marketing, Event Marketing, Affiliate Marketing, Referral Program',
+                                    'fr' => 'Lancement de produit, Notoriété de la marque, Génération de leads, Fidélisation client, Promotion des ventes, Marketing de contenu, Campagne sur les réseaux sociaux, Marketing par e-mail, Campagne SEO/SEM, Marketing d\'influence, Marketing événementiel, Marketing d\'affiliation, Programme de parrainage',
+                                    'hi' => 'उत्पाद लॉन्च, ब्रांड जागरूकता, लीड जनरेशन, ग्राहक प्रतिधारण, बिक्री संवर्धन, सामग्री विपणन, सोशल मीडिया अभियान, ईमेल विपणन, SEO/SEM अभियान, प्रभावशाली विपणन, इवेंट विपणन, सहबद्ध विपणन, रेफरल कार्यक्रम',
+                                    'ja' => '製品ローンチ, ブランド認知, リード生成, 顧客維持, セールスプロモーション, コンテンツマーケティング, ソーシャルメディアキャンペーン, メールマーケティング, SEO/SEMキャンペーン, インフルエンサーマーケティング, イベントマーケティング, アフィリエイトマーケティング, リファラルプログラム',
+                                    'ko' => '제품 출시, 브랜드 인지도, 리드 생성, 고객 유지, 판촉, 콘텐츠 마케팅, 소셜 미디어 캠페인, 이메일 마케팅, SEO/SEM 캠페인, 인플루언서 마케팅, 이벤트 마케팅, 제휴 마케팅, 추천 프로그램',
+                                    'pt' => 'Lançamento de Produto, Conscientização da Marca, Geração de Leads, Retenção de Clientes, Promoção de Vendas, Marketing de Conteúdo, Campanha de Mídia Social, E-mail Marketing, Campanha de SEO/SEM, Marketing de Influenciadores, Marketing de Eventos, Marketing de Afiliados, Programa de Indicações',
+                                    'th' => 'เปิดตัวผลิตภัณฑ์, การรับรู้แบรนด์, การสร้างลูกค้าเป้าหมาย, การรักษาลูกค้า, การส่งเสริมการขาย, การตลาดเนื้อหา, แคมเปญโซเชียลมีเดีย, การตลาดทางอีเมล, แคมเปญ SEO/SEM, การตลาดผู้มีอิทธิพล, การตลาดผ่านกิจกรรม, การตลาดแบบพันธมิตร, โปรแกรมการอ้างอิง',
+                                    'tl' => 'Paglulunsad ng Produkto, Kamalayan sa Brand, Pagbuo ng Leads, Pagpapanatili ng Customer, Promosyon sa Pagbebenta, Content Marketing, Kampanya sa Social Media, Email Marketing, Kampanya ng SEO/SEM, Influencer Marketing, Event Marketing, Affiliate Marketing, Referral Program',
+                                    'zh' => '产品发布, 品牌认知, 潜在客户生成, 客户保持, 促销, 内容营销, 社交媒体活动, 电子邮件营销, SEO/SEM 活动, 影响者营销, 事件营销, 联盟营销, 推荐计划',
+                                ]),
                                 "placeholder" => "Choose the most appropriate campaign type..."
                             ],
                             [
                                 "label" => "Target Audience",
-                                "description" => "Select the primary target audience for your campaign",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie die primäre Zielgruppe für Ihre Kampagne aus',
+                                    'en' => 'Select the primary target audience for your campaign',
+                                    'fr' => 'Sélectionnez le public cible principal pour votre campagne',
+                                    'hi' => 'अपने अभियान के लिए प्राथमिक लक्षित दर्शकों का चयन करें',
+                                    'ja' => 'キャンペーンの主要なターゲット層を選択してください',
+                                    'ko' => '캠페인의 주요 대상 고객을 선택하세요',
+                                    'pt' => 'Selecione o público-alvo principal para sua campanha',
+                                    'th' => 'เลือกกลุ่มเป้าหมายหลักสำหรับแคมเปญของคุณ',
+                                    'tl' => 'Piliin ang pangunahing target na audience para sa iyong kampanya',
+                                    'zh' => '选择您营销活动的主要目标受众',
+                                ]),
                                 "type" => "radio",
-                                "options" => "B2C General Consumers,B2B Businesses,Millennials,Gen Z,Baby Boomers,Small Business Owners,C-Level Executives,Tech Enthusiasts,Parents,Students",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'B2C Allgemeine Verbraucher, B2B Unternehmen, Millennials, Generation Z, Babyboomer, Kleine Geschäftsinhaber, C-Level-Führungskräfte, Technikbegeisterte, Eltern, Studenten, Freiberufler, Gesundheitsfachkräfte, Non-Profit-Organisationen',
+                                    'en' => 'B2C General Consumers, B2B Businesses, Millennials, Gen Z, Baby Boomers, Small Business Owners, C-Level Executives, Tech Enthusiasts, Parents, Students, Freelancers, Healthcare Professionals, Non-Profit Organizations',
+                                    'fr' => 'B2C Consommateurs généraux, B2B Entreprises, Millennials, Génération Z, Baby-boomers, Propriétaires de petites entreprises, Cadres C-Level, Passionnés de technologie, Parents, Étudiants, Freelancers, Professionnels de la santé, Organisations à but non lucratif',
+                                    'hi' => 'B2C सामान्य उपभोक्ता, B2B व्यवसाय, मिलेनियल्स, जेन जेड, बेबी बूमर्स, छोटे व्यवसाय के मालिक, सी-लेवल कार्यकारी, टेक उत्साही, माता-पिता, छात्र, फ्रीलांसर, स्वास्थ्य देखभाल पेशेवर, गैर-लाभकारी संगठन',
+                                    'ja' => 'B2C 一般消費者, B2B 企業, ミレニアル世代, Z世代, ベビーブーマー, 小規模ビジネスオーナー, Cレベルの経営者, テクノロジー愛好家, 親, 学生, フリーランサー, 医療従事者, 非営利団体',
+                                    'ko' => 'B2C 일반 소비자, B2B 기업, 밀레니얼 세대, Z세대, 베이비붐 세대, 소규모 사업주, C레벨 임원, 기술 애호가, 부모, 학생, 프리랜서, 의료 전문가, 비영리 단체',
+                                    'pt' => 'B2C Consumidores Gerais, B2B Negócios, Millennials, Geração Z, Baby Boomers, Pequenos Empresários, Executivos de Nível C, Entusiastas de Tecnologia, Pais, Estudantes, Freelancers, Profissionais de Saúde, Organizações Sem Fins Lucrativos',
+                                    'th' => 'B2C ผู้บริโภคทั่วไป, B2B ธุรกิจ, คนรุ่นมิลเลนเนียล, Gen Z, เบบี้บูมเมอร์, เจ้าของธุรกิจขนาดเล็ก, ผู้บริหารระดับ C, ผู้ที่ชื่นชอบเทคโนโลยี, ผู้ปกครอง, นักเรียน, ฟรีแลนซ์, ผู้เชี่ยวชาญด้านสุขภาพ, องค์กรไม่แสวงหาผลกำไร',
+                                    'tl' => 'B2C Pangkalahatang Consumer, B2B Negosyo, Millennials, Gen Z, Baby Boomers, Maliit na May-ari ng Negosyo, C-Level Executive, Mga Tagahanga ng Teknolohiya, Mga Magulang, Mga Estudyante, Freelancer, Mga Propesyonal sa Pangangalagang Pangkalusugan, Mga Non-Profit na Organisasyon',
+                                    'zh' => 'B2C 普通消费者, B2B 企业, 千禧一代, Z 世代, 婴儿潮一代, 小企业主, C 级高管, 技术爱好者, 父母, 学生, 自由职业者, 医疗专业人员, 非营利组织',
+                                ]),
                                 "placeholder" => "Select your primary target audience..."
                             ],
                             [
                                 "label" => "Budget Range",
-                                "description" => "Select the budget range for your marketing campaign",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie den Budgetbereich für Ihre Marketingkampagne aus',
+                                    'en' => 'Select the budget range for your marketing campaign',
+                                    'fr' => 'Sélectionnez la fourchette budgétaire pour votre campagne marketing',
+                                    'hi' => 'अपने मार्केटिंग अभियान के लिए बजट सीमा का चयन करें',
+                                    'ja' => 'マーケティングキャンペーンの予算範囲を選択してください',
+                                    'ko' => '마케팅 캠페인의 예산 범위를 선택하세요',
+                                    'pt' => 'Selecione a faixa de orçamento para sua campanha de marketing',
+                                    'th' => 'เลือกช่วงงบประมาณสำหรับแคมเปญการตลาดของคุณ',
+                                    'tl' => 'Piliin ang hanay ng badyet para sa iyong kampanya sa marketing',
+                                    'zh' => '选择您营销活动的预算范围',
+                                ]),
                                 "type" => "radio",
-                                "options" => "Low Budget ($1,000 - $10,000),Medium Budget ($10,000 - $50,000),High Budget ($50,000 - $200,000),Enterprise Budget ($200,000+)",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Niedriges Budget (1.000 - 10.000 $), Mittleres Budget (10.000 - 50.000 $), Hohes Budget (50.000 - 200.000 $), Enterprise-Budget (200.000 $+)',
+                                    'en' => 'Low Budget ($1,000 - $10,000), Medium Budget ($10,000 - $50,000), High Budget ($50,000 - $200,000), Enterprise Budget ($200,000+)',
+                                    'fr' => 'Petit Budget (1 000 - 10 000 $), Budget Moyen (10 000 - 50 000 $), Budget Élevé (50 000 - 200 000 $), Budget Entreprise (200 000 $+)',
+                                    'hi' => 'कम बजट ($1,000 - $10,000), मध्यम बजट ($10,000 - $50,000), उच्च बजट ($50,000 - $200,000), एंटरप्राइज बजट ($200,000+)',
+                                    'ja' => '低予算 ($1,000 - $10,000), 中予算 ($10,000 - $50,000), 高予算 ($50,000 - $200,000), エンタープライズ予算 ($200,000+)',
+                                    'ko' => '저예산 ($1,000 - $10,000), 중간 예산 ($10,000 - $50,000), 고예산 ($50,000 - $200,000), 엔터프라이즈 예산 ($200,000+)',
+                                    'pt' => 'Baixo Orçamento ($1.000 - $10.000), Orçamento Médio ($10.000 - $50.000), Alto Orçamento ($50.000 - $200.000), Orçamento Empresarial ($200.000+)',
+                                    'th' => 'งบประมาณต่ำ ($1,000 - $10,000), งบประมาณปานกลาง ($10,000 - $50,000), งบประมาณสูง ($50,000 - $200,000), งบประมาณองค์กร ($200,000+)',
+                                    'tl' => 'Mababang Badyet ($1,000 - $10,000), Katamtamang Badyet ($10,000 - $50,000), Mataas na Badyet ($50,000 - $200,000), Enterprise Badyet ($200,000+)',
+                                    'zh' => '低预算 ($1,000 - $10,000), 中等预算 ($10,000 - $50,000), 高预算 ($50,000 - $200,000), 企业预算 ($200,000+)',
+                                ]),
                                 "placeholder" => "Select your budget range..."
                             ],
                             [
                                 "label" => "Key Objectives",
-                                "description" => "Select the main objectives of your marketing campaign",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie die Hauptziele Ihrer Marketingkampagne aus',
+                                    'en' => 'Select the main objectives of your marketing campaign',
+                                    'fr' => 'Sélectionnez les principaux objectifs de votre campagne marketing',
+                                    'hi' => 'अपने मार्केटिंग अभियान के मुख्य उद्देश्यों का चयन करें',
+                                    'ja' => 'マーケティングキャンペーンの主要な目標を選択してください',
+                                    'ko' => '마케팅 캠페인의 주요 목표를 선택하세요',
+                                    'pt' => 'Selecione os principais objetivos da sua campanha de marketing',
+                                    'th' => 'เลือกวัตถุประสงค์หลักของแคมเปญการตลาดของคุณ',
+                                    'tl' => 'Piliin ang mga pangunahing layunin ng iyong kampanya sa marketing',
+                                    'zh' => '选择您营销活动的主要目标',
+                                ]),
                                 "type" => "multiselect",
-                                "options" => "Increase Brand Awareness,Generate Leads,Boost Sales,Improve Customer Engagement,Enhance Online Presence,Increase Website Traffic,Improve Conversion Rates,Build Customer Loyalty,Expand Market Share,Introduce New Product/Service",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Markenbekanntheit steigern, Leads generieren, Umsatz steigern, Kundenbindung verbessern, Online-Präsenz erhöhen, Website-Traffic steigern, Konversionsraten verbessern, Kundenloyalität aufbauen, Marktanteil ausbauen, Neues Produkt/Dienstleistung einführen, Soziale Medien Follower erhöhen, Kundenzufriedenheit steigern, Gemeinschaftsengagement stärken',
+                                    'en' => 'Increase Brand Awareness, Generate Leads, Boost Sales, Improve Customer Engagement, Enhance Online Presence, Increase Website Traffic, Improve Conversion Rates, Build Customer Loyalty, Expand Market Share, Introduce New Product/Service, Increase Social Media Followers, Enhance Customer Satisfaction, Strengthen Community Engagement',
+                                    'fr' => 'Augmenter la notoriété de la marque, Générer des leads, Augmenter les ventes, Améliorer l\'engagement client, Renforcer la présence en ligne, Augmenter le trafic sur le site web, Améliorer les taux de conversion, Renforcer la fidélité des clients, Augmenter la part de marché, Lancer un nouveau produit/service, Augmenter les abonnés sur les réseaux sociaux, Améliorer la satisfaction des clients, Renforcer l\'engagement communautaire',
+                                    'hi' => 'ब्रांड जागरूकता बढ़ाएं, लीड उत्पन्न करें, बिक्री बढ़ाएं, ग्राहक सहभागिता में सुधार करें, ऑनलाइन उपस्थिति बढ़ाएं, वेबसाइट ट्रैफ़िक बढ़ाएं, रूपांतरण दर में सुधार करें, ग्राहक वफादारी बनाएं, बाजार हिस्सेदारी का विस्तार करें, नया उत्पाद/सेवा पेश करें, सोशल मीडिया फॉलोअर्स बढ़ाएं, ग्राहक संतुष्टि में सुधार करें, सामुदायिक जुड़ाव को मजबूत करें',
+                                    'ja' => 'ブランド認知度を向上させる, リードを生成する, 売上を増加させる, 顧客エンゲージメントを向上させる, オンラインプレゼンスを強化する, ウェブサイトトラフィックを増加させる, コンバージョン率を向上させる, 顧客ロイヤルティを構築する, 市場シェアを拡大する, 新しい製品/サービスを導入する, ソーシャルメディアフォロワーを増加させる, 顧客満足度を向上させる, コミュニティエンゲージメントを強化する',
+                                    'ko' => '브랜드 인지도 향상, 리드 생성, 매출 증대, 고객 참여 개선, 온라인 존재 강화, 웹사이트 트래픽 증가, 전환율 개선, 고객 충성도 구축, 시장 점유율 확대, 신제품/서비스 도입, 소셜 미디어 팔로워 증가, 고객 만족도 향상, 커뮤니티 참여 강화',
+                                    'pt' => 'Aumentar o Reconhecimento da Marca, Gerar Leads, Aumentar Vendas, Melhorar o Engajamento do Cliente, Aumentar a Presença Online, Aumentar o Tráfego do Site, Melhorar as Taxas de Conversão, Construir Lealdade do Cliente, Expandir a Participação de Mercado, Introduzir Novo Produto/Serviço, Aumentar Seguidores nas Redes Sociais, Melhorar a Satisfação do Cliente, Fortalecer o Engajamento Comunitário',
+                                    'th' => 'เพิ่มการรับรู้แบรนด์, สร้างลูกค้าเป้าหมาย, ส่งเสริมยอดขาย, ปรับปรุงการมีส่วนร่วมของลูกค้า, เพิ่มสถานะออนไลน์, เพิ่มการเข้าชมเว็บไซต์, ปรับปรุงอัตราการแปลง, สร้างความภักดีของลูกค้า, ขยายส่วนแบ่งการตลาด, แนะนำผลิตภัณฑ์/บริการใหม่, เพิ่มจำนวนผู้ติดตามในโซเชียลมีเดีย, เพิ่มความพึงพอใจของลูกค้า, เสริมสร้างการมีส่วนร่วมของชุมชน',
+                                    'tl' => 'Dagdagan ang Kamalayan sa Brand, Bumuo ng Mga Lead, Palakasin ang Pagbebenta, Pagbutihin ang Pakikipag-ugnayan ng Customer, Palakasin ang Presensya sa Online, Dagdagan ang Trapiko sa Website, Pagbutihin ang Mga Rate ng Conversion, Bumuo ng Katapatan ng Customer, Palawakin ang Bahagi ng Merkado, Ipakilala ang Bagong Produkto/Serbisyo, Dagdagan ang Mga Tagasunod sa Social Media, Pagandahin ang Kasiyahan ng Customer, Palakasin ang Pakikipag-ugnayan sa Komunidad',
+                                    'zh' => '提高品牌知名度, 生成潜在客户, 提升销售, 提高客户参与度, 增强在线存在感, 增加网站流量, 提高转化率, 建立客户忠诚度, 扩大市场份额, 推出新产品/服务, 增加社交媒体粉丝, 提高客户满意度, 加强社区参与',
+                                ]),
                                 "placeholder" => "Select one or more key objectives for your campaign..."
                             ]
                         ]
@@ -2074,7 +2920,7 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                     [
                         "type" => "generate_excel",
                         "step_number" => 2,
-                        "uuid" => "66e39491a30f2",
+                        "uuid" => $generateUuid(),
                         "prompt" => "Generate a comprehensive Marketing Strategy Document for a {{step1.input.Campaign_Type}} campaign targeting {{step1.input.Target_Audience}} with a {{step1.input.Budget_Range}} and the following key objectives: {{step1.input.Key_Objectives}}. Follow these guidelines:
             
                         1. Executive Summary: Provide a brief overview of the marketing strategy, its goals, and expected outcomes.
@@ -2202,8 +3048,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
             // 오디오
             // Alloy Voice Generator
             [
-                'name' => '[TTS] Alloy - Professional Narrator',
-                'description' => 'Generate a professional, neutral voice-over using Alloy.',
+                'name' => $this->getLocalizedText([
+                    'de' => '[TTS] Alloy - Professioneller Sprecher',
+                    'en' => '[TTS] Alloy - Professional Narrator',
+                    'fr' => '[TTS] Alloy - Narrateur professionnel',
+                    'hi' => '[TTS] Alloy - पेशेवर कथाकार',
+                    'ja' => '[TTS] Alloy - プロフェッショナルナレーター',
+                    'ko' => '[TTS] Alloy - 전문 내레이터',
+                    'pt' => '[TTS] Alloy - Narrador Profissional',
+                    'th' => '[TTS] Alloy - ผู้บรรยายมืออาชีพ',
+                    'tl' => '[TTS] Alloy - Propesyonal na Tagapagsalaysay',
+                    'zh' => '[TTS] Alloy - 专业旁白',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erstellen Sie ein professionelles, neutrales Voice-Over mit Alloy.',
+                    'en' => 'Generate a professional, neutral voice-over using Alloy.',
+                    'fr' => 'Générez une voix off professionnelle et neutre avec Alloy.',
+                    'hi' => 'Alloy का उपयोग करके एक पेशेवर, तटस्थ वॉयस-ओवर उत्पन्न करें।',
+                    'ja' => 'Alloy を使用してプロフェッショナルでニュートラルなボイスオーバーを生成します。',
+                    'ko' => 'Alloy를 사용하여 전문적이고 중립적인 성우 녹음을 생성하세요.',
+                    'pt' => 'Gere uma narração profissional e neutra usando Alloy.',
+                    'th' => 'สร้างการพากย์เสียงแบบมืออาชีพและเป็นกลางโดยใช้ Alloy',
+                    'tl' => 'Bumuo ng isang propesyonal at neutral na voice-over gamit ang Alloy.',
+                    'zh' => '使用Alloy生成专业的中性配音。',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2212,7 +3080,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "script",
-                                "description" => "Enter your script for the professional voice-over",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihr Skript für das professionelle Voice-Over ein',
+                                    'en' => 'Enter your script for the professional voice-over',
+                                    'fr' => 'Entrez votre script pour la voix off professionnelle',
+                                    'hi' => 'पेशेवर वॉयस-ओवर के लिए अपनी स्क्रिप्ट दर्ज करें',
+                                    'ja' => 'プロフェッショナルなボイスオーバーのためのスクリプトを入力してください',
+                                    'ko' => '전문 성우 녹음을 위한 스크립트를 입력하세요',
+                                    'pt' => 'Insira seu script para a narração profissional',
+                                    'th' => 'ป้อนสคริปต์ของคุณสำหรับการพากย์เสียงแบบมืออาชีพ',
+                                    'tl' => 'Ilagay ang iyong script para sa propesyonal na voice-over',
+                                    'zh' => '输入您的专业配音脚本',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2236,8 +3115,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
 
             // Echo Voice Generator
             [
-                'name' => '[TTS] Echo - Gentle Storyteller',
-                'description' => 'Create a soft, soothing narration using Echo.',
+                'name' => $this->getLocalizedText([
+                    'de' => '[TTS] Echo - Sanfter Geschichtenerzähler',
+                    'en' => '[TTS] Echo - Gentle Storyteller',
+                    'fr' => '[TTS] Echo - Conteur doux',
+                    'hi' => '[TTS] Echo - सौम्य कहानीकार',
+                    'ja' => '[TTS] Echo - 穏やかなストーリーテラー',
+                    'ko' => '[TTS] Echo - 부드러운 스토리텔러',
+                    'pt' => '[TTS] Echo - Contador de Histórias Gentil',
+                    'th' => '[TTS] Echo - นักเล่าเรื่องที่อ่อนโยน',
+                    'tl' => '[TTS] Echo - Banayad na Manunulat ng Kuwento',
+                    'zh' => '[TTS] Echo - 温柔的故事讲述者',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erstellen Sie eine weiche, beruhigende Erzählung mit Echo.',
+                    'en' => 'Create a soft, soothing narration using Echo.',
+                    'fr' => 'Créez une narration douce et apaisante avec Echo.',
+                    'hi' => 'Echo का उपयोग करके एक मुलायम, सुकून भरी कहानी तैयार करें।',
+                    'ja' => 'Echoを使用して、柔らかで心地よいナレーションを作成します。',
+                    'ko' => 'Echo를 사용하여 부드럽고 편안한 내레이션을 만드세요.',
+                    'pt' => 'Crie uma narração suave e calmante usando Echo.',
+                    'th' => 'สร้างการบรรยายที่นุ่มนวลและผ่อนคลายโดยใช้ Echo',
+                    'tl' => 'Lumikha ng banayad at nakapapawing pagod na pagsasalaysay gamit ang Echo.',
+                    'zh' => '使用Echo创建柔和、舒缓的叙述。',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2246,7 +3148,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "script",
-                                "description" => "Enter your script for the gentle storytelling voice",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihr Skript für das professionelle Voice-Over ein',
+                                    'en' => 'Enter your script for the professional voice-over',
+                                    'fr' => 'Entrez votre script pour la voix off professionnelle',
+                                    'hi' => 'पेशेवर वॉयस-ओवर के लिए अपनी स्क्रिप्ट दर्ज करें',
+                                    'ja' => 'プロフェッショナルなボイスオーバーのためのスクリプトを入力してください',
+                                    'ko' => '전문 성우 녹음을 위한 스크립트를 입력하세요',
+                                    'pt' => 'Insira seu script para a narração profissional',
+                                    'th' => 'ป้อนสคริปต์ของคุณสำหรับการพากย์เสียงแบบมืออาชีพ',
+                                    'tl' => 'Ilagay ang iyong script para sa propesyonal na voice-over',
+                                    'zh' => '输入您的专业配音脚本',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2270,8 +3183,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
 
             // Fable Voice Generator
             [
-                'name' => '[TTS] Fable - Magical Fairytale Narrator',
-                'description' => 'Bring fairytales to life with the enchanting Fable voice.',
+                'name' => $this->getLocalizedText([
+                    'de' => '[TTS] Fable - Magischer Märchenerzähler',
+                    'en' => '[TTS] Fable - Magical Fairytale Narrator',
+                    'fr' => '[TTS] Fable - Narrateur de contes de fées magiques',
+                    'hi' => '[TTS] Fable - जादुई परी कथा कथावाचक',
+                    'ja' => '[TTS] Fable - 魔法のようなフェアリーテールナレーター',
+                    'ko' => '[TTS] Fable - 마법 같은 동화 내레이터',
+                    'pt' => '[TTS] Fable - Narrador de Contos de Fadas Mágicos',
+                    'th' => '[TTS] Fable - ผู้บรรยายเทพนิยายมหัศจรรย์',
+                    'tl' => '[TTS] Fable - Mahiwagang Tagapagsalaysay ng Kuwentong Pambata',
+                    'zh' => '[TTS] Fable - 魔法童话讲述者',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erwecken Sie Märchen mit der bezaubernden Stimme von Fable zum Leben.',
+                    'en' => 'Bring fairytales to life with the enchanting Fable voice.',
+                    'fr' => 'Donnez vie aux contes de fées avec la voix envoûtante de Fable.',
+                    'hi' => 'मंत्रमुग्ध करने वाली Fable आवाज़ के साथ परियों की कहानियों को जीवंत बनाएं।',
+                    'ja' => '魅惑的なFableの声でおとぎ話を生き生きと語りましょう。',
+                    'ko' => '마법 같은 Fable 목소리로 동화를 생생하게 만들어 보세요.',
+                    'pt' => 'Dê vida aos contos de fadas com a encantadora voz do Fable.',
+                    'th' => 'ทำให้เทพนิยายมีชีวิตชีวาด้วยเสียง Fable ที่น่าหลงใหล',
+                    'tl' => 'Gawing makatotohanan ang mga kuwentong pambata gamit ang mapang-akit na boses ni Fable.',
+                    'zh' => '用迷人的Fable声音让童话故事栩栩如生。',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2280,7 +3215,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "script",
-                                "description" => "Enter your fairytale or magical story script",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihr Skript für das professionelle Voice-Over ein',
+                                    'en' => 'Enter your script for the professional voice-over',
+                                    'fr' => 'Entrez votre script pour la voix off professionnelle',
+                                    'hi' => 'पेशेवर वॉयस-ओवर के लिए अपनी स्क्रिप्ट दर्ज करें',
+                                    'ja' => 'プロフェッショナルなボイスオーバーのためのスクリプトを入力してください',
+                                    'ko' => '전문 성우 녹음을 위한 스크립트를 입력하세요',
+                                    'pt' => 'Insira seu script para a narração profissional',
+                                    'th' => 'ป้อนสคริปต์ของคุณสำหรับการพากย์เสียงแบบมืออาชีพ',
+                                    'tl' => 'Ilagay ang iyong script para sa propesyonal na voice-over',
+                                    'zh' => '输入您的专业配音脚本',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2304,8 +3250,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
 
             // Onyx Voice Generator
             [
-                'name' => '[TTS] Onyx - Authoritative Presenter',
-                'description' => 'Generate a powerful, commanding voice using Onyx.',
+                'name' => $this->getLocalizedText([
+                    'de' => '[TTS] Onyx - Autoritativer Präsentator',
+                    'en' => '[TTS] Onyx - Authoritative Presenter',
+                    'fr' => '[TTS] Onyx - Présentateur autoritaire',
+                    'hi' => '[TTS] Onyx - प्राधिकृत प्रस्तुतकर्ता',
+                    'ja' => '[TTS] Onyx - 権威あるプレゼンター',
+                    'ko' => '[TTS] Onyx - 권위 있는 발표자',
+                    'pt' => '[TTS] Onyx - Apresentador Autoritário',
+                    'th' => '[TTS] Onyx - ผู้บรรยายที่ทรงอำนาจ',
+                    'tl' => '[TTS] Onyx - Mapangyarihang Tagapagsalaysay',
+                    'zh' => '[TTS] Onyx - 权威演示者',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erzeugen Sie eine kraftvolle, autoritative Stimme mit Onyx.',
+                    'en' => 'Generate a powerful, commanding voice using Onyx.',
+                    'fr' => 'Générez une voix puissante et autoritaire avec Onyx.',
+                    'hi' => 'Onyx का उपयोग करके एक शक्तिशाली, प्रभावी आवाज़ उत्पन्न करें।',
+                    'ja' => 'Onyxを使用して力強く威厳のある声を生成します。',
+                    'ko' => 'Onyx를 사용하여 강력하고 명령적인 목소리를 생성하세요.',
+                    'pt' => 'Gere uma voz poderosa e autoritária usando Onyx.',
+                    'th' => 'สร้างเสียงที่ทรงพลังและน่าเกรงขามโดยใช้ Onyx',
+                    'tl' => 'Bumuo ng isang makapangyarihang at nangingibabaw na boses gamit ang Onyx.',
+                    'zh' => '使用Onyx生成强大、指挥性的声音。',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2314,7 +3283,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "script",
-                                "description" => "Enter your script for the authoritative presentation",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihr Skript für das professionelle Voice-Over ein',
+                                    'en' => 'Enter your script for the professional voice-over',
+                                    'fr' => 'Entrez votre script pour la voix off professionnelle',
+                                    'hi' => 'पेशेवर वॉयस-ओवर के लिए अपनी स्क्रिप्ट दर्ज करें',
+                                    'ja' => 'プロフェッショナルなボイスオーバーのためのスクリプトを入力してください',
+                                    'ko' => '전문 성우 녹음을 위한 스크립트를 입력하세요',
+                                    'pt' => 'Insira seu script para a narração profissional',
+                                    'th' => 'ป้อนสคริปต์ของคุณสำหรับการพากย์เสียงแบบมืออาชีพ',
+                                    'tl' => 'Ilagay ang iyong script para sa propesyonal na voice-over',
+                                    'zh' => '输入您的专业配音脚本',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2338,8 +3318,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
 
             // Nova Voice Generator
             [
-                'name' => '[TTS] Nova - Energetic Announcer',
-                'description' => 'Create vibrant, enthusiastic audio content with Nova.',
+               'name' => $this->getLocalizedText([
+                    'de' => '[TTS] Nova - Energischer Ansager',
+                    'en' => '[TTS] Nova - Energetic Announcer',
+                    'fr' => '[TTS] Nova - Annonceur énergique',
+                    'hi' => '[TTS] Nova - ऊर्जावान उद्घोषक',
+                    'ja' => '[TTS] Nova - エネルギッシュなアナウンサー',
+                    'ko' => '[TTS] Nova - 에너지 넘치는 아나운서',
+                    'pt' => '[TTS] Nova - Anunciador Energético',
+                    'th' => '[TTS] Nova - ผู้ประกาศที่มีพลัง',
+                    'tl' => '[TTS] Nova - Energetikong Tagapagbalita',
+                    'zh' => '[TTS] Nova - 充满活力的播音员',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erstellen Sie lebendige, begeisterte Audioinhalte mit Nova.',
+                    'en' => 'Create vibrant, enthusiastic audio content with Nova.',
+                    'fr' => 'Créez du contenu audio vibrant et enthousiaste avec Nova.',
+                    'hi' => 'Nova का उपयोग करके जीवंत, उत्साही ऑडियो सामग्री बनाएं।',
+                    'ja' => 'Novaを使用して活気に満ちた、熱意あるオーディオコンテンツを作成します。',
+                    'ko' => 'Nova를 사용하여 활기차고 열정적인 오디오 콘텐츠를 만드세요.',
+                    'pt' => 'Crie conteúdo de áudio vibrante e entusiástico com Nova.',
+                    'th' => 'สร้างเนื้อหาเสียงที่มีชีวิตชีวาและกระตือรือร้นด้วย Nova',
+                    'tl' => 'Lumikha ng buhay na buhay at masigasig na audio content gamit si Nova.',
+                    'zh' => '使用Nova创建充满活力、热情的音频内容。',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2348,7 +3351,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "script",
-                                "description" => "Enter your script for the energetic announcement",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihr Skript für das professionelle Voice-Over ein',
+                                    'en' => 'Enter your script for the professional voice-over',
+                                    'fr' => 'Entrez votre script pour la voix off professionnelle',
+                                    'hi' => 'पेशेवर वॉयस-ओवर के लिए अपनी स्क्रिप्ट दर्ज करें',
+                                    'ja' => 'プロフェッショナルなボイスオーバーのためのスクリプトを入力してください',
+                                    'ko' => '전문 성우 녹음을 위한 스크립트를 입력하세요',
+                                    'pt' => 'Insira seu script para a narração profissional',
+                                    'th' => 'ป้อนสคริปต์ของคุณสำหรับการพากย์เสียงแบบมืออาชีพ',
+                                    'tl' => 'Ilagay ang iyong script para sa propesyonal na voice-over',
+                                    'zh' => '输入您的专业配音脚本',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2372,8 +3386,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
 
             // Shimmer Voice Generator
             [
-                'name' => '[TTS] Shimmer - Elegant Spokesperson',
-                'description' => 'Generate sophisticated, refined audio with Shimmer.',
+            'name' => $this->getLocalizedText([
+                'de' => '[TTS] Shimmer - Eleganter Sprecher',
+                'en' => '[TTS] Shimmer - Elegant Spokesperson',
+                'fr' => '[TTS] Shimmer - Porte-parole élégant',
+                'hi' => '[TTS] Shimmer - सुरुचिपूर्ण प्रवक्ता',
+                'ja' => '[TTS] Shimmer - 優雅なスポークスパーソン',
+                'ko' => '[TTS] Shimmer - 우아한 대표자',
+                'pt' => '[TTS] Shimmer - Porta-voz Elegante',
+                'th' => '[TTS] Shimmer - โฆษกที่สง่างาม',
+                'tl' => '[TTS] Shimmer - Eleganteng Tagapagsalita',
+                'zh' => '[TTS] Shimmer - 优雅的代言人',
+            ]),
+            'description' => $this->getLocalizedText([
+                'de' => 'Erstellen Sie anspruchsvolle, raffinierte Audioinhalte mit Shimmer.',
+                'en' => 'Generate sophisticated, refined audio with Shimmer.',
+                'fr' => 'Générez un contenu audio sophistiqué et raffiné avec Shimmer.',
+                'hi' => 'Shimmer का उपयोग करके परिष्कृत, परिपक्व ऑडियो उत्पन्न करें।',
+                'ja' => 'Shimmerを使用して洗練された上品なオーディオを生成します。',
+                'ko' => 'Shimmer를 사용하여 세련되고 정교한 오디오를 생성하세요.',
+                'pt' => 'Gere áudio sofisticado e refinado com Shimmer.',
+                'th' => 'สร้างเสียงที่ซับซ้อนและประณีตด้วย Shimmer',
+                'tl' => 'Bumuo ng sopistikado at pinong audio gamit si Shimmer.',
+                'zh' => '使用Shimmer生成精致、高雅的音频。',
+            ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2382,7 +3418,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "script",
-                                "description" => "Enter your script for the elegant spokesperson",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihr Skript für das professionelle Voice-Over ein',
+                                    'en' => 'Enter your script for the professional voice-over',
+                                    'fr' => 'Entrez votre script pour la voix off professionnelle',
+                                    'hi' => 'पेशेवर वॉयस-ओवर के लिए अपनी स्क्रिप्ट दर्ज करें',
+                                    'ja' => 'プロフェッショナルなボイスオーバーのためのスクリプトを入力してください',
+                                    'ko' => '전문 성우 녹음을 위한 스크립트를 입력하세요',
+                                    'pt' => 'Insira seu script para a narração profissional',
+                                    'th' => 'ป้อนสคริปต์ของคุณสำหรับการพากย์เสียงแบบมืออาชีพ',
+                                    'tl' => 'Ilagay ang iyong script para sa propesyonal na voice-over',
+                                    'zh' => '输入您的专业配音脚本',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2405,8 +3452,458 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
             ],
             // 사업
             [
-                'name' => 'SWOT Analysis Generator',
-                'description' => 'Service description input > SWOT analysis generation',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Überarbeiteter PSST-Geschäftsplan-Generator',
+                    'en' => 'Revised PSST Business Plan Generator',
+                    'fr' => 'Générateur de plan d\'affaires PSST révisé',
+                    'hi' => 'संशोधित PSST व्यापार योजना जनरेटर',
+                    'ja' => '改訂PSSTビジネスプラン生成',
+                    'ko' => 'PSST 기반 사업 계획서 생성기',
+                    'pt' => 'Gerador de Plano de Negócios PSST Revisado',
+                    'th' => 'ตัวสร้างแผนธุรกิจ PSST ที่ปรับปรุงใหม่',
+                    'tl' => 'Binagong PSST na Tagabuo ng Plano sa Negosyo',
+                    'zh' => '修订版PSST商业计划生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erstellen Sie einen umfassenden Geschäftsplan gemäß der detaillierten PSST-Struktur (Problem, Lösung, Skalierung, Team) mit einer einzigen abschließenden Integration',
+                    'en' => 'Generate a comprehensive business plan following the detailed PSST (Problem, Solution, Scale-Up, Team) structure with a single final integration',
+                    'fr' => 'Générez un plan d\'affaires complet en suivant la structure PSST détaillée (Problème, Solution, Évolutivité, Équipe) avec une intégration finale unique',
+                    'hi' => 'विस्तृत PSST (समस्या, समाधान, स्केल-अप, टीम) संरचना का पालन करते हुए एक व्यापक व्यापार योजना उत्पन्न करें जिसमें एक अंतिम एकीकरण हो',
+                    'ja' => 'PSST（問題、解決策、スケールアップ、チーム）の詳細な構造に従って、単一の最終統合を伴う包括的なビジネスプランを生成',
+                    'ko' => 'PSST(문제, 해결책, 스케일업, 팀) 구조에 따라 포괄적인 사업 계획서를 설계 및 생성',
+                    'pt' => 'Gere um plano de negócios abrangente seguindo a estrutura PSST detalhada (Problema, Solução, Expansão, Equipe) com uma única integração final',
+                    'th' => 'สร้างแผนธุรกิจที่ครอบคลุมตามโครงสร้าง PSST (ปัญหา โซลูชัน ขยายทีม) พร้อมการผสานรวมครั้งสุดท้ายเพียงครั้งเดียว',
+                    'tl' => 'Bumuo ng isang komprehensibong plano sa negosyo na sumusunod sa detalyadong PSST (Problema, Solusyon, Pag-scale, Koponan) na istruktura na may isang pangwakas na pagsasama',
+                    'zh' => '根据详细的PSST（问题，解决方案，扩展，团队）结构生成一个综合的商业计划，并进行一次最终整合',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "business_name",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihren Firmennamen ein',
+                                    'en' => 'Enter your business name',
+                                    'fr' => 'Entrez le nom de votre entreprise',
+                                    'hi' => 'अपना व्यापार नाम दर्ज करें',
+                                    'ja' => 'ビジネス名を入力してください',
+                                    'ko' => '회사 이름을 입력하세요',
+                                    'pt' => 'Insira o nome do seu negócio',
+                                    'th' => 'ป้อนชื่อธุรกิจของคุณ',
+                                    'tl' => 'Ilagay ang pangalan ng iyong negosyo',
+                                    'zh' => '输入您的公司名称',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "product_service",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie kurz Ihr Hauptprodukt oder Ihre Hauptdienstleistung',
+                                    'en' => 'Briefly describe your main product or service',
+                                    'fr' => 'Décrivez brièvement votre produit ou service principal',
+                                    'hi' => 'संक्षेप में अपने मुख्य उत्पाद या सेवा का वर्णन करें',
+                                    'ja' => 'あなたの主な製品またはサービスを簡単に説明してください',
+                                    'ko' => '주요 제품 또는 서비스를 간략하게 설명하세요',
+                                    'pt' => 'Descreva brevemente seu principal produto ou serviço',
+                                    'th' => 'อธิบายสั้น ๆ เกี่ยวกับผลิตภัณฑ์หรือบริการหลักของคุณ',
+                                    'tl' => 'Maikling ilarawan ang iyong pangunahing produkto o serbisyo',
+                                    'zh' => '简要描述您的主要产品或服务',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', identify and describe key social or everyday life challenges that this product or service aims to address. Focus on:\n\n1. Specific social issues or common problems people face in their daily lives\n2. The impact of these problems on individuals or society\n3. Why existing solutions (if any) are inadequate\n\nProvide a detailed analysis with concrete examples and, where possible, include relevant statistics or data to illustrate the significance of these problems. This analysis should clearly establish the background and motivation for the development of the product or service.",
+                        "background_information" => "You are a social researcher identifying key societal or everyday challenges that a new product or service aims to solve.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 3,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', analyze the competitive landscape and identify areas for improvement compared to competitors. Your analysis should:\n\n1. Name specific competitors (use full names) in the market\n2. Identify areas where competitors currently have an advantage\n3. Highlight any unique expertise or assets (e.g., patents, specialized knowledge) that could give this business an edge\n\nProvide a detailed, objective analysis of the competitive landscape and potential areas for differentiation.",
+                        "background_information" => "You are a market analyst specializing in competitive analysis for startups and new product launches.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 4,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', identify and analyze customer needs and potential areas for improvement. Your analysis should:\n\n1. Clearly define the target customer segments\n2. Describe specific needs or pain points of these customers\n3. Explain why customers might choose this product/service over alternatives\n4. Identify any unmet needs or areas where customer expectations are not being fully met\n\nProvide concrete examples and, where possible, cite relevant data or trends to support your analysis.",
+                        "background_information" => "You are a customer insights specialist helping a new business understand and address its target market's needs.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 5,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', outline a detailed development or improvement plan. Your plan should:\n\n1. List specific features or functionalities to be developed or improved\n2. Indicate whether each development will be done in-house or outsourced\n3. Provide a timeline for development, including current progress and future milestones\n4. Describe the process for implementing these improvements\n\nBe as specific as possible, using a table or structured format to clearly present the development plan.",
+                        "background_information" => "You are a product development manager creating a roadmap for a new product or service improvement.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 6,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', develop a strategy to address customer requirements and feedback. Your strategy should:\n\n1. Clearly identify the target customer segments\n2. List specific customer requirements or pain points\n3. Propose concrete solutions or improvements for each requirement\n4. Describe how these improvements will be implemented and measured\n\nUse specific, quantifiable metrics where possible to show the expected impact of these improvements.",
+                        "background_information" => "You are a customer experience strategist developing a plan to improve a product or service based on customer feedback.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 7,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', develop a strategy to establish and enhance market competitiveness. Your strategy should:\n\n1. Identify key differentiators from competitors\n2. Describe how to leverage or enhance these competitive advantages\n3. Address any areas where the business may be at a competitive disadvantage\n4. Outline specific steps to improve market position\n5. Propose methods to reach and acquire the target customer base\n\nUse concrete, measurable objectives and provide specific tactics for each aspect of the strategy.",
+                        "background_information" => "You are a business strategist developing a plan to establish a strong market position for a new product or service.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 8,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', create a detailed funding plan. Your plan should:\n\n1. Estimate the total funding required, broken down by major expense categories\n2. Identify potential funding sources (e.g., government grants, investor funding, personal capital)\n3. Provide a timeline for when different funding amounts will be needed\n4. Explain how the funding will be used to support business growth\n\nBe specific about amounts, timelines, and use of funds. Justify the need for each major expense category.",
+                        "background_information" => "You are a financial planner helping a startup determine its funding needs and develop a strategy to secure necessary capital.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 9,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', develop a market entry and performance strategy. Your strategy should:\n\n1. Define the target market segments for both domestic and international markets\n2. Outline specific strategies for entering these markets\n3. Set realistic performance targets (e.g., market share, revenue) for the first 3-5 years\n4. Describe marketing and sales approaches to achieve these targets\n5. If applicable, include plans for global expansion and establishing export channels\n\nProvide concrete, measurable goals and specific tactics for achieving them.",
+                        "background_information" => "You are a market entry strategist helping a new business plan its launch and growth in both domestic and international markets.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 10,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', develop an exit strategy. Your strategy should consider:\n\n1. Potential for attracting investment (angel investors, venture capital, crowdfunding)\n2. Possibilities for mergers and acquisitions (M&A) as a medium to long-term strategy\n3. Prospects for an initial public offering (IPO) as a long-term goal\n4. Opportunities for securing government support or R&D funding\n\nFor each potential exit route, provide a brief plan including estimated timelines and key milestones to achieve. If certain exit strategies seem unlikely, explain why and suggest alternatives based on industry trends or similar company examples.",
+                        "background_information" => "You are a business strategy consultant specializing in long-term planning and exit strategies for startups and growing businesses.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 11,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', outline the skills and experience of the core team. Your description should:\n\n1. List key team members and their roles\n2. Highlight relevant experience, skills, and qualifications of each team member\n3. Explain how each member's background contributes to the business's success\n4. Identify any skills gaps in the current team and how they might be addressed\n\nBe specific about each team member's contributions and how their expertise aligns with the business needs.",
+                        "background_information" => "You are an HR specialist assessing and describing the capabilities of a startup team.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 12,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', describe the company's technological capabilities. Your description should:\n\n1. List key technologies or technical skills possessed by the company\n2. Describe any proprietary technologies or methodologies\n3. Outline the company's R&D capabilities, including any specialized equipment or facilities\n4. Explain how these technological capabilities give the company a competitive edge\n\nBe specific about the technologies and how they relate to the product or service being offered.",
+                        "background_information" => "You are a technology assessment specialist evaluating the technical capabilities of a new business.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 13,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "For the business '{{step1.input.business_name}}' offering '{{step1.input.product_service}}', outline a plan for implementing social value initiatives. Your plan should:\n\n1. Propose specific programs or policies to create high-quality jobs (e.g., profit-sharing, converting temporary positions to permanent)\n2. Suggest ways to improve work-life balance (e.g., flexible hours, remote work options)\n3. Outline any environmental or community-focused initiatives\n4. Provide a timeline for implementing these initiatives\n\nBe specific about each proposed initiative, including its expected impact and how it aligns with the company's overall mission and values.",
+                        "background_information" => "You are a corporate social responsibility consultant helping a new business develop a plan for creating positive social impact.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 14,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create an executive summary for the business plan of '{{step1.input.business_name}}' offering '{{step1.input.product_service}}'. This summary should concisely cover all aspects of the detailed PSST framework:\n\n1. Problem: Key social or everyday challenges, competitive landscape, and customer needs\n2. Solution: Development plans, customer response strategies, and market competitiveness approaches\n3. Scale-Up: Funding plans, market entry strategies, and exit strategies\n4. Team: Core skills, technological capabilities, and social value initiatives\n\nThe executive summary should be approximately 1000 words, providing a comprehensive overview of the entire business plan. It should be engaging and highlight the most critical points from each section of the detailed PSST analysis.",
+                        "background_information" => "You are a seasoned business plan writer creating a detailed yet concise executive summary that captures the essence of a startup's vision, strategy, and potential.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "content_integration",
+                        "step_number" => 15,
+                        "uuid" => $generateUuid(),
+                        "content_template" => "# Executive Summary\n\n{{step14.output}}\n\n# Detailed PSST Analysis\n\n## Problem Analysis\n\n### Social or Everyday Challenges\n{{step2.output}}\n\n### Competitive Landscape\n{{step3.output}}\n\n### Customer Needs and Improvements\n{{step4.output}}\n\n## Solution Feasibility\n\n### Product/Service Development Plan\n{{step5.output}}\n\n### Customer Requirements Strategy\n{{step6.output}}\n\n### Market Competitiveness Strategy\n{{step7.output}}\n\n## Scale-Up Strategy\n\n### Funding Plan\n{{step8.output}}\n\n### Market Entry and Performance Strategy\n{{step9.output}}\n\n### Exit Strategy\n{{step10.output}}\n\n## Team Composition\n\n### Core Team Skills and Experience\n{{step11.output}}\n\n### Technological Capabilities\n{{step12.output}}\n\n### Social Value Initiatives\n{{step13.output}}"
+                    ]
+                ]),
+                'tags' => json_encode(["business plan", "PSST"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Generator für koreanische Nutzungsbedingungen',
+                    'en' => 'Korean Style Terms of Service Generator',
+                    'fr' => 'Générateur de conditions d\'utilisation de style coréen',
+                    'hi' => 'कोरियाई शैली की सेवा शर्तों का जनरेटर',
+                    'ja' => '韓国式利用規約ジェネレーター',
+                    'ko' => '서비스 이용약관 생성기',
+                    'pt' => 'Gerador de Termos de Serviço Estilo Coreano',
+                    'th' => 'เครื่องมือสร้างข้อกำหนดการใช้บริการแบบเกาหลี',
+                    'tl' => 'Tagabuo ng Mga Tuntunin ng Serbisyo sa Estilo ng Korea',
+                    'zh' => '韩式服务条款生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erstellen Sie angepasste Nutzungsbedingungen basierend auf koreanischen Rechtsstandards und Geschäftspraktiken',
+                    'en' => 'Generate customized Terms of Service based on Korean legal standards and business practices',
+                    'fr' => 'Générez des conditions d\'utilisation personnalisées basées sur les normes juridiques et les pratiques commerciales coréennes',
+                    'hi' => 'कोरियाई कानूनी मानकों और व्यावसायिक प्रथाओं के आधार पर अनुकूलित सेवा शर्तें तैयार करें',
+                    'ja' => '韓国の法的基準とビジネス慣行に基づいてカスタマイズされた利用規約を生成します',
+                    'ko' => '법률 기준과 비즈니스 관행에 따른 맞춤형 서비스 이용약관 생성',
+                    'pt' => 'Gere Termos de Serviço personalizados com base em padrões legais e práticas comerciais coreanas',
+                    'th' => 'สร้างข้อกำหนดการใช้บริการที่ปรับแต่งตามมาตรฐานทางกฎหมายและแนวปฏิบัติทางธุรกิจของเกาหลี',
+                    'tl' => 'Lumikha ng customized na Mga Tuntunin ng Serbisyo batay sa mga pamantayang legal at kasanayan sa negosyo ng Korea',
+                    'zh' => '根据韩国法律标准和商业惯例生成定制的服务条款',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "Company_Name",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie den Namen Ihres Unternehmens ein',
+                                    'en' => 'Enter the name of your company',
+                                    'fr' => 'Entrez le nom de votre entreprise',
+                                    'hi' => 'अपनी कंपनी का नाम दर्ज करें',
+                                    'ja' => '会社名を入力してください',
+                                    'ko' => '회사 이름을 입력하세요',
+                                    'pt' => 'Insira o nome da sua empresa',
+                                    'th' => 'ป้อนชื่อบริษัทของคุณ',
+                                    'tl' => 'Ilagay ang pangalan ng iyong kumpanya',
+                                    'zh' => '输入您的公司名称',
+                                ]),
+                                "type" => "text",
+                                "placeholder" => "e.g., ABC Corporation"
+                            ],
+                            [
+                                "label" => "Service_Name",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie den Namen Ihres Dienstes ein',
+                                    'en' => 'Enter the name of your service',
+                                    'fr' => 'Entrez le nom de votre service',
+                                    'hi' => 'अपनी सेवा का नाम दर्ज करें',
+                                    'ja' => 'サービス名を入力してください',
+                                    'ko' => '서비스 이름을 입력하세요',
+                                    'pt' => 'Insira o nome do seu serviço',
+                                    'th' => 'ป้อนชื่อบริการของคุณ',
+                                    'tl' => 'Ilagay ang pangalan ng iyong serbisyo',
+                                    'zh' => '输入您的服务名称',
+                                ]),
+                                "type" => "text",
+                                "placeholder" => "e.g., ABC Business Services"
+                            ],
+                            [
+                                "label" => "Service_Description",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie kurz Ihren Service',
+                                    'en' => 'Briefly describe your service',
+                                    'fr' => 'Décrivez brièvement votre service',
+                                    'hi' => 'अपनी सेवा का संक्षेप में वर्णन करें',
+                                    'ja' => 'サービスを簡単に説明してください',
+                                    'ko' => '서비스를 간략하게 설명하세요',
+                                    'pt' => 'Descreva brevemente seu serviço',
+                                    'th' => 'อธิบายบริการของคุณอย่างสั้น ๆ',
+                                    'tl' => 'Maikling ilarawan ang iyong serbisyo',
+                                    'zh' => '简要描述您的服务',
+                                ]),
+                                "type" => "textarea",
+                                "placeholder" => "e.g., Online business platform for corporate customers"
+                            ],
+                            [
+                                "label" => "Specific_Services",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Listen Sie die spezifischen Dienstleistungen auf, die Sie anbieten',
+                                    'en' => 'List the specific services you offer',
+                                    'fr' => 'Listez les services spécifiques que vous proposez',
+                                    'hi' => 'आप जो विशिष्ट सेवाएँ प्रदान करते हैं, उन्हें सूचीबद्ध करें',
+                                    'ja' => '提供する特定のサービスをリストアップしてください',
+                                    'ko' => '제공하는 특정 서비스를 나열하세요',
+                                    'pt' => 'Liste os serviços específicos que você oferece',
+                                    'th' => 'แสดงรายการบริการเฉพาะที่คุณเสนอ',
+                                    'tl' => 'Ilista ang mga tiyak na serbisyong inaalok mo',
+                                    'zh' => '列出您提供的具体服务',
+                                ]),
+                                "type" => "multiselect",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Werbedienste, Einkaufspartner, Zahlungsdienste, Datenanalyse, Kundenmanagement, Community, Store, Punkteprogramm, Sonstiges',
+                                    'en' => 'Advertising Services, Shopping Partners, Payment Services, Data Analysis, Customer Management, Community, Store, Points Program, Other',
+                                    'fr' => 'Services publicitaires, Partenaires d\'achat, Services de paiement, Analyse de données, Gestion des clients, Communauté, Boutique, Programme de points, Autre',
+                                    'hi' => 'विज्ञापन सेवाएँ, खरीदारी भागीदार, भुगतान सेवाएँ, डेटा विश्लेषण, ग्राहक प्रबंधन, समुदाय, स्टोर, पॉइंट्स कार्यक्रम, अन्य',
+                                    'ja' => '広告サービス, ショッピングパートナー, 支払いサービス, データ分析, 顧客管理, コミュニティ, ストア, ポイントプログラム, その他',
+                                    'ko' => '광고 서비스, 쇼핑 파트너, 결제 서비스, 데이터 분석, 고객 관리, 커뮤니티, 스토어, 포인트 프로그램, 기타',
+                                    'pt' => 'Serviços de publicidade, Parceiros de compras, Serviços de pagamento, Análise de dados, Gestão de clientes, Comunidade, Loja, Programa de Pontos, Outro',
+                                    'th' => 'บริการโฆษณา, พันธมิตรการช้อปปิ้ง, บริการชำระเงิน, การวิเคราะห์ข้อมูล, การจัดการลูกค้า, ชุมชน, ร้านค้า, โปรแกรมคะแนน, อื่น ๆ',
+                                    'tl' => 'Mga Serbisyo sa Pag-aanunsyo, Mga Kasosyo sa Pamimili, Mga Serbisyo sa Pagbabayad, Pagsusuri ng Data, Pamamahala ng Customer, Komunidad, Tindahan, Programa ng Mga Puntos, Iba pa',
+                                    'zh' => '广告服务, 购物合作伙伴, 支付服务, 数据分析, 客户管理, 社区, 商店, 积分计划, 其他',
+                                ]),
+                                "placeholder" => "Select the services you offer..."
+                            ],
+                            [
+                                "label" => "Membership_Type",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie den Mitgliedschaftstyp aus, den Sie anbieten',
+                                    'en' => 'Select the type of membership you offer',
+                                    'fr' => 'Sélectionnez le type d\'abonnement que vous proposez',
+                                    'hi' => 'आप जो सदस्यता प्रदान करते हैं उसका प्रकार चुनें',
+                                    'ja' => '提供するメンバーシップの種類を選択してください',
+                                    'ko' => '제공하는 멤버십 유형을 선택하세요',
+                                    'pt' => 'Selecione o tipo de associação que você oferece',
+                                    'th' => 'เลือกประเภทของสมาชิกที่คุณเสนอ',
+                                    'tl' => 'Piliin ang uri ng membership na inaalok mo',
+                                    'zh' => '选择您提供的会员类型',
+                                ]),
+                                "type" => "select",
+                                "options" => $this->getLocalizedText([
+                                    'de' => 'Allgemeine Mitglieder, Unternehmensmitglieder, Einzelunternehmen-Mitglieder',
+                                    'en' => 'General Members, Corporate Members, Individual Business Members',
+                                    'fr' => 'Membres généraux, Membres d\'entreprise, Membres d\'affaires individuels',
+                                    'hi' => 'सामान्य सदस्य, कॉर्पोरेट सदस्य, व्यक्तिगत व्यवसाय सदस्य',
+                                    'ja' => '一般会員, 法人会員, 個人事業主会員',
+                                    'ko' => '일반 회원, 기업 회원, 개인 사업자 회원',
+                                    'pt' => 'Membros Gerais, Membros Corporativos, Membros de Negócios Individuais',
+                                    'th' => 'สมาชิกทั่วไป, สมาชิกองค์กร, สมาชิกธุรกิจรายบุคคล',
+                                    'tl' => 'Pangkalahatang Miyembro, Mga Miyembro ng Korporasyon, Mga Miyembro ng Indibidwal na Negosyo',
+                                    'zh' => '普通会员, 公司会员, 个体商户会员',
+                                ]),
+                                "placeholder" => "Select the membership type..."
+                            ],
+                            [
+                                "label" => "Account_Inactivity_Period",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie den Zeitraum ein, nach dem ein Konto als inaktiv gilt (in Monaten)',
+                                    'en' => 'Enter the period after which an account is considered inactive (in months)',
+                                    'fr' => 'Entrez la période après laquelle un compte est considéré comme inactif (en mois)',
+                                    'hi' => 'वह अवधि दर्ज करें जिसके बाद एक खाता निष्क्रिय माना जाता है (महीनों में)',
+                                    'ja' => 'アカウントが非アクティブと見なされる期間を入力してください（ヶ月）',
+                                    'ko' => '계정이 비활성으로 간주되는 기간을 입력하세요 (개월)',
+                                    'pt' => 'Insira o período após o qual uma conta é considerada inativa (em meses)',
+                                    'th' => 'ป้อนระยะเวลาหลังจากที่บัญชีถือว่าไม่ใช้งาน (เป็นเดือน)',
+                                    'tl' => 'Ilagay ang panahon pagkatapos kung kailan itinuturing na hindi aktibo ang isang account (sa buwan)',
+                                    'zh' => '输入账户被视为不活跃的期限（以月为单位）',
+                                ]),
+                                "type" => "number",
+                                "placeholder" => "e.g., 12"
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Generate Terms of Service for {{step1.input.Service_Name}} provided by {{step1.input.Company_Name}}. The terms should be structured as follows:
+            
+            Chapter 1: General Provisions
+            1. Purpose
+            2. Definitions
+            3. Effect and Amendment of Terms
+            4. Other Applicable Rules
+            
+            Chapter 2: Membership Registration and Service Use
+            5. Membership Registration
+            6. Provision of Services
+            7. Restriction, Suspension, and Modification of Services
+            
+            Chapter 3: Obligations of Contracting Parties
+            8. Member Obligations
+            9. Protection and Use of Personal Information
+            10. Notifications and Announcements
+            
+            Chapter 4: Termination of Service Agreement
+            11. Termination of Service Agreement
+            12. Compensation for Damages and Exemption from Liability
+            13. Copyright Ownership and Usage Restrictions
+            14. Dispute Resolution
+            
+            Each section should be tailored to {{step1.input.Service_Name}} and include the following details:
+            - Service description: {{step1.input.Service_Description}}
+            - Specific services: {{step1.input.Specific_Services}}
+            - Membership type: {{step1.input.Membership_Type}}
+            - Account inactivity period: {{step1.input.Account_Inactivity_Period}} months
+            
+            Use formal legal language suitable for Terms of Service while ensuring compliance with Korean laws and regulations. The terms should be comprehensive, clear, and protective of both the company and users' rights.",
+                        "background_information" => "You are a legal expert specializing in drafting Terms of Service for online business platforms, with a focus on Korean legal standards. Your task is to create comprehensive and legally sound Terms of Service that adhere to Korean legal standards and business practices, presented in English.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ]
+                ]),
+                'tags' => json_encode(["terms of service", "legal"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+               'name' => $this->getLocalizedText([
+                    'de' => 'SWOT-Analyse-Generator',
+                    'en' => 'SWOT Analysis Generator',
+                    'fr' => 'Générateur d\'Analyse SWOT',
+                    'hi' => 'SWOT विश्लेषण जनरेटर',
+                    'ja' => 'SWOT分析ジェネレーター',
+                    'ko' => 'SWOT 분석 생성기',
+                    'pt' => 'Gerador de Análise SWOT',
+                    'th' => 'เครื่องมือสร้างการวิเคราะห์ SWOT',
+                    'tl' => 'Tagabuo ng Pagsusuri ng SWOT',
+                    'zh' => 'SWOT分析生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Eingabe der Servicebeschreibung > Generierung der SWOT-Analyse',
+                    'en' => 'Service description input > SWOT analysis generation',
+                    'fr' => 'Saisie de la description du service > Génération de l\'analyse SWOT',
+                    'hi' => 'सेवा विवरण इनपुट > SWOT विश्लेषण उत्पादन',
+                    'ja' => 'サービス説明入力 > SWOT分析生成',
+                    'ko' => '서비스 설명 입력 > SWOT 분석 생성',
+                    'pt' => 'Entrada da descrição do serviço > Geração da análise SWOT',
+                    'th' => 'ป้อนคำอธิบายบริการ > สร้างการวิเคราะห์ SWOT',
+                    'tl' => 'Input ng paglalarawan ng serbisyo > Paggawa ng pagsusuri ng SWOT',
+                    'zh' => '服务描述输入 > SWOT分析生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2415,7 +3912,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "service_description",
-                                "description" => "Provide a brief description of the service or business",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie eine kurze Beschreibung des Dienstes oder Unternehmens an',
+                                    'en' => 'Provide a brief description of the service or business',
+                                    'fr' => 'Fournissez une brève description du service ou de l\'entreprise',
+                                    'hi' => 'सेवा या व्यवसाय का संक्षिप्त विवरण प्रदान करें',
+                                    'ja' => 'サービスまたは事業の簡単な説明を提供してください',
+                                    'ko' => '서비스 또는 비즈니스에 대한 간단한 설명을 제공하세요',
+                                    'pt' => 'Forneça uma breve descrição do serviço ou negócio',
+                                    'th' => 'ให้คำอธิบายสั้นๆ เกี่ยวกับบริการหรือธุรกิจ',
+                                    'tl' => 'Magbigay ng maikling paglalarawan ng serbisyo o negosyo',
+                                    'zh' => '提供服务或业务的简要描述',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2478,8 +3986,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Business Model Canvas Generator',
-                'description' => 'Business idea input > Business Model Canvas generation',
+              'name' => $this->getLocalizedText([
+                    'de' => 'Business Model Canvas Generator',
+                    'en' => 'Business Model Canvas Generator',
+                    'fr' => 'Générateur de Business Model Canvas',
+                    'hi' => 'बिजनेस मॉडल कैनवास जनरेटर',
+                    'ja' => 'ビジネスモデルキャンバスジェネレーター',
+                    'ko' => '비즈니스 모델 캔버스 생성기',
+                    'pt' => 'Gerador de Canvas de Modelo de Negócios',
+                    'th' => 'เครื่องมือสร้าง Business Model Canvas',
+                    'tl' => 'Tagabuo ng Business Model Canvas',
+                    'zh' => '商业模式画布生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Geschäftsidee-Eingabe > Generierung des Business Model Canvas',
+                    'en' => 'Business idea input > Business Model Canvas generation',
+                    'fr' => 'Saisie de l\'idée commerciale > Génération du Business Model Canvas',
+                    'hi' => 'व्यावसायिक विचार इनपुट > बिजनेस मॉडल कैनवास उत्पादन',
+                    'ja' => 'ビジネスアイデア入力 > ビジネスモデルキャンバス生成',
+                    'ko' => '비즈니스 아이디어 입력 > 비즈니스 모델 캔버스 생성',
+                    'pt' => 'Entrada da ideia de negócio > Geração do Canvas de Modelo de Negócios',
+                    'th' => 'ป้อนไอเดียธุรกิจ > สร้าง Business Model Canvas',
+                    'tl' => 'Input ng ideya ng negosyo > Paggawa ng Business Model Canvas',
+                    'zh' => '商业创意输入 > 商业模式画布生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2488,7 +4018,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "business_idea",
-                                "description" => "Provide a brief description of your business idea or concept",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Geben Sie eine kurze Beschreibung Ihrer Geschäftsidee oder Ihres Konzepts an',
+                                    'en' => 'Provide a brief description of your business idea or concept',
+                                    'fr' => 'Fournissez une brève description de votre idée ou concept commercial',
+                                    'hi' => 'अपने व्यावसायिक विचार या अवधारणा का संक्षिप्त विवरण प्रदान करें',
+                                    'ja' => 'ビジネスアイデアやコンセプトの簡単な説明を提供してください',
+                                    'ko' => '비즈니스 아이디어나 컨셉에 대한 간단한 설명을 제공하세요',
+                                    'pt' => 'Forneça uma breve descrição da sua ideia ou conceito de negócio',
+                                    'th' => 'ให้คำอธิบายสั้นๆ เกี่ยวกับไอเดียหรือแนวคิดทางธุรกิจของคุณ',
+                                    'tl' => 'Magbigay ng maikling paglalarawan ng iyong ideya o konsepto ng negosyo',
+                                    'zh' => '提供您的商业创意或概念的简要描述',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2607,8 +4148,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
             ],
             //기획
             [
-                'name' => '1Pager Generation Process',
-                'description' => 'Requirements input > 1Pager generation',
+                'name' => $this->getLocalizedText([
+                    'de' => '1Pager-Generierungsprozess',
+                    'en' => '1Pager Generation Process',
+                    'fr' => 'Processus de génération de 1Pager',
+                    'hi' => '1Pager उत्पादन प्रक्रिया',
+                    'ja' => '1Pager生成プロセス',
+                    'ko' => '1Pager 생성 프로세스',
+                    'pt' => 'Processo de Geração de 1Pager',
+                    'th' => 'กระบวนการสร้าง 1Pager',
+                    'tl' => 'Proseso ng Paggawa ng 1Pager',
+                    'zh' => '1Pager生成过程',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Anforderungen eingeben > 1Pager generieren',
+                    'en' => 'Requirements input > 1Pager generation',
+                    'fr' => 'Saisie des exigences > Génération de 1Pager',
+                    'hi' => 'आवश्यकताओं का इनपुट > 1Pager उत्पादन',
+                    'ja' => '要件入力 > 1Pager生成',
+                    'ko' => '요구사항 입력 > 1Pager 생성',
+                    'pt' => 'Entrada de requisitos > Geração de 1Pager',
+                    'th' => 'ป้อนความต้องการ > สร้าง 1Pager',
+                    'tl' => 'Input ng mga kinakailangan > Paggawa ng 1Pager',
+                    'zh' => '要求输入 > 1Pager生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2617,7 +4180,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "key_points",
-                                "description" => "List the key points or requirements (separated by commas)",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Liste der Hauptpunkte oder Anforderungen (durch Kommas getrennt)',
+                                    'en' => 'List the key points or requirements (separated by commas)',
+                                    'fr' => 'Lister les points clés ou exigences (séparés par des virgules)',
+                                    'hi' => 'मुख्य बिंदुओं या आवश्यकताओं को सूचीबद्ध करें (अल्पविराम से अलग करें)',
+                                    'ja' => '要点や要件をリストアップしてください（コンマで区切る）',
+                                    'ko' => '핵심 사항 또는 요구 사항 나열 (쉼표로 구분)',
+                                    'pt' => 'Liste os pontos-chave ou requisitos (separados por vírgulas)',
+                                    'th' => 'ระบุจุดสำคัญหรือความต้องการ (แยกด้วยเครื่องหมายจุลภาค)',
+                                    'tl' => 'Ilista ang mga pangunahing punto o kinakailangan (hinihiwalay ng mga kuwit)',
+                                    'zh' => '列出关键点或要求（用逗号分隔）',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2641,8 +4215,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => '6Pager Generation Process',
-                'description' => 'Requirements input > 6Pager generation',
+                'name' => $this->getLocalizedText([
+                    'de' => '6Pager-Generierungsprozess',
+                    'en' => '6Pager Generation Process',
+                    'fr' => 'Processus de génération de 6Pager',
+                    'hi' => '6Pager उत्पादन प्रक्रिया',
+                    'ja' => '6Pager生成プロセス',
+                    'ko' => '6Pager 생성 프로세스',
+                    'pt' => 'Processo de Geração de 6Pager',
+                    'th' => 'กระบวนการสร้าง 6Pager',
+                    'tl' => 'Proseso ng Paggawa ng 6Pager',
+                    'zh' => '6Pager生成过程',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Anforderungen eingeben > 6Pager generieren',
+                    'en' => 'Requirements input > 6Pager generation',
+                    'fr' => 'Saisie des exigences > Génération de 6Pager',
+                    'hi' => 'आवश्यकताओं का इनपुट > 6Pager उत्पादन',
+                    'ja' => '要件入力 > 6Pager生成',
+                    'ko' => '요구사항 입력 > 6Pager 생성',
+                    'pt' => 'Entrada de requisitos > Geração de 6Pager',
+                    'th' => 'ป้อนความต้องการ > สร้าง 6Pager',
+                    'tl' => 'Input ng mga kinakailangan > Paggawa ng 6Pager',
+                    'zh' => '要求输入 > 6Pager生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2651,7 +4248,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "key_points",
-                                "description" => "List the key points or requirements (separated by commas)",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Liste der Hauptpunkte oder Anforderungen (durch Kommas getrennt)',
+                                    'en' => 'List the key points or requirements (separated by commas)',
+                                    'fr' => 'Lister les points clés ou exigences (séparés par des virgules)',
+                                    'hi' => 'मुख्य बिंदुओं या आवश्यकताओं को सूचीबद्ध करें (अल्पविराम से अलग करें)',
+                                    'ja' => '要点や要件をリストアップしてください（コンマで区切る）',
+                                    'ko' => '핵심 사항 또는 요구 사항 나열 (쉼표로 구분)',
+                                    'pt' => 'Liste os pontos-chave ou requisitos (separados por vírgulas)',
+                                    'th' => 'ระบุจุดสำคัญหรือความต้องการ (แยกด้วยเครื่องหมายจุลภาค)',
+                                    'tl' => 'Ilista ang mga pangunahing punto o kinakailangan (hinihiwalay ng mga kuwit)',
+                                    'zh' => '列出关键点或要求（用逗号分隔）',
+                                ]),
                                 "type" => "textarea",
                                 "options" => null,
                                 "file_type" => null
@@ -2735,23 +4343,32 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'created_at' => now(),
                 'updated_at' => now(),
             ],                
-            //요약
-            [
-                'name' => 'Webpage Summary',
-                'description' => 'url > scrap > regenerative',
-                'steps' => json_encode([
-                    ["type" => "input", "step_number" => 1, "uuid" => $generateUuid(), "input_fields" => [["label" => "url", "description" => "blog contents keyword", "type" => "text", "options" => null, "file_type" => null]]],
-                    ["type" => "scrap_webpage", "step_number" => 2, "uuid" => $generateUuid(), "url_source" => "user_input", "fixed_url" => null, "extraction_type" => "text_only"],
-                    ["type" => "generate_text", "step_number" => 3, "uuid" => $generateUuid(), "prompt" => "Create a detailed and engaging blog post centered around the keyword '{{step1.input.url}}'. The blog post should be informative, well-structured, and optimized for SEO. Start with a compelling introduction that hooks the reader, then provide valuable insights, tips, or information related to '{{step1.input.keyword}}'. Use subheadings to organize the content into easily digestible sections, and include relevant examples, statistics, or case studies to support your points. Conclude with a strong call-to-action, encouraging readers to share the post or engage with your brand.", "background_information" => "As a blog expert, you have a deep understanding of crafting high-quality content that resonates with readers and ranks well in search engines. Using your expertise, create a detailed and engaging blog post centered around the keyword '{{step1.input.keyword}}'.", "ai_provider" => "openai", "ai_model" => "gpt-4o-2024-05-13o-2024-05-13", "temperature" => 0.7, "reference_file" => null]
-                ]),
-                'tags' => json_encode(["webpage", "summary"]),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
             //이미지
             [
-                'name' => '[Dalle3] Image Generate',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => '[Dalle3] Bildgenerierung',
+                    'en' => '[Dalle3] Image Generate',
+                    'fr' => '[Dalle3] Génération d\'image',
+                    'hi' => '[Dalle3] छवि उत्पादन',
+                    'ja' => '[Dalle3] 画像生成',
+                    'ko' => '[Dalle3] 이미지 생성기',
+                    'pt' => '[Dalle3] Geração de Imagem',
+                    'th' => '[Dalle3] สร้างภาพ',
+                    'tl' => '[Dalle3] Paggawa ng Imahe',
+                    'zh' => '[Dalle3] 图像生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2760,7 +4377,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -2807,8 +4435,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],            
             [
-                'name' => '[StableDiffusion] Image Generate',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => '[StableDiffusion] Bildgenerierung',
+                    'en' => '[StableDiffusion] Image Generate',
+                    'fr' => '[StableDiffusion] Génération d\'image',
+                    'hi' => '[StableDiffusion] छवि उत्पादन',
+                    'ja' => '[StableDiffusion] 画像生成',
+                    'ko' => '[StableDiffusion] 이미지 생성기',
+                    'pt' => '[StableDiffusion] Geração de Imagem',
+                    'th' => '[StableDiffusion] สร้างภาพ',
+                    'tl' => '[StableDiffusion] Paggawa ng Imahe',
+                    'zh' => '[StableDiffusion] 图像生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2817,7 +4467,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -2864,8 +4525,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],            
             [
-                'name' => '[FLUX] Image Generate',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Bildgenerierung',
+                    'en' => '[FLUX] Image Generate',
+                    'fr' => '[FLUX] Génération d\'image',
+                    'hi' => '[FLUX] छवि उत्पादन',
+                    'ja' => '[FLUX] 画像生成',
+                    'ko' => '[FLUX] 이미지 생성기',
+                    'pt' => '[FLUX] Geração de Imagem',
+                    'th' => '[FLUX] สร้างภาพ',
+                    'tl' => '[FLUX] Paggawa ng Imahe',
+                    'zh' => '[FLUX] 图像生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2874,7 +4557,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -2921,8 +4615,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],            
             [
-                'name' => '[FLUX] Enhanced Image Generate',
-                'description' => 'keyword > prompt > image generate',
+            'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Erweiterte Bildgenerierung',
+                    'en' => '[FLUX] Enhanced Image Generate',
+                    'fr' => '[FLUX] Génération d\'image améliorée',
+                    'hi' => '[FLUX] उन्नत छवि उत्पादन',
+                    'ja' => '[FLUX] 強化画像生成',
+                    'ko' => '[FLUX] 향상된 이미지 생성기',
+                    'pt' => '[FLUX] Geração de Imagem Aprimorada',
+                    'th' => '[FLUX] สร้างภาพขั้นสูง',
+                    'tl' => '[FLUX] Pinahusay na Paggawa ng Imahe',
+                    'zh' => '[FLUX] 增强图像生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2931,7 +4647,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -2978,8 +4705,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => '[FLUX] Polaroid Photograph Generate',
-                'description' => 'keyword > prompt > image generate',
+               'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Polaroid-Fotogenerierung',
+                    'en' => '[FLUX] Polaroid Photograph Generate',
+                    'fr' => '[FLUX] Génération de photographie Polaroid',
+                    'hi' => '[FLUX] पोलरॉइड फ़ोटोग्राफ़ उत्पादन',
+                    'ja' => '[FLUX] ポラロイド写真生成',
+                    'ko' => '[FLUX] 폴라로이드 포토그래피 생성기',
+                    'pt' => '[FLUX] Geração de Fotografia Polaroid',
+                    'th' => '[FLUX] สร้างภาพถ่ายโพลารอยด์',
+                    'tl' => '[FLUX] Paggawa ng Larawang Polaroid',
+                    'zh' => '[FLUX] 宝丽来照片生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -2988,7 +4737,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3040,8 +4800,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => '[FLUX] flmft kodachrome style Image Generate',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] flmft Bildgenerierung im Kodachrome-Stil',
+                    'en' => '[FLUX] flmft Kodachrome Style Image Generate',
+                    'fr' => '[FLUX] Génération d\'image style Kodachrome flmft',
+                    'hi' => '[FLUX] flmft कोडक्रोम स्टाइल इमेज उत्पादन',
+                    'ja' => '[FLUX] flmft コダクロームスタイル画像生成',
+                    'ko' => '[FLUX] 코닥 필름 스타일 이미지 생성',
+                    'pt' => '[FLUX] Geração de Imagem Estilo Kodachrome flmft',
+                    'th' => '[FLUX] สร้างภาพสไตล์ Kodachrome flmft',
+                    'tl' => '[FLUX] Paggawa ng Imahe sa Estilo ng Kodachrome flmft',
+                    'zh' => '[FLUX] flmft 柯达克罗姆风格图像生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3050,7 +4832,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3102,8 +4895,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => '90s Art Generate',
-                'description' => 'keyword > prompt > image generate',
+            'name' => $this->getLocalizedText([
+                    'de' => '90er-Jahre Kunstgenerierung',
+                    'en' => '90s Art Generate',
+                    'fr' => 'Génération d\'art des années 90',
+                    'hi' => '90 के दशक की कला उत्पादन',
+                    'ja' => '90年代アート生成',
+                    'ko' => '90\'s 아트 생성',
+                    'pt' => 'Geração de Arte dos Anos 90',
+                    'th' => 'สร้างงานศิลปะยุค 90',
+                    'tl' => 'Paggawa ng Sining ng Dekada 90',
+                    'zh' => '90年代艺术生成',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3112,7 +4928,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3159,8 +4986,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],            
             [
-                'name' => '20s Anime Style Image Generate',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => '20er-Jahre Anime-Stil Bildgenerierung',
+                    'en' => '20s Anime Style Image Generate',
+                    'fr' => 'Génération d\'image style anime des années 20',
+                    'hi' => '20 के दशक की एनीमे शैली छवि उत्पादन',
+                    'ja' => '20年代アニメスタイル画像生成',
+                    'ko' => '2000년대 애니메이션 스타일 이미지 생성',
+                    'pt' => 'Geração de Imagem Estilo Anime dos Anos 20',
+                    'th' => 'สร้างภาพสไตล์อนิเมะยุค 20',
+                    'tl' => 'Paggawa ng Imahe sa Estilo ng Anime ng Dekada 20',
+                    'zh' => '20年代动漫风格图像生成',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3169,7 +5019,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3216,8 +5077,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],           
             [
-                'name' => 'Anime Sketch Image Generate',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => 'Anime-Skizzenbild-Generierung',
+                    'en' => 'Anime Sketch Image Generate',
+                    'fr' => 'Génération d\'image esquisse d\'anime',
+                    'hi' => 'एनीमे स्केच छवि उत्पादन',
+                    'ja' => 'アニメスケッチ画像生成',
+                    'ko' => '애니메이션 스케치 이미지 생성',
+                    'pt' => 'Geração de Imagem de Esboço de Anime',
+                    'th' => 'สร้างภาพสเก็ตช์อนิเมะ',
+                    'tl' => 'Paggawa ng Imahe ng Sketch ng Anime',
+                    'zh' => '动漫草图图像生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3226,7 +5109,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3278,8 +5172,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],     
             [
-                'name' => '[FLUX] Pixel-Art Generate',
-                'description' => 'keyword > prompt > image generate',
+               'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Pixel-Art-Generierung',
+                    'en' => '[FLUX] Pixel-Art Generate',
+                    'fr' => '[FLUX] Génération de Pixel-Art',
+                    'hi' => '[FLUX] पिक्सेल-आर्ट उत्पादन',
+                    'ja' => '[FLUX] ピクセルアート生成',
+                    'ko' => '[FLUX] 픽셀 아트 생성기',
+                    'pt' => '[FLUX] Geração de Pixel-Art',
+                    'th' => '[FLUX] สร้าง Pixel-Art',
+                    'tl' => '[FLUX] Paggawa ng Pixel-Art',
+                    'zh' => '[FLUX] 像素艺术生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3288,7 +5204,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3335,8 +5262,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],     
             [
-                'name' => '[FLUX] Pixel-Art Generate',
-                'description' => 'keyword > prompt > image generate',
+            'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Pixel-Art-Generierung im Poketmon-Charakterstil',
+                    'en' => '[FLUX] Poketmon Style Character Pixel-Art Generate',
+                    'fr' => '[FLUX] Génération de Pixel-Art de personnage style Poketmon',
+                    'hi' => '[FLUX] पोकेटमोन शैली चरित्र पिक्सेल-आर्ट उत्पादन',
+                    'ja' => '[FLUX] ポケモンスタイルキャラクターピクセルアート生成',
+                    'ko' => '[FLUX] 포켓몬스터 캐릭터 스타일 픽셀아트 생성기',
+                    'pt' => '[FLUX] Geração de Pixel-Art de Personagem Estilo Poketmon',
+                    'th' => '[FLUX] สร้างภาพพิกเซลตัวละครสไตล์โปเกมอน',
+                    'tl' => '[FLUX] Paggawa ng Pixel-Art ng Karakter sa Estilo ng Poketmon',
+                    'zh' => '[FLUX] 宝可梦风格角色像素艺术生成',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3345,7 +5295,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3358,24 +5319,24 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "uuid" => $generateUuid(),
                         "prompt" => "Using the keyword '{{step1.input.keyword}}', create a concise prompt in English for the pokemon-trainer-sprites-pixelart-flux AI image generator. Follow this format:
 
-    'a pixel image of [keyword description]'
+                            'a pixel image of [keyword description]'
 
-    Examples:
-    - a pixel image of iron man on red armor on white background
-    - a pixel image of assasin's creed, white hood
-    - a pixel image of belle from beauty and the beast
-    - a pixel image of the flash
-    - a pixel image of superman
-    - a pixel image of ariel from the little mermaid
+                            Examples:
+                            - a pixel image of iron man on red armor on white background
+                            - a pixel image of assasin's creed, white hood
+                            - a pixel image of belle from beauty and the beast
+                            - a pixel image of the flash
+                            - a pixel image of superman
+                            - a pixel image of ariel from the little mermaid
 
-    Guidelines:
-    - Always start with 'a pixel image of'.
-    - Keep the description after 'of' brief and focused on the key elements.
-    - Do not include any additional style descriptors beyond 'pixel image'.
-    - Ensure the description accurately represents the keyword.
-    - Avoid complex backgrounds or multiple characters unless specifically requested in the keyword.
+                            Guidelines:
+                            - Always start with 'a pixel image of'.
+                            - Keep the description after 'of' brief and focused on the key elements.
+                            - Do not include any additional style descriptors beyond 'pixel image'.
+                            - Ensure the description accurately represents the keyword.
+                            - Avoid complex backgrounds or multiple characters unless specifically requested in the keyword.
 
-    Please provide the image prompt now in English, formatted for pokemon-trainer-sprites-pixelart-flux.",
+                            Please provide the image prompt now in English, formatted for pokemon-trainer-sprites-pixelart-flux.",
                         "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools. Your descriptions are known for their detail, clarity, and ability to inspire visually stunning images.",
                         "ai_provider" => "openai",
                         "ai_model" => "gpt-4o-2024-05-13",
@@ -3399,8 +5360,31 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],     
             [
-                'name' => '[FLUX] LineWork Generate',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Linienarbeit-Generierung',
+                    'en' => '[FLUX] LineWork Generate',
+                    'fr' => '[FLUX] Génération de LineWork',
+                    'hi' => '[FLUX] रेखा-कार्य उत्पादन',
+                    'ja' => '[FLUX] 線画生成',
+                    'ko' => '[FLUX] 라인워크 생성기',
+                    'pt' => '[FLUX] Geração de LineWork',
+                    'th' => '[FLUX] สร้างภาพ LineWork',
+                    'tl' => '[FLUX] Paggawa ng LineWork',
+                    'zh' => '[FLUX] 线条艺术生成',
+                ]),
+
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3409,7 +5393,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the image",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3456,8 +5451,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],    
             [
-                'name' => '[FLUX] Logo Generate',
-                'description' => 'keyword > prompt > image generate',
+              'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Logo-Generierung',
+                    'en' => '[FLUX] Logo Generate',
+                    'fr' => '[FLUX] Génération de logo',
+                    'hi' => '[FLUX] लोगो उत्पादन',
+                    'ja' => '[FLUX] ロゴ生成',
+                    'ko' => '[FLUX] 로고 생성기',
+                    'pt' => '[FLUX] Geração de Logotipo',
+                    'th' => '[FLUX] สร้างโลโก้',
+                    'tl' => '[FLUX] Paggawa ng Logo',
+                    'zh' => '[FLUX] 徽标生成',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3466,7 +5483,18 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                         "input_fields" => [
                             [
                                 "label" => "keyword",
-                                "description" => "Enter the keyword or phrase for the logo",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                    'en' => 'Enter the keyword or phrase for the image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                    'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => '画像のキーワードやフレーズを入力してください',
+                                    'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                    'zh' => '输入图像的关键词或短语',
+                                ]),
                                 "type" => "text",
                                 "options" => null,
                                 "file_type" => null
@@ -3519,8 +5547,30 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
                 'updated_at' => now(),
             ],
             [
-                'name' => '[FLUX] NSFW Generate(+18)',
-                'description' => 'keyword > prompt > image generate',
+                'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] NSFW-Generierung (+18)',
+                    'en' => '[FLUX] NSFW Generate (+18)',
+                    'fr' => '[FLUX] Génération NSFW (+18)',
+                    'hi' => '[FLUX] एनएसएफडब्ल्यू उत्पादन (+18)',
+                    'ja' => '[FLUX] NSFW生成 (+18)',
+                    'ko' => '[FLUX] NSFW 생성(+18)',
+                    'pt' => '[FLUX] Geração NSFW (+18)',
+                    'th' => '[FLUX] สร้าง NSFW (+18)',
+                    'tl' => '[FLUX] Paggawa ng NSFW (+18)',
+                    'zh' => '[FLUX] NSFW生成 (+18)',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                    'en' => 'keyword > prompt > image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > 画像生成',
+                    'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                    'tl' => 'keyword > prompt > paggawa ng imahe',
+                    'zh' => '关键词 > 提示 > 图像生成',
+                ]),
                 'steps' => json_encode([
                     [
                         "type" => "input",
@@ -3558,5 +5608,10 @@ Generate only the HTML code with Tailwind CSS classes based on the provided UI/U
             $data['id'] = $maxId + $index + 1;
             DB::table('logics')->insert($data);
         }
+    }
+
+    private function getLocalizedText($texts) {
+        $locale = app()->getLocale();
+        return $texts[$locale] ?? $texts['en'];  // Fallback to English if translation not available
     }
 };
