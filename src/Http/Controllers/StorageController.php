@@ -75,6 +75,31 @@ class StorageController extends BaseController
             $contentGenerate->content = $this->prepareContentForStorage($lastStep, $contentType);
         }
 
+        if ($lastStepType === 'generate_text' || $lastStepType === 'content_integration') {
+            $content = is_string($resultData) ? $resultData : ($resultData['result'] ?? json_encode($resultData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            
+            // 이스케이프된 줄바꿈을 실제 줄바꿈으로 변환
+            $content = str_replace('\\n', "\n", $content);
+            
+            // Mermaid 다이어그램 처리
+            $content = preg_replace_callback('/<pre class="mermaid">(.*?)<\/pre>/s', function($matches) {
+                // Mermaid 다이어그램 내부의 줄바꿈을 보존
+                $mermaidContent = str_replace("\n", "___NEWLINE___", $matches[1]);
+                return "<pre class=\"mermaid\">{$mermaidContent}</pre>";
+            }, $content);
+            
+            // 나머지 텍스트의 줄바꿈을 \\n으로 변환
+            $content = preg_replace('/\n(?!<pre class="mermaid"|<\/pre>)/', "\\n", $content);
+            
+            // Mermaid 다이어그램 내부의 줄바꿈 복원
+            $content = str_replace("___NEWLINE___", "\n", $content);
+            
+            $contentGenerate->content = $content;
+        } else {
+            // 다른 타입의 콘텐츠 처리 (이전 코드와 동일)
+            $contentGenerate->content = $this->prepareContentForStorage($lastStep, $contentType);
+        }
+
         $contentGenerate->published_date = now();
         $contentGenerate->status = 'draft';
         $contentGenerate->save();
@@ -106,7 +131,7 @@ class StorageController extends BaseController
             }
             return $content;
         }
-
+    
         if (is_string($content) && $this->isJson($content)) {
             $decodedContent = json_decode($content, true);
             if (isset($decodedContent['result'])) {
@@ -115,40 +140,48 @@ class StorageController extends BaseController
                 $content = $decodedContent;
             }
         }
-
+    
         if (is_array($content) || is_object($content)) {
             if (isset($content['result'])) {
                 $content = $content['result'];
             }
             $content = json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
-
+    
         if (!is_string($content)) {
             $content = json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
-
+    
         $content = $this->decodeUnicode($content);
-
+    
         // 앞뒤의 따옴표 제거 (json_encode로 인해 추가된 것)
         $content = trim($content, '"');
-
+    
         // HTML 엔티티 디코딩
         $content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-        // Markdown 코드 블록 표시 제거
-        $content = preg_replace('/^```[\w]*\s*\n/m', '', $content);
-        $content = preg_replace('/\n```\s*$/m', '', $content);
-        $content = preg_replace('/```[\w]*,?\s*\n/m', '', $content);
-
+    
+        // 코드 블록을 임시로 치환
+        $codeBlocks = [];
+        $content = preg_replace_callback('/```[\s\S]*?```/', function($matches) use (&$codeBlocks) {
+            $placeholder = '___CODE_BLOCK_' . count($codeBlocks) . '___';
+            $codeBlocks[] = $matches[0];
+            return $placeholder;
+        }, $content);
+    
         // 줄바꿈 문자 정규화 (PHP_EOL을 사용)
         $content = str_replace(["\r\n", "\r", "\n"], PHP_EOL, $content);
         
         // 연속된 줄바꿈을 하나로 줄임
         $content = preg_replace('/('.preg_quote(PHP_EOL, '/').'){3,}/', PHP_EOL.PHP_EOL, $content);
-
+    
+        // 코드 블록 복원
+        $content = preg_replace_callback('/___CODE_BLOCK_(\d+)___/', function($matches) use ($codeBlocks) {
+            return $codeBlocks[$matches[1]];
+        }, $content);
+    
         // 앞뒤 공백 제거
         $content = trim($content);
-
+    
         return $content;
     }
 

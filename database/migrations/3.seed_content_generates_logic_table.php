@@ -4149,6 +4149,831 @@ return new class extends Migration
             //기획
             [
                 'name' => $this->getLocalizedText([
+                    'de' => 'User Story-Generierungsprozess',
+                    'en' => 'User Story Generation Process',
+                    'fr' => 'Processus de génération de User Story',
+                    'hi' => 'यूजर स्टोरी उत्पादन प्रक्रिया',
+                    'ja' => 'ユーザーストーリー生成プロセス',
+                    'ko' => '사용자 스토리 생성 프로세스',
+                    'pt' => 'Processo de Geração de User Story',
+                    'th' => 'กระบวนการสร้าง User Story',
+                    'tl' => 'Proseso ng Paggawa ng User Story',
+                    'zh' => '用户故事生成过程',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Eingabe der Produktanforderungen > Generierung von User Stories',
+                    'en' => 'Product requirements input > User Story generation',
+                    'fr' => 'Saisie des exigences du produit > Génération de User Story',
+                    'hi' => 'उत्पाद आवश्यकताओं का इनपुट > यूजर स्टोरी उत्पादन',
+                    'ja' => '製品要件入力 > ユーザーストーリー生成',
+                    'ko' => '제품 요구사항 입력 > 사용자 스토리 생성',
+                    'pt' => 'Entrada de requisitos do produto > Geração de User Story',
+                    'th' => 'ป้อนความต้องการของผลิตภัณฑ์ > สร้าง User Story',
+                    'tl' => 'Input ng mga kinakailangan ng produkto > Paggawa ng User Story',
+                    'zh' => '产品需求输入 > 用户故事生成',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "product_requirement",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie kurz die Produktanforderung oder die zu entwickelnde Funktion',
+                                    'en' => 'Briefly describe the product requirement or feature to be developed',
+                                    'fr' => 'Décrivez brièvement l\'exigence du produit ou la fonctionnalité à développer',
+                                    'hi' => 'उत्पाद की आवश्यकता या विकसित की जाने वाली सुविधा का संक्षेप में वर्णन करें',
+                                    'ja' => '製品要件または開発する機能について簡単に説明してください',
+                                    'ko' => '개발할 제품 요구사항 또는 기능에 대해 간단히 설명해 주세요',
+                                    'pt' => 'Descreva brevemente o requisito do produto ou recurso a ser desenvolvido',
+                                    'th' => 'อธิบายความต้องการของผลิตภัณฑ์หรือฟีเจอร์ที่จะพัฒนาอย่างย่อ',
+                                    'tl' => 'Ilarawan nang maikli ang kinakailangan ng produkto o feature na dapat i-develop',
+                                    'zh' => '简要描述产品需求或要开发的功能',
+                                ]),
+                                "type" => "textarea",
+                                "options" => null,
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the following product requirement or feature description, generate a set of user stories:
+            
+            Product Requirement: {{step1.input.product_requirement}}
+            
+            Generate 3-5 user stories that cover different aspects of this requirement. Each user story should follow this format:
+            
+            * (유저)[User type] 는
+            * (목적)[Purpose]하기 위해
+            * (액션)[Action]할 수 있다.
+            
+            Ensure that each user story:
+            1. Identifies a specific user type
+            2. Clearly states the user's goal or purpose
+            3. Describes a concrete action the user can take
+            
+            The user stories should cover various aspects of the described feature or requirement, considering different user types and scenarios when applicable.
+            
+            Please generate the user stories now.",
+                        "background_information" => "You are an experienced product owner with expertise in breaking down product requirements into clear, concise, and valuable user stories for agile development teams.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ]
+                ]),
+                'tags' => json_encode(["user story", "agile", "product development"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Use-Case-Diagramm Generierungsprozess',
+                    'en' => 'Use Case Diagram Generation Process',
+                    'fr' => 'Processus de génération de diagramme de cas d\'utilisation',
+                    'hi' => 'यूज केस डायग्राम उत्पादन प्रक्रिया',
+                    'ja' => 'ユースケース図生成プロセス',
+                    'ko' => '유스 케이스 다이어그램 생성 프로세스',
+                    'pt' => 'Processo de Geração de Diagrama de Caso de Uso',
+                    'th' => 'กระบวนการสร้างแผนภาพ Use Case',
+                    'tl' => 'Proseso ng Paggawa ng Use Case Diagram',
+                    'zh' => '用例图生成过程',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Eingabe der Systemanforderungen > Generierung des Use-Case-Diagramms',
+                    'en' => 'System requirements input > Use Case Diagram generation',
+                    'fr' => 'Saisie des exigences du système > Génération de diagramme de cas d\'utilisation',
+                    'hi' => 'सिस्टम आवश्यकताओं का इनपुट > यूज केस डायग्राम उत्पादन',
+                    'ja' => 'システム要件入力 > ユースケース図生成',
+                    'ko' => '시스템 요구사항 입력 > 유스 케이스 다이어그램 생성',
+                    'pt' => 'Entrada de requisitos do sistema > Geração de Diagrama de Caso de Uso',
+                    'th' => 'ป้อนความต้องการของระบบ > สร้างแผนภาพ Use Case',
+                    'tl' => 'Input ng mga kinakailangan ng sistema > Paggawa ng Use Case Diagram',
+                    'zh' => '系统需求输入 > 用例图生成',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "system_requirement",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie kurz die Systemanforderung oder die zu entwickelnde Funktion',
+                                    'en' => 'Briefly describe the system requirement or feature to be developed',
+                                    'fr' => 'Décrivez brièvement l\'exigence du système ou la fonctionnalité à développer',
+                                    'hi' => 'सिस्टम की आवश्यकता या विकसित की जाने वाली सुविधा का संक्षेप में वर्णन करें',
+                                    'ja' => 'システム要件または開発する機能について簡単に説明してください',
+                                    'ko' => '개발할 시스템 요구사항 또는 기능에 대해 간단히 설명해 주세요',
+                                    'pt' => 'Descreva brevemente o requisito do sistema ou recurso a ser desenvolvido',
+                                    'th' => 'อธิบายความต้องการของระบบหรือฟีเจอร์ที่จะพัฒนาอย่างย่อ',
+                                    'tl' => 'Ilarawan nang maikli ang kinakailangan ng sistema o feature na dapat i-develop',
+                                    'zh' => '简要描述系统需求或要开发的功能',
+                                ]),
+                                "type" => "textarea",
+                                "options" => null,
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the following system requirement or feature description, create a detailed use case diagram using Mermaid syntax. The diagram should comprehensively visualize the interaction between the system and its users, including various scenarios and relationships.
+
+                            System Requirement: {{step1.input.system_requirement}}
+
+                            Create a Mermaid flowchart that:
+                            1. Identifies all actors (users and external systems) involved
+                            2. Shows a comprehensive set of use cases (actions) that the actors can perform
+                            3. Illustrates various types of relationships between actors and use cases (e.g., association, include, extend)
+                            4. Includes the system boundary to clearly separate the system from external actors
+                            5. Represents any dependencies or relationships between use cases
+                            6. Incorporates sub-systems or groupings of related use cases if applicable
+
+                            Use the following Mermaid syntax structure and expand upon it:
+
+                            <pre class=\"mermaid\">
+                            flowchart TD
+                                subgraph System Boundary
+                                    subgraph Subsystem1
+                                        A([User1]) -->|Main Function| B(Use Case 1)
+                                        B -->|Include| C(Use Case 2)
+                                        D(Use Case 3) -.->|Extend| B
+                                    end
+                                    subgraph Subsystem2
+                                        E([User2]) -->|Main Function| F(Use Case 4)
+                                        G([External System]) -.->|Interface| F
+                                    end
+                                    H(Use Case 5)
+                                end
+                                A -->|Additional Function| H
+                                E -->|Additional Function| H
+                                I([Administrator]) -->|Manage| B
+                                I -->|Manage| F
+                            </pre>
+
+                            Please ensure that:
+                            - Actors are represented with double parentheses: ([Actor])
+                            - Use cases are represented with single parentheses: (Use Case)
+                            - The system boundary and sub-systems are clearly defined using subgraphs
+                            - Various relationship types are used:
+                            * Solid lines with arrows (-->) for associations
+                            * Dotted lines with arrows (-.->) for extend or include relationships
+                            * Use |text| to label relationships appropriately
+                            - Group related use cases into logical sub-systems or modules
+                            - Include secondary actors or external systems if relevant
+                            - Represent complex scenarios with multiple interconnected use cases
+                            - Each element of the diagram is on a separate line (do not use \n characters)
+                            - Use Korean labels for actors, actions, and use cases
+                            - Add notes or comments using %% for clarity if needed
+
+                            Generate a comprehensive and detailed Mermaid flowchart for the use case diagram now, based on the given system requirement. Ensure the diagram captures the complexity and nuances of the system. Place the entire flowchart code within the <pre class=\"mermaid\"></pre> tags.",
+                        "background_information" => "You are a skilled system analyst with expertise in creating clear and informative use case diagrams to visualize system interactions. Your task is to interpret the given system requirement and create a comprehensive use case diagram that accurately represents the system's functionality and user interactions.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ]
+                ]),
+                'tags' => json_encode(["use case diagram", "system analysis", "software development"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'UI/UX-Wireframe-Generator',
+                    'en' => 'UI/UX Wireframe Generator',
+                    'fr' => 'Générateur de Wireframe UI/UX',
+                    'hi' => 'UI/UX वायरफ्रेम जनरेटर',
+                    'ja' => 'UI/UXワイヤーフレームジェネレーター',
+                    'ko' => 'UI/UX 와이어프레임 생성기',
+                    'pt' => 'Gerador de Wireframe UI/UX',
+                    'th' => 'เครื่องมือสร้างไวร์เฟรม UI/UX',
+                    'tl' => 'Tagabuo ng Wireframe ng UI/UX',
+                    'zh' => 'UI/UX线框图生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Texteingabe der Beschreibung > Generierung von UI/UX-Wireframes basierend auf der bereitgestellten Beschreibung',
+                    'en' => 'Text description input > Generate UI/UX wireframes based on the provided description',
+                    'fr' => 'Saisie de la description textuelle > Génération de wireframes UI/UX basés sur la description fournie',
+                    'hi' => 'पाठ विवरण इनपुट > प्रदान किए गए विवरण के आधार पर UI/UX वायरफ्रेम उत्पन्न करें',
+                    'ja' => 'テキスト説明入力 > 提供された説明に基づいてUI/UXワイヤーフレームを生成',
+                    'ko' => '텍스트 설명 입력 > 제공된 설명을 바탕으로 UI/UX 와이어프레임 생성',
+                    'pt' => 'Entrada de descrição de texto > Gerar wireframes UI/UX com base na descrição fornecida',
+                    'th' => 'ป้อนคำอธิบายเป็นข้อความ > สร้างไวร์เฟรม UI/UX ตามคำอธิบายที่ให้มา',
+                    'tl' => 'Input ng paglalarawan sa teksto > Bumuo ng mga wireframe ng UI/UX batay sa ibinigay na paglalarawan',
+                    'zh' => '文本描述输入 > 基于提供的描述生成UI/UX线框图',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "UI/UX Description",
+                                "description"=> $this->getLocalizedText([
+                                    'de' => 'Geben Sie eine detaillierte Beschreibung des UI/UX-Designs ein, für das Sie ein Wireframe erstellen möchten',
+                                    'en' => 'Provide a detailed description of the UI/UX design you want to create a wireframe for',
+                                    'fr' => 'Fournissez une description détaillée du design UI/UX pour lequel vous souhaitez créer un wireframe',
+                                    'hi' => 'आप जिस UI/UX डिज़ाइन का वायरफ्रेम बनाना चाहते हैं उसका विस्तृत विवरण प्रदान करें',
+                                    'ja' => 'ワイヤーフレームを作成したいUI/UXデザインの詳細な説明を提供してください',
+                                    'ko' => '와이어프레임을 만들고자 하는 UI/UX 디자인에 대한 자세한 설명을 제공하세요',
+                                    'pt' => 'Forneça uma descrição detalhada do design UI/UX para o qual você deseja criar um wireframe',
+                                    'th' => 'ให้คำอธิบายโดยละเอียดเกี่ยวกับการออกแบบ UI/UX ที่คุณต้องการสร้างไวร์เฟรม',
+                                    'tl' => 'Magbigay ng detalyadong paglalarawan ng disenyo ng UI/UX na gusto mong gumawa ng wireframe',
+                                    'zh' => '提供你想要创建线框图的UI/UX设计的详细描述',
+                                ]),
+                                "type" => "textarea",
+                                "options" => null,
+                                "placeholder" => "Describe the layout, components, and any specific features of your UI/UX design..."
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_wireframe",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the provided UI/UX design description, generate an SVG wireframe. Here's the UI/UX description:
+                            {{step1.input.UI/UX_Description}}
+                            Follow these guidelines:
+            
+                            1. Create a complete SVG structure with appropriate viewBox attribute.
+                            2. Use basic shapes (rect, circle, line, path) to represent UI elements.
+                            3. Use different shades of gray for various elements to indicate hierarchy.
+                            4. Include placeholder text using <text> elements where appropriate.
+                            5. Group related elements using <g> tags.
+                            6. Add comments to explain major sections of the wireframe.
+                            7. Ensure the wireframe is responsive by using percentage-based dimensions where appropriate.
+                            8. The output should be solely the SVG code, without any additional explanations or suggestions outside of the SVG structure.",
+                        "background_information" => "You are an expert UI/UX designer specializing in creating clear, informative wireframes. Your task is to translate textual UI/UX descriptions into SVG wireframes. You excel at interpreting design requirements and representing them in a simplified, schematic form. Your output is always valid SVG, optimized for immediate use, and requires no further explanation or context.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4-vision-preview",
+                        "temperature" => 0.3,
+                        "reference_text" => "{{step1.input.UI/UX Description}}"
+                    ],
+                ]),
+                'tags' => json_encode(["UI/UX", "wireframe generation"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Prototyp-Planer-Generator',
+                    'en' => 'Prototype Planner Generator',
+                    'fr' => 'Générateur de planificateur de prototype',
+                    'hi' => 'प्रोटोटाइप योजनाकार जनरेटर',
+                    'ja' => 'プロトタイププランナージェネレーター',
+                    'ko' => '프로토타입 계획서 생성기',
+                    'pt' => 'Gerador de Planejador de Protótipo',
+                    'th' => 'เครื่องมือสร้างแผนต้นแบบ',
+                    'tl' => 'Tagabuo ng Plano ng Prototype',
+                    'zh' => '原型规划生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Produktidee > Ziele, Funktionen, Zeitplan, Ressourcen und Budgetplanung',
+                    'en' => 'product idea > goals, features, timeline, resources, and budget planning',
+                    'fr' => 'idée de produit > objectifs, fonctionnalités, calendrier, ressources et planification budgétaire',
+                    'hi' => 'उत्पाद विचार > लक्ष्य, विशेषताएँ, समयरेखा, संसाधन और बजट योजना',
+                    'ja' => '製品アイデア > 目標、機能、タイムライン、リソース、予算計画',
+                    'ko' => '제품 아이디어 > 목표, 기능, 일정, 리소스 및 예산 계획',
+                    'pt' => 'ideia do produto > metas, recursos, cronograma, recursos e planejamento orçamentário',
+                    'th' => 'แนวคิดผลิตภัณฑ์ > เป้าหมาย, คุณสมบัติ, ไทม์ไลน์, ทรัพยากร และการวางแผนงบประมาณ',
+                    'tl' => 'ideya ng produkto > mga layunin, tampok, timeline, mapagkukunan, at pagpaplano ng badyet',
+                    'zh' => '产品创意 > 目标、功能、时间线、资源和预算规划',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "product_idea",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Geben Sie Ihre Produktidee ein',
+                                    'en' => 'Enter your product idea',
+                                    'fr' => 'Saisissez votre idée de produit',
+                                    'hi' => 'अपना उत्पाद विचार दर्ज करें',
+                                    'ja' => '製品アイデアを入力してください',
+                                    'ko' => '제품 아이디어를 입력하세요',
+                                    'pt' => 'Digite sua ideia de produto',
+                                    'th' => 'ป้อนแนวคิดผลิตภัณฑ์ของคุณ',
+                                    'tl' => 'Ilagay ang iyong ideya ng produkto',
+                                    'zh' => '输入您的产品创意',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the product idea '{{step1.input.product_idea}}', generate a list of 5 clear and achievable goals for the prototype. These goals should:\n\n1. Be specific and measurable.\n2. Align with the core concept of the product.\n3. Focus on key aspects to be demonstrated in the prototype.\n4. Be realistic for a prototype stage.\n5. Cover different aspects of the product (e.g., functionality, user experience, technical feasibility).\n\nPresent the goals in a numbered list format.",
+                        "background_information" => "You are a product strategist tasked with defining clear goals for a prototype based on the initial product idea.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 3,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create a list of 10 key features for the prototype of '{{step1.input.product_idea}}'. These features should:\n\n1. Directly support the goals outlined in {{step2.output}}.\n2. Be specific and clearly defined.\n3. Focus on core functionality essential for the prototype.\n4. Be feasible to implement in a prototype stage.\n5. Provide a mix of user-facing and technical features.\n\nPresent the features in a numbered list, with a brief one-sentence description for each.",
+                        "background_information" => "You are a product designer developing a feature list for a prototype, balancing essential functionality with feasibility.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 4,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Develop a timeline for the prototype development of '{{step1.input.product_idea}}'. The timeline should:\n\n1. Cover a 6-week period.\n2. Break down the development process into weekly milestones.\n3. Include key tasks and deliverables for each week.\n4. Align with the goals from {{step2.output}} and features from {{step3.output}}.\n5. Account for design, development, testing, and refinement phases.\n\nPresent the timeline in a structured week-by-week format, with bullet points for each week's main tasks.",
+                        "background_information" => "You are a project manager creating a realistic timeline for prototype development, ensuring all crucial aspects are covered within a 6-week timeframe.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 5,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create a resource allocation plan for the prototype development of '{{step1.input.product_idea}}'. The plan should:\n\n1. Identify the key roles needed for the project (e.g., developers, designers, project manager).\n2. Specify the number of team members for each role.\n3. Outline the main responsibilities for each role.\n4. Suggest any specific skills or expertise required.\n5. Align with the timeline from {{step4.output}} and the features from {{step3.output}}.\n\nPresent the resource allocation plan in a structured format, listing each role with its details.",
+                        "background_information" => "You are a resource manager planning the team composition and responsibilities for an efficient prototype development process.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 6,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Develop a budget plan for the prototype development of '{{step1.input.product_idea}}'. The budget plan should:\n\n1. Estimate costs for human resources based on the allocation plan in {{step5.output}}.\n2. Include costs for necessary software, tools, or subscriptions.\n3. Account for any hardware or equipment needs.\n4. Consider any outsourcing or third-party service costs.\n5. Add a contingency amount for unforeseen expenses.\n\nPresent the budget in a structured format with categories and estimated amounts. Provide a total estimated budget at the end.",
+                        "background_information" => "You are a financial planner creating a comprehensive budget for the prototype development, ensuring all necessary resources are accounted for while maintaining cost-efficiency.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "content_integration",
+                        "step_number" => 7,
+                        "uuid" => $generateUuid(),
+                        "content_template" => "## Goals\n{{step2.output}}\n\n## Key Features\n{{step3.output}}\n\n## Development Timeline\n{{step4.output}}\n\n## Resource Allocation\n{{step5.output}}\n\n## Budget Plan\n{{step6.output}}"
+                    ]
+                ]),
+                'tags' => json_encode(["prototype", "product development", "project planning"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Projekt-Status-Berichtsgenerator',
+                    'en' => 'Project Status Report Generator',
+                    'fr' => 'Générateur de rapport d\'état de projet',
+                    'hi' => 'परियोजना स्थिति रिपोर्ट जनरेटर',
+                    'ja' => 'プロジェクト状況レポートジェネレーター',
+                    'ko' => '프로젝트 상태 보고서 생성기',
+                    'pt' => 'Gerador de Relatório de Status do Projeto',
+                    'th' => 'เครื่องมือสร้างรายงานสถานะโครงการ',
+                    'tl' => 'Tagabuo ng Ulat sa Katayuan ng Proyekto',
+                    'zh' => '项目状态报告生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Projektstatus > detaillierter Bericht mit Fortschritt, Risiken und nächsten Schritten',
+                    'en' => 'project status > detailed report with progress, risks, and next steps',
+                    'fr' => 'état du projet > rapport détaillé avec progrès, risques et prochaines étapes',
+                    'hi' => 'परियोजना स्थिति > प्रगति, जोखिम और अगले कदमों के साथ विस्तृत रिपोर्ट',
+                    'ja' => 'プロジェクト状況 > 進捗、リスク、次のステップを含む詳細レポート',
+                    'ko' => '프로젝트 상태 > 진행 상황, 위험 및 다음 단계가 포함된 상세 보고서',
+                    'pt' => 'status do projeto > relatório detalhado com progresso, riscos e próximos passos',
+                    'th' => 'สถานะโครงการ > รายงานโดยละเอียดพร้อมความคืบหน้า ความเสี่ยง และขั้นตอนต่อไป',
+                    'tl' => 'katayuan ng proyekto > detalyadong ulat na may pag-unlad, mga panganib, at susunod na hakbang',
+                    'zh' => '项目状态 > 包含进展、风险和下一步计划的详细报告',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "project_status",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie den aktuellen Projektstatus aus',
+                                    'en' => 'Select the current project status',
+                                    'fr' => 'Sélectionnez l\'état actuel du projet',
+                                    'hi' => 'वर्तमान परियोजना स्थिति का चयन करें',
+                                    'ja' => '現在のプロジェクト状況を選択してください',
+                                    'ko' => '현재 프로젝트 상태를 선택하세요',
+                                    'pt' => 'Selecione o status atual do projeto',
+                                    'th' => 'เลือกสถานะโครงการปัจจุบัน',
+                                    'tl' => 'Piliin ang kasalukuyang katayuan ng proyekto',
+                                    'zh' => '选择当前项目状态',
+                                ]),
+                                "type" => "select",
+                                "options" => "On Track, At Risk, High Risk, Off Track",
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "project_description",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie kurz den aktuellen Projektstatus',
+                                    'en' => 'Briefly describe the current project status',
+                                    'fr' => 'Décrivez brièvement l\'état actuel du projet',
+                                    'hi' => 'वर्तमान परियोजना स्थिति का संक्षेप में वर्णन करें',
+                                    'ja' => '現在のプロジェクト状況を簡潔に説明してください',
+                                    'ko' => '현재 프로젝트 상태를 간략히 설명하세요',
+                                    'pt' => 'Descreva brevemente o status atual do projeto',
+                                    'th' => 'อธิบายสถานะโครงการปัจจุบันโดยย่อ',
+                                    'tl' => 'Ilarawan nang maikli ang kasalukuyang katayuan ng proyekto',
+                                    'zh' => '简要描述当前项目状态',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the project status '{{step1.input.project_status}}' and the description '{{step1.input.project_description}}', generate an executive summary for the project status report. The summary should:\n\n1. Clearly state the current project status.\n2. Highlight key achievements or milestones reached.\n3. Briefly mention any major challenges or risks.\n4. Provide an overall assessment of the project's health.\n5. Be concise and to the point (3-5 sentences).",
+                        "background_information" => "You are a project manager preparing a status report for senior management. Your goal is to provide a clear and concise overview of the project's current state.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 3,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create a detailed progress update for the project based on the status '{{step1.input.project_status}}' and description '{{step1.input.project_description}}'. The progress update should:\n\n1. List 3-5 key accomplishments since the last report.\n2. Provide specific details on tasks completed and their impact.\n3. Mention any tasks that are behind schedule and explain why.\n4. Include quantitative metrics where possible (e.g., percentage complete, number of deliverables finished).\n5. Be presented in a bulleted list format for easy reading.",
+                        "background_information" => "You are a project coordinator compiling a comprehensive progress update. Your goal is to provide a clear picture of what has been achieved and what is still pending.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 4,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Develop a risk assessment based on the project status '{{step1.input.project_status}}' and description '{{step1.input.project_description}}'. The risk assessment should:\n\n1. Identify 3-5 key risks or challenges facing the project.\n2. Rate each risk as Low, Medium, or High impact.\n3. Provide a brief description of each risk and its potential consequences.\n4. Suggest mitigation strategies for each identified risk.\n5. Be presented in a table format with columns for Risk, Impact, Description, and Mitigation Strategy.",
+                        "background_information" => "You are a risk management specialist analyzing the project's current situation. Your goal is to highlight potential issues and propose ways to address them.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 5,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create a list of next steps and recommendations based on the project status '{{step1.input.project_status}}' and description '{{step1.input.project_description}}'. This section should:\n\n1. Propose 3-5 concrete actions to address current challenges or maintain progress.\n2. Prioritize these actions (High, Medium, Low priority).\n3. Assign a timeframe for each action (e.g., Immediate, Within 1 week, Within 1 month).\n4. Briefly explain the expected outcome or benefit of each action.\n5. Be presented in a bulleted list format, with each action clearly labeled with its priority and timeframe.",
+                        "background_information" => "You are a project strategist recommending the best course of action moving forward. Your goal is to provide clear, actionable steps to keep the project on track or get it back on track.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "content_integration",
+                        "step_number" => 6,
+                        "uuid" => $generateUuid(),
+                        "content_template" => "# Project Status Report\n\n## Executive Summary\n{{step2.output}}\n\n## Progress Update\n{{step3.output}}\n\n## Risk Assessment\n{{step4.output}}\n\n## Next Steps and Recommendations\n{{step5.output}}"
+                    ]
+                ]),
+                'tags' => json_encode(["project management", "status report", "risk assessment"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Projekt-Ergebnisbericht-Generator',
+                    'en' => 'Project Result Report Generator',
+                    'fr' => 'Générateur de rapport de résultats de projet',
+                    'hi' => 'परियोजना परिणाम रिपोर्ट जनरेटर',
+                    'ja' => 'プロジェクト結果レポートジェネレーター',
+                    'ko' => '프로젝트 결과보고서 생성기',
+                    'pt' => 'Gerador de Relatório de Resultados do Projeto',
+                    'th' => 'เครื่องมือสร้างรายงานผลลัพธ์โครงการ',
+                    'tl' => 'Tagabuo ng Ulat ng Resulta ng Proyekto',
+                    'zh' => '项目结果报告生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Projektergebnisse > umfassender Bericht mit Zielerreichung, Herausforderungen und Erkenntnissen',
+                    'en' => 'project results > comprehensive report with goal achievement, challenges, and lessons learned',
+                    'fr' => 'résultats du projet > rapport complet avec réalisation des objectifs, défis et leçons apprises',
+                    'hi' => 'परियोजना परिणाम > लक्ष्य प्राप्ति, चुनौतियों और सीखे गए पाठों के साथ व्यापक रिपोर्ट',
+                    'ja' => 'プロジェクト結果 > 目標達成、課題、学んだ教訓を含む包括的なレポート',
+                    'ko' => '프로젝트 결과 > 목표 달성, 도전 과제 및 학습된 교훈이 포함된 종합 보고서',
+                    'pt' => 'resultados do projeto > relatório abrangente com realização de objetivos, desafios e lições aprendidas',
+                    'th' => 'ผลลัพธ์โครงการ > รายงานครอบคลุมพร้อมการบรรลุเป้าหมาย ความท้าทาย และบทเรียนที่ได้รับ',
+                    'tl' => 'resulta ng proyekto > komprehensibong ulat na may pagkamit ng layunin, mga hamon, at mga aral na natutunan',
+                    'zh' => '项目结果 > 包含目标实现、挑战和经验教训的综合报告',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "project_name",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Geben Sie den Projektnamen ein',
+                                    'en' => 'Enter the project name',
+                                    'fr' => 'Entrez le nom du projet',
+                                    'hi' => 'परियोजना का नाम दर्ज करें',
+                                    'ja' => 'プロジェクト名を入力してください',
+                                    'ko' => '프로젝트 이름을 입력하세요',
+                                    'pt' => 'Digite o nome do projeto',
+                                    'th' => 'ป้อนชื่อโครงการ',
+                                    'tl' => 'Ilagay ang pangalan ng proyekto',
+                                    'zh' => '输入项目名称',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "project_duration",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Geben Sie die Projektdauer ein (z.B. 6 Monate, 1 Jahr)',
+                                    'en' => 'Enter the project duration (e.g., 6 months, 1 year)',
+                                    'fr' => 'Entrez la durée du projet (par exemple, 6 mois, 1 an)',
+                                    'hi' => 'परियोजना की अवधि दर्ज करें (उदाहरण: 6 महीने, 1 वर्ष)',
+                                    'ja' => 'プロジェクト期間を入力してください（例：6ヶ月、1年）',
+                                    'ko' => '프로젝트 기간을 입력하세요 (예: 6개월, 1년)',
+                                    'pt' => 'Digite a duração do projeto (por exemplo, 6 meses, 1 ano)',
+                                    'th' => 'ป้อนระยะเวลาโครงการ (เช่น 6 เดือน, 1 ปี)',
+                                    'tl' => 'Ilagay ang tagal ng proyekto (halimbawa, 6 na buwan, 1 taon)',
+                                    'zh' => '输入项目持续时间（例如：6个月，1年）',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "project_objectives",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie kurz die Hauptziele des Projekts',
+                                    'en' => 'Briefly describe the main objectives of the project',
+                                    'fr' => 'Décrivez brièvement les principaux objectifs du projet',
+                                    'hi' => 'परियोजना के मुख्य उद्देश्यों का संक्षेप में वर्णन करें',
+                                    'ja' => 'プロジェクトの主な目的を簡潔に説明してください',
+                                    'ko' => '프로젝트의 주요 목표를 간략히 설명하세요',
+                                    'pt' => 'Descreva brevemente os principais objetivos do projeto',
+                                    'th' => 'อธิบายวัตถุประสงค์หลักของโครงการโดยย่อ',
+                                    'tl' => 'Ilarawan nang maikli ang mga pangunahing layunin ng proyekto',
+                                    'zh' => '简要描述项目的主要目标',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the project name '{{step1.input.project_name}}', duration '{{step1.input.project_duration}}', and objectives '{{step1.input.project_objectives}}', generate an executive summary for the project result report. The summary should:\n\n1. Provide an overview of the project and its main goals.\n2. Highlight key achievements and outcomes.\n3. Briefly mention any significant challenges faced and how they were addressed.\n4. Summarize the overall impact and success of the project.\n5. Be concise and informative (4-6 sentences).",
+                        "background_information" => "You are a project manager preparing a final report for stakeholders. Your goal is to provide a clear and concise overview of the project's results and impact.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 3,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create a detailed list of project achievements based on the objectives '{{step1.input.project_objectives}}'. The achievements section should:\n\n1. List 5-7 key accomplishments of the project.\n2. Align each achievement with the original project objectives.\n3. Provide specific, quantifiable results where possible (e.g., percentage improvements, number of deliverables).\n4. Highlight any unexpected positive outcomes.\n5. Be presented in a bulleted list format for easy reading.",
+                        "background_information" => "You are a project coordinator compiling a comprehensive list of project achievements. Your goal is to showcase the project's successes and demonstrate how they align with the initial objectives.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 4,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Develop a challenges and solutions section for the project result report. This section should:\n\n1. Identify 4-6 significant challenges faced during the project.\n2. Briefly describe each challenge and its potential impact on the project.\n3. Explain the solution or approach used to address each challenge.\n4. Highlight any positive outcomes or lessons learned from overcoming these challenges.\n5. Be presented in a table format with columns for Challenge, Impact, Solution, and Outcome.",
+                        "background_information" => "You are a project analyst reviewing the obstacles encountered during the project. Your goal is to demonstrate how challenges were effectively managed and to highlight the team's problem-solving capabilities.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 5,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create a lessons learned and best practices section based on the project experience. This section should:\n\n1. Identify 5-7 key lessons learned from the project.\n2. For each lesson, provide a brief explanation of the context and the insight gained.\n3. Suggest how each lesson can be applied to future projects.\n4. Highlight any best practices that emerged during the project.\n5. Be presented in a numbered list format, with each item clearly stating the lesson and its application.",
+                        "background_information" => "You are a knowledge management specialist tasked with capturing valuable insights from the project. Your goal is to provide actionable lessons and best practices that can improve future project performance.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 6,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Develop a conclusion and recommendations section for the project result report. This section should:\n\n1. Summarize the overall success and impact of the project.\n2. Reflect on how well the project met its original objectives.\n3. Highlight the most significant achievements and lessons learned.\n4. Provide 3-5 key recommendations for future similar projects or next steps.\n5. End with a forward-looking statement about the project's long-term impact or potential future developments.\n\nAim for a concise yet comprehensive conclusion (3-4 paragraphs).",
+                        "background_information" => "You are a senior project manager providing the final assessment of the project. Your goal is to offer a balanced view of the project's outcomes and provide valuable insights for future initiatives.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "content_integration",
+                        "step_number" => 7,
+                        "uuid" => $generateUuid(),
+                        "content_template" => "## Executive Summary\n{{step2.output}}\n\n## Project Achievements\n{{step3.output}}\n\n## Challenges and Solutions\n{{step4.output}}\n\n## Lessons Learned and Best Practices\n{{step5.output}}\n\n## Conclusion and Recommendations\n{{step6.output}}"
+                    ]
+                ]),
+                'tags' => json_encode(["project management", "result report", "lessons learned"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Umfrage-Generator',
+                    'en' => 'Survey Generator',
+                    'fr' => 'Générateur de sondage',
+                    'hi' => 'सर्वेक्षण जनरेटर',
+                    'ja' => 'アンケート生成ツール',
+                    'ko' => '설문조사 생성기',
+                    'pt' => 'Gerador de Pesquisa',
+                    'th' => 'เครื่องมือสร้างแบบสำรวจ',
+                    'tl' => 'Tagabuo ng Survey',
+                    'zh' => '调查问卷生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Umfragezweck > automatische Generierung von maßgeschneiderten Umfragefragen verschiedener Typen',
+                    'en' => 'survey purpose > automatic generation of tailored survey questions of various types',
+                    'fr' => 'objectif de l\'enquête > génération automatique de questions d\'enquête personnalisées de différents types',
+                    'hi' => 'सर्वेक्षण उद्देश्य > विभिन्न प्रकार के अनुकूलित सर्वेक्षण प्रश्नों का स्वचालित उत्पादन',
+                    'ja' => 'アンケートの目的 > さまざまなタイプのカスタマイズされたアンケート質問の自動生成',
+                    'ko' => '설문조사 목적 > 다양한 유형의 맞춤형 설문조사 문항 자동 생성',
+                    'pt' => 'objetivo da pesquisa > geração automática de perguntas de pesquisa personalizadas de vários tipos',
+                    'th' => 'วัตถุประสงค์ของแบบสำรวจ > การสร้างคำถามแบบสำรวจที่ปรับแต่งได้หลากหลายรูปแบบโดยอัตโนมัติ',
+                    'tl' => 'layunin ng survey > awtomatikong pagbuo ng mga naka-customize na tanong sa survey ng iba\'t ibang uri',
+                    'zh' => '调查目的 > 自动生成各种类型的定制调查问题',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "survey_purpose",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie kurz den Zweck der Umfrage',
+                                    'en' => 'Briefly describe the purpose of the survey',
+                                    'fr' => 'Décrivez brièvement l\'objectif de l\'enquête',
+                                    'hi' => 'सर्वेक्षण के उद्देश्य का संक्षेप में वर्णन करें',
+                                    'ja' => 'アンケートの目的を簡潔に説明してください',
+                                    'ko' => '설문조사의 목적을 간략히 설명하세요',
+                                    'pt' => 'Descreva brevemente o objetivo da pesquisa',
+                                    'th' => 'อธิบายวัตถุประสงค์ของแบบสำรวจโดยย่อ',
+                                    'tl' => 'Ilarawan nang maikli ang layunin ng survey',
+                                    'zh' => '简要描述调查的目的',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "target_audience",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Beschreiben Sie die Zielgruppe für die Umfrage',
+                                    'en' => 'Describe the target audience for the survey',
+                                    'fr' => 'Décrivez le public cible de l\'enquête',
+                                    'hi' => 'सर्वेक्षण के लक्षित दर्शकों का वर्णन करें',
+                                    'ja' => 'アンケートの対象者を説明してください',
+                                    'ko' => '설문조사의 대상 청중을 설명하세요',
+                                    'pt' => 'Descreva o público-alvo da pesquisa',
+                                    'th' => 'อธิบายกลุ่มเป้าหมายของแบบสำรวจ',
+                                    'tl' => 'Ilarawan ang target na audience para sa survey',
+                                    'zh' => '描述调查的目标受众',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "question_types",
+                                "description"  => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie die gewünschten Fragetypen aus',
+                                    'en' => 'Select the desired question types',
+                                    'fr' => 'Sélectionnez les types de questions souhaités',
+                                    'hi' => 'वांछित प्रश्न प्रकारों का चयन करें',
+                                    'ja' => '希望する質問タイプを選択してください',
+                                    'ko' => '원하는 질문 유형을 선택하세요',
+                                    'pt' => 'Selecione os tipos de perguntas desejados',
+                                    'th' => 'เลือกประเภทคำถามที่ต้องการ',
+                                    'tl' => 'Piliin ang mga nais na uri ng tanong',
+                                    'zh' => '选择所需的问题类型',
+                                ]),
+                                "type" => "multiselect",
+                                "options" => $this->getLocalizedText([
+                                    'de' => '[Mehrfachauswahl] Mehrfachauswahlfragen, [Likert-Skala] Likert-Skala Fragen, [Offen] Offene Fragen, [Bewertungsskala] Bewertungsskalafragen, [Ranking] Ranking-Fragen, [Ja/Nein] Ja/Nein-Fragen, [Dropdown] Dropdown-Fragen',
+                                    'en' => '[Multiple Choice] Multiple choice questions, [Likert Scale] Likert scale questions, [Open-ended] Open-ended questions, [Rating Scale] Rating scale questions, [Ranking] Ranking questions, [Yes/No] Yes/No questions, [Dropdown] Dropdown questions',
+                                    'fr' => '[Choix multiple] Questions à choix multiples, [Échelle de Likert] Questions à échelle de Likert, [Ouverte] Questions ouvertes, [Échelle d\'évaluation] Questions à échelle d\'évaluation, [Classement] Questions de classement, [Oui/Non] Questions Oui/Non, [Liste déroulante] Questions à liste déroulante',
+                                    'hi' => '[बहुविकल्पीय] बहुविकल्पीय प्रश्न, [लिकर्ट स्केल] लिकर्ट स्केल प्रश्न, [खुला उत्तर] खुले उत्तर वाले प्रश्न, [रेटिंग स्केल] रेटिंग स्केल प्रश्न, [रैंकिंग] रैंकिंग प्रश्न, [हाँ/नहीं] हाँ/नहीं प्रश्न, [ड्रॉपडाउन] ड्रॉपडाउन प्रश्न',
+                                    'ja' => '[選択式] 選択式質問, [リッカート尺度] リッカート尺度質問, [自由回答] 自由回答質問, [評価尺度] 評価尺度質問, [ランキング] ランキング質問, [はい/いいえ] はい/いいえ質問, [ドロップダウン] ドロップダウン質問',
+                                    'ko' => '[객관식] 객관식 질문, [리커트 척도] 리커트 척도 질문, [주관식] 주관식 질문, [평가 척도] 평가 척도 질문, [순위] 순위 질문, [예/아니오] 예/아니오 질문, [드롭다운] 드롭다운 질문',
+                                    'pt' => '[Múltipla escolha] Perguntas de múltipla escolha, [Escala Likert] Perguntas de escala Likert, [Aberta] Perguntas abertas, [Escala de avaliação] Perguntas de escala de avaliação, [Classificação] Perguntas de classificação, [Sim/Não] Perguntas Sim/Não, [Lista suspensa] Perguntas de lista suspensa',
+                                    'th' => '[หลายตัวเลือก] คำถามแบบหลายตัวเลือก, [มาตรวัดของลิเคิร์ท] คำถามแบบมาตรวัดของลิเคิร์ท, [ปลายเปิด] คำถามปลายเปิด, [มาตราส่วนประมาณค่า] คำถามแบบมาตราส่วนประมาณค่า, [การจัดอันดับ] คำถามแบบจัดอันดับ, [ใช่/ไม่ใช่] คำถามแบบใช่/ไม่ใช่, [เลือกจากรายการ] คำถามแบบเลือกจากรายการ',
+                                    'tl' => '[Maramihang pagpili] Mga tanong na maramihang pagpili, [Likert Scale] Mga tanong sa Likert scale, [Bukas] Mga bukas na tanong, [Rating Scale] Mga tanong sa rating scale, [Ranggo] Mga tanong sa ranggo, [Oo/Hindi] Mga tanong na Oo/Hindi, [Dropdown] Mga tanong na dropdown',
+                                    'zh' => '[多选题] 多选题, [李克特量表] 李克特量表问题, [开放式] 开放式问题, [评分量表] 评分量表问题, [排序] 排序问题, [是/否] 是/否问题, [下拉菜单] 下拉菜单问题',
+                                ]),
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the survey purpose '{{step1.input.survey_purpose}}', target audience '{{step1.input.target_audience}}', and selected question types {{step1.input.question_types}}, generate an introduction for the survey. The introduction should:\n\n1. Briefly explain the purpose of the survey.\n2. Mention the target audience.\n3. Provide an estimate of how long the survey will take to complete.\n4. Assure respondents of the confidentiality of their responses.\n5. Thank participants for their time and input.\n\nAim for a concise yet informative introduction (3-4 sentences).",
+                        "background_information" => "You are a survey design expert creating an engaging and informative introduction to encourage participation and set appropriate expectations for the survey.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 3,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Generate a set of survey questions based on the purpose '{{step1.input.survey_purpose}}', target audience '{{step1.input.target_audience}}', and selected question types {{step1.input.question_types}}. For each question type selected, create 2-3 relevant questions. Ensure that:\n\n1. Questions are clear, concise, and directly related to the survey purpose.\n2. The language is appropriate for the target audience.\n3. Each question is labeled with its type (e.g., [Multiple Choice], [Likert Scale], etc.).\n4. For closed-ended questions (Multiple Choice, Likert Scale, etc.), provide appropriate response options.\n5. Open-ended questions are phrased to encourage detailed responses.\n\nPresent the questions in a numbered list format.",
+                        "background_information" => "You are a survey methodology expert crafting questions that will effectively gather the desired information while ensuring a good user experience for the respondents.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 4,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Create a set of demographic questions appropriate for the survey purpose '{{step1.input.survey_purpose}}' and target audience '{{step1.input.target_audience}}'. Include 3-5 relevant demographic questions that:\n\n1. Are appropriate and necessary for the analysis of the survey results.\n2. Use a mix of question types (e.g., multiple choice, dropdown).\n3. Provide inclusive options for sensitive questions (e.g., gender, ethnicity).\n4. Include an option to decline to answer for sensitive questions.\n5. Are placed at the end of the survey to avoid survey fatigue on critical questions.\n\nPresent the demographic questions in a numbered list format.",
+                        "background_information" => "You are a survey designer focusing on creating demographic questions that will provide valuable segmentation data while respecting respondents' privacy and comfort.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 5,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Develop a conclusion for the survey that:\n\n1. Thanks the respondent for their time and input.\n2. Reiterates the importance of their participation.\n3. Provides information on how the results will be used (if appropriate).\n4. Gives contact information for any questions or concerns about the survey.\n5. If applicable, mentions any follow-up actions or how participants can stay informed about the outcomes.\n\nAim for a brief, appreciative conclusion (2-3 sentences).",
+                        "background_information" => "You are a communication specialist creating a conclusion that leaves respondents with a positive impression and reinforces the value of their participation.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "content_integration",
+                        "step_number" => 6,
+                        "uuid" => $generateUuid(),
+                        "content_template" => "## Introduction\n{{step2.output}}\n\n## Survey Questions\n{{step3.output}}\n\n## Demographic Questions\n{{step4.output}}\n\n## Conclusion\n{{step5.output}}"
+                    ]
+                ]),
+                'tags' => json_encode(["survey", "questionnaire", "market research"]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => $this->getLocalizedText([
                     'de' => '1Pager-Generierungsprozess',
                     'en' => '1Pager Generation Process',
                     'fr' => 'Processus de génération de 1Pager',

@@ -117,7 +117,7 @@ class TextGenerationController extends BaseController
             ['role' => 'system', 'content' => $this->ensureValidUTF8($backgroundInfo)],
             ['role' => 'user', 'content' => $this->ensureValidUTF8($prompt)]
         ];
-
+    
         if ($isImageFile) {
             $imageUrl = $this->getImageUrl($processedInputData, $previousResults);
             if ($imageUrl) {
@@ -128,21 +128,17 @@ class TextGenerationController extends BaseController
                 Log::info("Added image URL to OpenAI request", ['imageUrl' => $imageUrl]);
             }
         }
-
+    
         Log::debug('OpenAI API request', ['messages' => $messages]);
-
+    
         $response = OpenAI::chat()->create([
             'model' => $model,
             'messages' => $messages,
             'temperature' => floatval($temperature), 
         ]);
-
+    
         if (isset($response->choices[0]->message->content)) {
             $content = $response->choices[0]->message->content;
-            // 줄바꿈 문자를 PHP_EOL로 변환
-            $content = str_replace(["\r\n", "\r", "\n"], PHP_EOL, $content);
-            // 연속된 줄바꿈을 하나로 줄임
-            $content = preg_replace('/('.PHP_EOL.'){3,}/', PHP_EOL.PHP_EOL, $content);
             return $this->ensureValidUTF8($content);
         } else {
             throw new \Exception('Unexpected OpenAI API response structure');
