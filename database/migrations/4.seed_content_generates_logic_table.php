@@ -21,7 +21,7 @@ return new class extends Migration
         $maxId = DB::table('logics')->max('id') ?? 0;
 
         $logicsData = [
-                 
+
         ];
 
         foreach ($logicsData as $index => $data) {

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Support\Exceptions\Halt;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Str;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Shared\Html;
 
 class ViewContentsGenerate extends ViewRecord
 {
@@ -102,6 +104,12 @@ class ViewContentsGenerate extends ViewRecord
         $actions = [];
 
         if ($this->record->type === 'text' || $this->record->type === 'integration') {
+
+            $actions[] = Action::make('downloadDocx')
+                ->label(__('startupful-plugin.docx_down'))
+                ->icon('heroicon-o-document-arrow-down')
+                ->action(fn () => $this->downloadDocx());
+
             $actions[] = Action::make('copyMarkdown')
                 ->label(__('startupful-plugin.markdown_copy'))
                 ->icon('heroicon-o-clipboard-document')
@@ -294,4 +302,21 @@ class ViewContentsGenerate extends ViewRecord
             ->send();
     }
 
+    public function downloadDocx(): StreamedResponse
+    {
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();
+
+        $content = $this->record->content;
+        $content = str_replace("\\n", "\n", $content);
+        $content = preg_replace('/\n/m', "  \n", $content);
+        $htmlContent = Str::markdown($content);
+
+        Html::addHtml($section, $htmlContent, false, false);
+
+        return response()->streamDownload(function () use ($phpWord) {
+            $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+            $objWriter->save('php://output');
+        }, $this->record->title . '.docx');
+    }
 }

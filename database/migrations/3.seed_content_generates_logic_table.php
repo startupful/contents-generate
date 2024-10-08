@@ -5172,6 +5172,108 @@ return new class extends Migration
                 'updated_at' => now(),
             ],     
             [
+                'name' => $this->getLocalizedText([
+                    'de' => '[FLUX] Vektorgrafik-Generator',
+                    'en' => '[FLUX] Vector Image Generator',
+                    'fr' => '[FLUX] Générateur d\'images vectorielles',
+                    'hi' => '[FLUX] वेक्टर इमेज जनरेटर',
+                    'ja' => '[FLUX] ベクター画像生成ツール',
+                    'ko' => '[FLUX] 벡터 이미지 생성기',
+                    'pt' => '[FLUX] Gerador de Imagens Vetoriais',
+                    'th' => '[FLUX] ตัวสร้างภาพเวกเตอร์',
+                    'tl' => '[FLUX] Tagabuo ng Vector Image',
+                    'zh' => '[FLUX] 矢量图生成器',
+                  ]),
+                  'description' => $this->getLocalizedText([
+                      'de' => 'Schlüsselwort > Prompt > Bild generieren',
+                      'en' => 'keyword > prompt > image generate',
+                      'fr' => 'mot-clé > prompt > génération d\'image',
+                      'hi' => 'कीवर्ड > प्रॉम्प्ट > छवि उत्पादन',
+                      'ja' => 'キーワード > プロンプト > 画像生成',
+                      'ko' => '키워드 > 프롬프트 > 이미지 생성',
+                      'pt' => 'palavra-chave > prompt > geração de imagem',
+                      'th' => 'คำสำคัญ > prompt > สร้างภาพ',
+                      'tl' => 'keyword > prompt > paggawa ng imahe',
+                      'zh' => '关键词 > 提示 > 图像生成',
+                  ]),
+                  'steps' => json_encode([
+                      [
+                          "type" => "input",
+                          "step_number" => 1,
+                          "uuid" => $generateUuid(),
+                          "input_fields" => [
+                              [
+                                  "label" => "keyword",
+                                  "description" => $this->getLocalizedText([
+                                      'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Bild ein',
+                                      'en' => 'Enter the keyword or phrase for the image',
+                                      'fr' => 'Entrez le mot-clé ou la phrase pour l\'image',
+                                      'hi' => 'छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                      'ja' => '画像のキーワードやフレーズを入力してください',
+                                      'ko' => '이미지에 대한 키워드 또는 문구를 입력하세요',
+                                      'pt' => 'Digite a palavra-chave ou frase para a imagem',
+                                      'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพ',
+                                      'tl' => 'Ilagay ang keyword o parirala para sa imahe',
+                                      'zh' => '输入图像的关键词或短语',
+                                  ]),
+                                  "type" => "text",
+                                  "options" => null,
+                                  "file_type" => null
+                              ]
+                          ]
+                      ],
+                      [
+                          "type" => "generate_text",
+                          "step_number" => 2,
+                          "uuid" => $generateUuid(),
+                          "prompt" => "Using the keyword '{{step1.input.keyword}}', create a concise description for a vector image in the following format:
+              
+              v3ct0r style, simple vector art, isolated on white bg, [description],
+              
+              Guidelines:
+              
+                - Start with the fixed phrase \"v3ct0r style, simple vector art, isolated on white bg,\"
+                - Follow with a brief description that includes:
+                    - The main subject or character related to the keyword
+                    - Any relevant actions or poses
+                    - Additional details or elements that enhance the concept
+                - The entire description should be on a single line
+                - End the description with a comma
+                - Keep the overall description concise and specific
+              
+              Examples:
+              
+              - `v3ct0r style, simple vector art, isolated on white bg, construction worker wearing a hard hat and holding a small clipboard, character asset, clip art - The text on the clipboard says \"FLUX TEST\"`
+              - `v3ct0r style, simple vector art, isolated on white bg, salesman giving a thumbs up in front of a car, character asset, clip art`
+              - `v3ct0r style, simple vector art, isolated on white bg, ugly witch standing next to a bubbling cauldron stirring the pot, character asset, clip art`
+              - `v3ct0r style, simple flat vector art, isolated on white bg, cat`
+              - `v3ct0r style, simple flat vector art, isolated on white bg, rocket`
+              - `v3ct0r style, simple flat vector art, isolated on white bg, clown`
+              
+              Please generate the logo description now using the provided keyword and following this format.",
+                          "background_information" => "You are an expert logo designer and prompt engineer. Your task is to create concise and effective prompts for AI image generation, formatted precisely to guide the AI in creating logos that accurately represent the given keyword. Disregard any existing content generation language settings and strictly produce this content in English.",
+                          "ai_provider" => "openai",
+                          "ai_model" => "gpt-4o-2024-05-13",
+                          "temperature" => 0.7,
+                          "reference_file" => null
+                      ],
+                      [
+                          "type" => "generate_image",
+                          "step_number" => 3,
+                          "uuid" => $generateUuid(),
+                          "prompt" => "{{step2.output}}",
+                          "background_information" => "",
+                          "ai_provider" => "huggingface",
+                          "ai_model" => "renderartist/simplevectorflux",
+                          "temperature" => 0.7,
+                          "reference_file" => null
+                      ]
+                  ]),
+                  'tags' => json_encode(["image", "flux-vector"]),
+                  'created_at' => now(),
+                  'updated_at' => now(),
+              ],
+            [
                'name' => $this->getLocalizedText([
                     'de' => '[FLUX] Pixel-Art-Generierung',
                     'en' => '[FLUX] Pixel-Art Generate',
@@ -5593,7 +5695,7 @@ return new class extends Migration
                         "prompt" => "{{step1.input.keyword}}",
                         "background_information" => "",
                         "ai_provider" => "huggingface",
-                        "ai_model" => "enhanceaiteam/Flux-uncensored",
+                        "ai_model" => "enhanceaiteam/Flux-Uncensored-V2",
                         "temperature" => 0.7,
                         "reference_file" => null
                     ]
