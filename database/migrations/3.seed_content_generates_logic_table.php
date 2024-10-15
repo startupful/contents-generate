@@ -668,6 +668,18 @@ return new class extends Migration
             'tl' => 'guro',
             'zh' => '教师',
         ],
+        'recruitment' => [
+            'de' => 'Lehrer',
+            'en' => 'teacher',
+            'fr' => 'enseignant',
+            'hi' => 'शिक्षक',
+            'ja' => '教師',
+            'ko' => '교사',
+            'pt' => 'professor',
+            'th' => 'ครู',
+            'tl' => 'guro',
+            'zh' => '教师',
+        ],
     ];
 
     /**
@@ -5006,7 +5018,7 @@ return new class extends Migration
                         "reference_file" => null
                     ]
                 ]),
-                'tags' => json_encode(["planner", "use_case_diagram"]),
+                'tags' => json_encode($this->getLocalizedTags(["planner", "use_case_diagram"])),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -5831,6 +5843,214 @@ return new class extends Migration
                 'created_at' => now(),
                 'updated_at' => now(),
             ],                
+            //hr
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Generator für Stellenanforderungen',
+                    'en' => 'Job Requirements Generator',
+                    'fr' => 'Générateur d\'exigences de poste',
+                    'hi' => 'नौकरी आवश्यकता जनरेटर',
+                    'ja' => '求人要件ジェネレーター',
+                    'ko' => '채용 공고문 생성기',
+                    'pt' => 'Gerador de Requisitos de Emprego',
+                    'th' => 'เครื่องมือสร้างข้อกำหนดงาน',
+                    'tl' => 'Tagabuo ng Mga Kinakailangan sa Trabaho',
+                    'zh' => '职位要求生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Erstellen Sie detaillierte Stellenanforderungen und Verantwortlichkeiten für Ihre Stellenausschreibungen',
+                    'en' => 'Create detailed job requirements and responsibilities for your job postings',
+                    'fr' => 'Créez des exigences et des responsabilités détaillées pour vos offres d\'emploi',
+                    'hi' => 'अपनी नौकरी की पोस्टिंग के लिए विस्तृत कार्य आवश्यकताएँ और जिम्मेदारियाँ बनाएं',
+                    'ja' => '求人掲載のための詳細な職務要件と責任を作成',
+                    'ko' => '구인 공고를 위한 상세한 직무 요건과 책임 사항을 작성하세요',
+                    'pt' => 'Crie requisitos e responsabilidades detalhadas para suas vagas de emprego',
+                    'th' => 'สร้างข้อกำหนดงานและความรับผิดชอบโดยละเอียดสำหรับการประกาศรับสมัครงานของคุณ',
+                    'tl' => 'Lumikha ng detalyadong mga kinakailangan at responsibilidad sa trabaho para sa iyong mga job posting',
+                    'zh' => '为您的招聘广告创建详细的工作要求和职责',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "job_title",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie den Stellentitel ein',
+                                    'en' => 'Enter the job title',
+                                    'fr' => 'Saisissez le titre du poste',
+                                    'hi' => 'नौकरी का शीर्षक दर्ज करें',
+                                    'ja' => '職位名を入力してください',
+                                    'ko' => '채용하는 직무를 입력하세요',
+                                    'pt' => 'Digite o título do cargo',
+                                    'th' => 'ป้อนชื่อตำแหน่งงาน',
+                                    'tl' => 'Ilagay ang titulo ng trabaho',
+                                    'zh' => '输入职位名称',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "employment_type",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie die Art der Beschäftigung',
+                                    'en' => 'Select the type of employment',
+                                    'fr' => 'Sélectionnez le type d\'emploi',
+                                    'hi' => 'रोजगार का प्रकार चुनें',
+                                    'ja' => '雇用形態を選択してください',
+                                    'ko' => '채용 유형을 선택하세요',
+                                    'pt' => 'Selecione o tipo de emprego',
+                                    'th' => 'เลือกประเภทการจ้างงาน',
+                                    'tl' => 'Piliin ang uri ng trabaho',
+                                    'zh' => '选择雇佣类型',
+                                ]),
+                                "type" => "select",
+                                "options" => $this->getLocalizedText([
+                                    'de' => '[Praktikum] Praktikum, [Zeitarbeit] Zeitarbeit, [Freiberuflich] Freiberuflich, [Festanstellung] Festanstellung',
+                                    'en' => '[Intern] Internship, [Temporary] Temporary, [Freelance] Freelance, [Full-time] Full-time',
+                                    'fr' => '[Stage] Stage, [Intérim] Intérim, [Freelance] Freelance, [CDI] CDI',
+                                    'hi' => '[इंटर्न] इंटर्नशिप, [अस्थायी] अस्थायी, [फ्रीलांस] फ्रीलांस, [पूर्णकालिक] पूर्णकालिक',
+                                    'ja' => '[インターン] インターンシップ, [派遣] 派遣, [フリーランス] フリーランス, [正社員] 正社員',
+                                    'ko' => '[인턴] 인턴, [파견직] 파견직, [프리랜서] 프리랜서, [정규직] 정규직',
+                                    'pt' => '[Estagiário] Estágio, [Temporário] Temporário, [Freelancer] Freelancer, [Efetivo] Efetivo',
+                                    'th' => '[ฝึกงาน] ฝึกงาน, [ชั่วคราว] ชั่วคราว, [ฟรีแลนซ์] ฟรีแลนซ์, [เต็มเวลา] เต็มเวลา',
+                                    'tl' => '[Intern] Internship, [Pansamantala] Pansamantala, [Freelance] Freelance, [Full-time] Full-time',
+                                    'zh' => '[实习] 实习, [临时] 临时, [自由职业] 自由职业, [全职] 全职',
+                                ]),
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "experience_level",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie die erforderliche Berufserfahrung',
+                                    'en' => 'Select the required years of experience',
+                                    'fr' => 'Sélectionnez les années d\'expérience requises',
+                                    'hi' => 'आवश्यक अनुभव वर्ष चुनें',
+                                    'ja' => '必要な経験年数を選択してください',
+                                    'ko' => '채용 연차를 선택하세요',
+                                    'pt' => 'Selecione os anos de experiência necessários',
+                                    'th' => 'เลือกจำนวนปีประสบการณ์ที่ต้องการ',
+                                    'tl' => 'Piliin ang kinakailangang taon ng karanasan',
+                                    'zh' => '选择所需的工作经验年限',
+                                ]),
+                                "type" => "select",
+                                "options" => $this->getLocalizedText([
+                                    'de' => '[Berufseinsteiger] Berufseinsteiger, [1 Jahr] 1 Jahr, [2 Jahre] 2 Jahre, [3 Jahre] 3 Jahre, [3-5 Jahre] 3-5 Jahre, [5-7 Jahre] 5-7 Jahre, [7+ Jahre] 7+ Jahre',
+                                    'en' => '[Entry-level] Entry-level, [1 year] 1 year, [2 years] 2 years, [3 years] 3 years, [3-5 years] 3-5 years, [5-7 years] 5-7 years, [7+ years] 7+ years',
+                                    'fr' => '[Débutant] Débutant, [1 an] 1 an, [2 ans] 2 ans, [3 ans] 3 ans, [3-5 ans] 3-5 ans, [5-7 ans] 5-7 ans, [7+ ans] 7+ ans',
+                                    'hi' => '[नौसिखिया] नौसिखिया, [1 वर्ष] 1 वर्ष, [2 वर्ष] 2 वर्ष, [3 वर्ष] 3 वर्ष, [3-5 वर्ष] 3-5 वर्ष, [5-7 वर्ष] 5-7 वर्ष, [7+ वर्ष] 7+ वर्ष',
+                                    'ja' => '[新卒] 新卒, [1年] 1年, [2年] 2年, [3年] 3年, [3-5年] 3-5年, [5-7年] 5-7年, [7年以上] 7年以上',
+                                    'ko' => '[신입] 신입, [1년] 1년, [2년] 2년, [3년] 3년, [3~5년] 3~5년, [5~7년] 5~7년, [7년~] 7년~',
+                                    'pt' => '[Iniciante] Iniciante, [1 ano] 1 ano, [2 anos] 2 anos, [3 anos] 3 anos, [3-5 anos] 3-5 anos, [5-7 anos] 5-7 anos, [7+ anos] 7+ anos',
+                                    'th' => '[ระดับเริ่มต้น] ระดับเริ่มต้น, [1 ปี] 1 ปี, [2 ปี] 2 ปี, [3 ปี] 3 ปี, [3-5 ปี] 3-5 ปี, [5-7 ปี] 5-7 ปี, [7+ ปี] 7+ ปี',
+                                    'tl' => '[Entry-level] Entry-level, [1 taon] 1 taon, [2 taon] 2 taon, [3 taon] 3 taon, [3-5 taon] 3-5 taon, [5-7 taon] 5-7 taon, [7+ taon] 7+ taon',
+                                    'zh' => '[入门级] 入门级, [1年] 1年, [2年] 2年, [3年] 3年, [3-5年] 3-5年, [5-7年] 5-7年, [7年以上] 7年以上',
+                                ]),
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "job_info",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie allgemeine Informationen zur Stelle ein (oder fügen Sie bestehende Informationen ein)',
+                                    'en' => 'Enter general information about the position (or paste existing information)',
+                                    'fr' => 'Saisissez des informations générales sur le poste (ou collez les informations existantes)',
+                                    'hi' => 'पद के बारे में सामान्य जानकारी दर्ज करें (या मौजूदा जानकारी पेस्ट करें)',
+                                    'ja' => 'ポジションに関する一般的な情報を入力してください（または既存の情報を貼り付けてください）',
+                                    'ko' => '채용 관련 전반적인 내용을 간략하게 제공하거나 기존 정보를 붙여넣으세요',
+                                    'pt' => 'Insira informações gerais sobre o cargo (ou cole informações existentes)',
+                                    'th' => 'ป้อนข้อมูลทั่วไปเกี่ยวกับตำแหน่ง (หรือวางข้อมูลที่มีอยู่)',
+                                    'tl' => 'Ilagay ang pangkalahatang impormasyon tungkol sa posisyon (o i-paste ang umiiral na impormasyon)',
+                                    'zh' => '输入有关该职位的一般信息（或粘贴现有信息）',
+                                ]),
+                                "type" => "textarea",
+                                "options" => null,
+                                "file_type" => null
+                            ],
+                            [
+                                "label" => "benefits",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Wählen Sie die angebotenen Leistungen und Vorteile aus',
+                                    'en' => 'Select the benefits and perks offered',
+                                    'fr' => 'Sélectionnez les avantages et les prestations offerts',
+                                    'hi' => 'प्रदान किए जाने वाले लाभ और सुविधाओं का चयन करें',
+                                    'ja' => '提供される福利厚生を選択してください',
+                                    'ko' => '제공되는 혜택 및 복지를 선택하세요',
+                                    'pt' => 'Selecione os benefícios e vantagens oferecidos',
+                                    'th' => 'เลือกสวัสดิการและสิทธิประโยชน์ที่มอบให้',
+                                    'tl' => 'Piliin ang mga benepisyo at perks na inaalok',
+                                    'zh' => '选择提供的福利和待遇',
+                                ]),
+                                "type" => "multiselect",
+                                "options" => $this->getLocalizedText([
+                                    'de' => '[top_colleagues] Branchenführende Kollegen, [flexible_hours] Flexible Arbeitszeiten, [remote_work] Möglichkeit zur Fernarbeit, [equipment_support] Ausrüstungsunterstützung, [snacks] Snacks angeboten, [welfare_points] Wohlfahrtspunkte angeboten, [health_insurance] Krankenversicherung, [paid_vacation] Bezahlter Urlaub, [education_support] Bildungsunterstützung, [stock_options] Aktienoptionen, [gym_membership] Fitnessstudio-Mitgliedschaft, [child_care] Kinderbetreuung, [commute_allowance] Fahrkostenzuschuss, [meal_allowance] Essenszuschuss, [performance_bonus] Leistungsprämie, [retirement_plan] Altersvorsorgeplan',
+                                    'en' => '[top_colleagues] Top industry colleagues, [flexible_hours] Flexible working hours, [remote_work] Remote work available, [equipment_support] Equipment support, [snacks] Snacks provided, [welfare_points] Welfare points provided, [health_insurance] Health insurance, [paid_vacation] Paid vacation, [education_support] Education support, [stock_options] Stock options, [gym_membership] Gym membership, [child_care] Child care, [commute_allowance] Commute allowance, [meal_allowance] Meal allowance, [performance_bonus] Performance bonus, [retirement_plan] Retirement plan',
+                                    'fr' => '[top_colleagues] Collègues de premier plan dans l\'industrie, [flexible_hours] Horaires de travail flexibles, [remote_work] Travail à distance disponible, [equipment_support] Support matériel, [snacks] Collations fournies, [welfare_points] Points de bien-être fournis, [health_insurance] Assurance santé, [paid_vacation] Congés payés, [education_support] Soutien à l\'éducation, [stock_options] Options d\'achat d\'actions, [gym_membership] Abonnement à une salle de sport, [child_care] Garde d\'enfants, [commute_allowance] Allocation de transport, [meal_allowance] Allocation repas, [performance_bonus] Prime de performance, [retirement_plan] Plan de retraite',
+                                    'hi' => '[top_colleagues] शीर्ष उद्योग सहयोगी, [flexible_hours] लचीले काम के घंटे, [remote_work] दूरस्थ कार्य उपलब्ध, [equipment_support] उपकरण समर्थन, [snacks] स्नैक्स प्रदान किए गए, [welfare_points] कल्याण अंक प्रदान किए गए, [health_insurance] स्वास्थ्य बीमा, [paid_vacation] वेतन सहित अवकाश, [education_support] शिक्षा समर्थन, [stock_options] स्टॉक विकल्प, [gym_membership] जिम सदस्यता, [child_care] शिशु देखभाल, [commute_allowance] यात्रा भत्ता, [meal_allowance] भोजन भत्ता, [performance_bonus] प्रदर्शन बोनस, [retirement_plan] सेवानिवृत्ति योजना',
+                                    'ja' => '[top_colleagues] 業界トップの同僚, [flexible_hours] フレックスタイム制, [remote_work] リモートワーク可能, [equipment_support] 機器サポート, [snacks] スナック提供, [welfare_points] ウェルフェアポイント提供, [health_insurance] 健康保険, [paid_vacation] 有給休暇, [education_support] 教育支援, [stock_options] ストックオプション, [gym_membership] ジム会員権, [child_care] 児童保育, [commute_allowance] 通勤手当, [meal_allowance] 食事手当, [performance_bonus] 業績ボーナス, [retirement_plan] 退職金制度',
+                                    'ko' => '[top_colleagues] 업계 최고 동료, [flexible_hours] 유연 근무제, [remote_work] 재택근무 가능, [equipment_support] 장비 지원, [snacks] 간식 제공, [welfare_points] 복지 포인트 제공, [health_insurance] 건강 보험, [paid_vacation] 유급 휴가, [education_support] 교육 지원, [stock_options] 스톡 옵션, [gym_membership] 헬스장 멤버십, [child_care] 육아 지원, [commute_allowance] 통근 수당, [meal_allowance] 식대 지원, [performance_bonus] 성과 보너스, [retirement_plan] 퇴직 연금',
+                                    'pt' => '[top_colleagues] Colegas de alto nível na indústria, [flexible_hours] Horário de trabalho flexível, [remote_work] Trabalho remoto disponível, [equipment_support] Suporte de equipamentos, [snacks] Lanches fornecidos, [welfare_points] Pontos de bem-estar fornecidos, [health_insurance] Seguro de saúde, [paid_vacation] Férias remuneradas, [education_support] Apoio educacional, [stock_options] Opções de ações, [gym_membership] Associação a academia, [child_care] Cuidados infantis, [commute_allowance] Subsídio de transporte, [meal_allowance] Subsídio de refeição, [performance_bonus] Bônus de desempenho, [retirement_plan] Plano de aposentadoria',
+                                    'th' => '[top_colleagues] เพื่อนร่วมงานชั้นนำในอุตสาหกรรม, [flexible_hours] เวลาทำงานยืดหยุ่น, [remote_work] สามารถทำงานระยะไกลได้, [equipment_support] การสนับสนุนอุปกรณ์, [snacks] มีอาหารว่างให้, [welfare_points] มีคะแนนสวัสดิการให้, [health_insurance] ประกันสุขภาพ, [paid_vacation] วันหยุดที่ได้รับค่าจ้าง, [education_support] การสนับสนุนด้านการศึกษา, [stock_options] สิทธิในการซื้อหุ้น, [gym_membership] สมาชิกฟิตเนส, [child_care] การดูแลเด็ก, [commute_allowance] เบี้ยเลี้ยงการเดินทาง, [meal_allowance] เบี้ยเลี้ยงอาหาร, [performance_bonus] โบนัสตามผลงาน, [retirement_plan] แผนเกษียณอายุ',
+                                    'tl' => '[top_colleagues] Mga nangungunang kasamahan sa industriya, [flexible_hours] Flexible na oras ng trabaho, [remote_work] Available ang remote work, [equipment_support] Suporta sa kagamitan, [snacks] Nagbibigay ng meryenda, [welfare_points] Nagbibigay ng welfare points, [health_insurance] Health insurance, [paid_vacation] Bayad na bakasyon, [education_support] Suporta sa edukasyon, [stock_options] Stock options, [gym_membership] Membership sa gym, [child_care] Pangangalaga sa bata, [commute_allowance] Allowance sa pagcommute, [meal_allowance] Allowance sa pagkain, [performance_bonus] Performance bonus, [retirement_plan] Plano sa pagreretiro',
+                                    'zh' => '[top_colleagues] 顶尖行业同事, [flexible_hours] 灵活工作时间, [remote_work] 可远程工作, [equipment_support] 设备支持, [snacks] 提供零食, [welfare_points] 提供福利点数, [health_insurance] 健康保险, [paid_vacation] 带薪休假, [education_support] 教育支持, [stock_options] 股票期权, [gym_membership] 健身房会员资格, [child_care] 儿童保育, [commute_allowance] 通勤津贴, [meal_allowance] 餐饮津贴, [performance_bonus] 绩效奖金, [retirement_plan] 退休计划',
+                                ]),
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Based on the provided job information, generate a structured job description for the position of {{step1.input.job_title}} with the following sections:
+
+1. **포지션 상세** (Position Details): 
+   Provide a comprehensive and engaging overview of the company, its mission, and the context of the position. Use the following guidelines:
+   - Start with an inspiring motto or vision statement if available.
+   - Describe the company's founding year, main business area, and any significant achievements or milestones.
+   - Highlight the company's innovative products or services, explaining their impact on everyday life or the industry.
+   - Mention any notable investments, partnerships, or client relationships to showcase the company's growth and credibility.
+   - Describe the company's global or local presence, mentioning specific locations if provided.
+   - Paint a picture of the company culture and work environment, emphasizing aspects that would attract potential candidates.
+   - Conclude with an inspiring call to action for potential applicants.
+
+   Use the provided job_info to create a narrative that brings the company to life. Even if limited information is given, expand on it creatively while maintaining accuracy. For example, if given '창업 버티컬 플랫폼 스타트업풀, 커뮤니티 스쿼드', create a detailed and engaging company description similar to:
+
+   '\"Connecting entrepreneurs to success through innovative solutions\" 스타트업풀은 창업 버티컬 플랫폼입니다. 우리는 창업자들이 성공적으로 사업을 시작하고 성장할 수 있도록 돕기 위해 일하고 있습니다. 스타트업풀은 창업자들에게 필요한 자원과 네트워크를 제공하며, 그들의 여정을 더욱 원활하게 만들어주는 다양한 서비스를 제공합니다.
+우리의 플랫폼은 창업자들이 맞춤형 지원을 받을 수 있도록 설계되었으며, 이를 통해 많은 스타트업들이 빠르게 성장하고 있습니다. 스타트업풀의 커뮤니티 스쿼드는 창업자들이 서로 소통하고 협력할 수 있는 공간을 제공하여, 새로운 비즈니스 기회를 창출하고 있습니다. 현재까지 수많은 창업자들이 우리의 플랫폼을 통해 성공적인 사업을 시작하였으며, 계속해서 그 수는 증가하고 있습니다.
+스타트업풀의 문화는 혁신적이며 협력적인 환경을 지향합니다. 우리는 팀원들이 자신의 아이디어를 자유롭게 표현하고, 서로의 의견을 존중하며 협력하는 문화를 소중히 여깁니다.
+스타트업풀과 함께 창업 생태계를 혁신하고, 성공적인 창업자들이 더 많아질 수 있도록 기여할 용감하고 성실한 동료들을 찾습니다.'
+
+2. **주요업무** (Key Responsibilities): List 4-6 main responsibilities of the position, starting with 'As a {{step1.input.job_title}} at our company, you will:'.
+
+3. **자격요건** (Qualifications): List 5-7 key qualifications and experiences required for the position, starting with 'What experience and skills are needed?'. Ensure these align with the specified experience level of {{step1.input.experience_level}}.
+
+4. **우대사항** (Preferred Qualifications): List 3-5 preferred qualifications or experiences that would be advantageous for the position, starting with 'These points would be even better!'.
+
+5. **혜택 및 복지** (Benefits and Welfare): Describe the company's benefits and culture based on the selected options: {{step1.input.benefits}}. Include any additional relevant information about the company culture.
+
+6. **채용 전형** (Recruitment Process): Outline the application process, including:
+   - Required documents
+   - Employment terms (mentioning it's a {{step1.input.employment_type}} position)
+   - Steps in the selection process
+   - Any additional important information for applicants
+
+Use the following job information as context: {{step1.input.job_info}}
+
+Ensure the content is engaging, professional, and tailored to attract qualified candidates for the {{step1.input.job_title}} role. Use bullet points for better readability where appropriate.",
+                        "background_information" => "You are an experienced HR professional creating a comprehensive job description for a tech company. Your goal is to accurately represent the position and company culture while inspiring qualified candidates to apply.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                ]),
+                'tags' => json_encode($this->getLocalizedTags(["hr", "recruitment"])),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             //이미지
             [
                 'name' => $this->getLocalizedText([
@@ -6564,6 +6784,101 @@ return new class extends Migration
                 'created_at' => now(),
                 'updated_at' => now(),
             ],           
+            [
+                'name' => $this->getLocalizedText([
+                    'de' => 'Märchenbuch-Skizzenbild-Generierung',
+                    'en' => 'Fairy Tale Sketch Image Generator',
+                    'fr' => 'Générateur d\'images esquissées de contes de fées',
+                    'hi' => 'परीकथा स्केच छवि जनरेटर',
+                    'ja' => 'おとぎ話スケッチ画像ジェネレーター',
+                    'ko' => '동화책 스케치 이미지 생성기',
+                    'pt' => 'Gerador de Imagens de Esboço de Contos de Fadas',
+                    'th' => 'เครื่องสร้างภาพสเก็ตช์นิทาน',
+                    'tl' => 'Tagalikha ng Imahe ng Sketch ng Kuwentong Pambata',
+                    'zh' => '童话故事草图图像生成器',
+                ]),
+                'description' => $this->getLocalizedText([
+                    'de' => 'Schlüsselwort > Prompt > Märchenbild generieren',
+                    'en' => 'keyword > prompt > fairy tale image generate',
+                    'fr' => 'mot-clé > prompt > génération d\'image de conte de fées',
+                    'hi' => 'कीवर्ड > प्रॉम्प्ट > परीकथा छवि उत्पादन',
+                    'ja' => 'キーワード > プロンプト > おとぎ話画像生成',
+                    'ko' => '키워드 > 프롬프트 > 동화 이미지 생성',
+                    'pt' => 'palavra-chave > prompt > geração de imagem de conto de fadas',
+                    'th' => 'คำสำคัญ > prompt > สร้างภาพนิทาน',
+                    'tl' => 'keyword > prompt > paggawa ng imahe ng kuwentong pambata',
+                    'zh' => '关键词 > 提示 > 童话图像生成',
+                ]),
+                'steps' => json_encode([
+                    [
+                        "type" => "input",
+                        "step_number" => 1,
+                        "uuid" => $generateUuid(),
+                        "input_fields" => [
+                            [
+                                "label" => "keyword",
+                                "description" => $this->getLocalizedText([
+                                    'de' => 'Geben Sie das Schlüsselwort oder den Ausdruck für das Märchenbild ein',
+                                    'en' => 'Enter the keyword or phrase for the fairy tale image',
+                                    'fr' => 'Entrez le mot-clé ou la phrase pour l\'image du conte de fées',
+                                    'hi' => 'परीकथा छवि के लिए कीवर्ड या वाक्यांश दर्ज करें',
+                                    'ja' => 'おとぎ話の画像のキーワードやフレーズを入力してください',
+                                    'ko' => '동화 이미지에 대한 키워드 또는 문구를 입력하세요',
+                                    'pt' => 'Digite a palavra-chave ou frase para a imagem do conto de fadas',
+                                    'th' => 'ป้อนคำสำคัญหรือวลีสำหรับภาพนิทาน',
+                                    'tl' => 'Ilagay ang keyword o parirala para sa imahe ng kuwentong pambata',
+                                    'zh' => '输入童话图像的关键词或短语',
+                                ]),
+                                "type" => "text",
+                                "options" => null,
+                                "file_type" => null
+                            ]
+                        ]
+                    ],
+                    [
+                        "type" => "generate_text",
+                        "step_number" => 2,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "Using the keyword '{{step1.input.keyword}}', create a concise and vivid description in English for an AI image generator in the style of a fairy tale sketch illustration. The description should be formatted similarly to the following examples:
+            
+            - A stick-figure-style robot and some sci-fi machines, with pastel colors, highlight the innocence and romance of children, sketched style
+            - A joyful girl with balloons floats above a whimsical city wearing a pointy hat and striped pants, sketched style
+            - Some happy children stand ready to take pictures in a magical forest clearing, sketched style
+            - A brave knight riding a carousel horse, chasing after a dragon-shaped cloud, sketched style
+            - A group of talking animals having a tea party in a tree house, with floating teacups and swirling steam, sketched style
+            
+            Guidelines:
+            
+            - Keep the description concise, ideally in one sentence.
+            - Focus on whimsical, magical, and child-friendly imagery that captures the essence of fairy tales.
+            - Include the phrase 'sketched style' at the end to specify the desired aesthetic.
+            - Use descriptive language to set the scene, mood, and fantastical elements.
+            - Ensure the description is clear and helps the AI generate an image that accurately represents a fairy tale scene.
+            - The output must be in English.
+            
+            Please provide the fairy tale image description now in English.",
+                        "background_information" => "You are an expert at crafting rich and evocative prompts for AI image generation tools, specializing in fairy tale and children's book illustrations. Your descriptions are known for their whimsy, magic, and ability to inspire visually stunning images that appeal to children and adults alike. Disregard any existing content generation language settings and strictly produce this content in English.",
+                        "ai_provider" => "openai",
+                        "ai_model" => "gpt-4o-2024-05-13",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ],
+                    [
+                        "type" => "generate_image",
+                        "step_number" => 3,
+                        "uuid" => $generateUuid(),
+                        "prompt" => "{{step2.output}}",
+                        "background_information" => "",
+                        "ai_provider" => "huggingface",
+                        "ai_model" => "Shakker-Labs/FLUX.1-dev-LoRA-Children-Simple-Sketch",
+                        "temperature" => 0.7,
+                        "reference_file" => null
+                    ]
+                ]),
+                'tags' => json_encode($this->getLocalizedTags(["image", "Flux-sketch"])),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'name' => $this->getLocalizedText([
                     'de' => 'Anime-Skizzenbild-Generierung',

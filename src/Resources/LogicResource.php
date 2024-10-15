@@ -84,7 +84,7 @@ class LogicResource extends Resource
                                 TagsInput::make('tags')
                                     ->reorderable()
                                     ->nestedRecursiveRules([
-                                        'min:3',
+                                        'min:1',
                                         'max:255',
                                     ])
                                     ->label(__('startupful-plugin.tags'))
@@ -573,9 +573,10 @@ class LogicResource extends Resource
                     'alvdansen/pola-photo-flux' => 'FLUX-Pola-photo',
                     'alvdansen/flux-koda' => 'FLUX-KODA-Flim',
                     'nerijs/animation2k-flux' => 'FLUX-20s Anime',
+                    'Shakker-Labs/FLUX.1-dev-LoRA-Children-Simple-Sketch' => 'FLUX-Child-Sketch',
                     'renderartist/simplevectorflux' => 'FLUX-Vector',
                     'alvdansen/haunted_linework_flux' => 'FLUX-linework',
-                    'nerijs/pixel-art-xl' => 'FLUX-pixelart',
+                    'UmeAiRT/FLUX.1-dev-LoRA-Modern_Pixel_art' => 'FLUX-pixelart',
                     'sWizad/pokemon-trainer-sprites-pixelart-flux' => 'FLUX-pixel(feat.pokemon style)',
                     'aleksa-codes/flux-ghibsky-illustration' => 'FLUX-Ghibsky Illustrate',
                     'Shakker-Labs/FLUX.1-dev-LoRA-Logo-Design' => 'FLUX-Logo',

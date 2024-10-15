@@ -11,6 +11,7 @@ use PhpOffice\PhpWord\IOFactory as WordIOFactory;
 use PhpOffice\PhpPresentation\IOFactory as PresentationIOFactory;
 use ZipArchive;
 use OpenAI\Laravel\Facades\OpenAI;
+use Smalot\PdfParser\Parser;
 
 class FileManagerController extends BaseController
 {
@@ -154,12 +155,32 @@ class FileManagerController extends BaseController
 
     private function extractTextFromPDF($filePath)
     {
-        $output = shell_exec("pdftotext '$filePath' -");
-        if ($output === null) {
-            Log::error('Failed to extract text from PDF', ['filePath' => $filePath]);
-            throw new \Exception('Failed to extract text from PDF');
+        if (!file_exists($filePath)) {
+            Log::error('PDF 파일이 존재하지 않습니다', ['filePath' => $filePath]);
+            throw new \Exception('PDF 파일이 존재하지 않습니다');
         }
-        return $output;
+    
+        if (!is_readable($filePath)) {
+            Log::error('PDF 파일을 읽을 수 없습니다', ['filePath' => $filePath]);
+            throw new \Exception('PDF 파일을 읽을 수 없습니다');
+        }
+    
+        try {
+            $parser = new Parser();
+            $pdf = $parser->parseFile($filePath);
+            $text = $pdf->getText();
+    
+            if (empty(trim($text))) {
+                Log::warning('추출된 텍스트가 없습니다', ['filePath' => $filePath]);
+                return "이 PDF에서 추출할 수 있는 텍스트가 없습니다.";
+            }
+    
+            Log::info('PDF에서 텍스트 추출 성공', ['filePath' => $filePath, 'textLength' => strlen($text)]);
+            return $text;
+        } catch (\Exception $e) {
+            Log::error('PDF 파싱 중 오류 발생', ['filePath' => $filePath, 'error' => $e->getMessage()]);
+            throw new \Exception('PDF 파싱 중 오류 발생: ' . $e->getMessage());
+        }
     }
 
     private function extractTextFromWord($filePath)

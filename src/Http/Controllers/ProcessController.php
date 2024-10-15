@@ -25,11 +25,23 @@ class ProcessController extends BaseController
             $steps = $request->input('steps');
             $inputData = $request->input('inputData');
             $logicId = $request->input('logic_id');
+            $userId = $request->input('user_id') ?? $request->header('X-User-ID');
 
             Log::info('Starting to process logic', [
                 'steps' => $this->truncateForLog($this->jsonHelper->safeJsonEncode($steps)),
                 'inputData' => $this->truncateForLog($this->jsonHelper->safeJsonEncode($inputData)),
-                'logicId' => $logicId
+                'logicId' => $logicId,
+                'userId' => $userId,
+                'headers' => $request->headers->all()
+            ]);
+
+            if (is_null($userId)) {
+                Log::error('User is not authenticated in ProcessController');
+                return response()->json(['error' => 'User is not authenticated'], 401);
+            }
+
+            Log::info('Starting to process logic in ProcessController', [
+                'userId' => $userId
             ]);
 
             $result = [];
@@ -59,14 +71,18 @@ class ProcessController extends BaseController
                 }
             }
 
-            $content = $this->storageController->storeGeneratedContent($result, $steps, $logicId);
+            $content = $this->storageController->storeGeneratedContent($result, $steps, $logicId, $userId);
 
-            Log::info('Logic processing completed successfully', ['content' => $this->truncateForLog($this->jsonHelper->safeJsonEncode($content))]);
+            Log::info('Logic processing completed successfully in ProcessController', [
+                'content' => $this->truncateForLog($this->jsonHelper->safeJsonEncode($content)),
+                'userId' => $userId
+            ]);
             return response()->json(['success' => true, 'message' => 'Content generated and stored successfully']);
         } catch (\Exception $e) {
             Log::error('Error processing logic', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
+                'userId' => $userId ?? 'Not available'
             ]);
             return response()->json(['error' => $e->getMessage()], 500);
         }

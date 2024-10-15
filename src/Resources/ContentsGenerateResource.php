@@ -15,6 +15,7 @@ use Startupful\ContentsGenerate\Resources\ContentsGenerateResource\Pages;
 use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Builder;
 
 class ContentsGenerateResource extends Resource
 {
@@ -44,7 +45,15 @@ class ContentsGenerateResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        $user = auth()->user();
+        
+        if ($user->id == 1) {
+            // Admin sees count of all items
+            return static::getModel()::count();
+        } else {
+            // Other users see count of their own items
+            return static::getModel()::where('user_id', $user->id)->count();
+        }
     }
 
     public static function form(Form $form): Form
@@ -112,7 +121,13 @@ class ContentsGenerateResource extends Resource
                 ]),
             ])
             ->headerActions([
-            ]);
+            ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $user = auth()->user();
+                if ($user->id != 1) {
+                    $query->where('user_id', $user->id);
+                }
+            });
     }
 
     public static function getRelations(): array

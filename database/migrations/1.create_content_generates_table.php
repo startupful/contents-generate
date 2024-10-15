@@ -14,6 +14,7 @@ return new class extends Migration
         if (!Schema::hasTable('content_generates')) {
             Schema::create('content_generates', function (Blueprint $table) {
                 $table->id();
+                $table->foreignId('user_id')->constrained()->onDelete('cascade');
                 $table->string('uuid');
                 $table->string('title');
                 $table->text('content');

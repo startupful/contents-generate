@@ -18,8 +18,13 @@ class StorageController extends BaseController
         mb_internal_encoding('UTF-8');
     }
     
-    public function storeGeneratedContent($result, $steps, $logicId)
+    public function storeGeneratedContent($result, $steps, $logicId, $userId)
     {
+        if (is_null($userId)) {
+            Log::error('User ID is null when storing content');
+            throw new \Exception('User ID cannot be null');
+        }
+
         $lastStep = end($result);
         $lastStepType = end($steps)['type'];
 
@@ -30,6 +35,7 @@ class StorageController extends BaseController
         $contentGenerate->uuid = Str::uuid();
         $contentGenerate->title = $title;
         $contentGenerate->type = $this->determineContentType($lastStepType);
+        $contentGenerate->user_id = $userId;
         
         $contentType = $contentGenerate->type;
 
@@ -109,7 +115,8 @@ class StorageController extends BaseController
             'type' => $contentGenerate->type,
             'file_path' => $contentGenerate->file_path,
             'file_name' => $contentGenerate->file_name,
-            'content' => substr($contentGenerate->content, 0, 100) . '...' // Log only first 100 chars
+            'content' => substr($contentGenerate->content, 0, 100) . '...', // Log only first 100 chars
+            'user_id' => $contentGenerate->user_id
         ]);
 
         return $contentGenerate;

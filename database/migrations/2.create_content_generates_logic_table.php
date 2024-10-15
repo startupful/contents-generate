@@ -14,6 +14,7 @@ return new class extends Migration
         if (!Schema::hasTable('logics')) {
         Schema::create('logics', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
             $table->text('steps');

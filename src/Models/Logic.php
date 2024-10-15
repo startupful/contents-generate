@@ -10,7 +10,7 @@ class Logic extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'steps', 'status', 'tags'];
+    protected $fillable = ['user_id', 'name', 'description', 'steps', 'status', 'tags'];
 
     protected $casts = [
         'tags' => 'array',

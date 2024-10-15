@@ -4,6 +4,7 @@ namespace Startupful\ContentsGenerate;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Illuminate\Support\Facades\Auth;
 
 class ContentsGeneratePlugin implements Plugin
 {
@@ -14,11 +15,11 @@ class ContentsGeneratePlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel
-        ->resources([
-            Resources\ContentsGenerateResource::class,
-            Resources\LogicResource::class,
-        ]);
+                $panel
+                ->resources([
+                    Resources\ContentsGenerateResource::class,
+                    Resources\LogicResource::class,
+                ]);
     }
 
     public function boot(Panel $panel): void

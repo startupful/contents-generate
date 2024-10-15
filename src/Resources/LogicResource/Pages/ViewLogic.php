@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ViewLogic extends Page implements HasForms
 {
@@ -138,10 +139,24 @@ class ViewLogic extends Page implements HasForms
         $maxRetries = 5;
         $retryDelay = 5000; // 5 seconds
 
+        $userId = auth()->id();
+
+        Log::info('Starting processLogic', ['userId' => $userId]);
+
+        if (is_null($userId)) {
+            Log::error('User is not authenticated in processLogic');
+            Notification::make()
+                ->title('Error')
+                ->body('User is not authenticated. Please log in and try again.')
+                ->danger()
+                ->send();
+            return;
+        }
+
         for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
             try {
                 $inputData = $this->formData;
-                Log::info('Starting to process logic', ['steps' => $this->record->steps, 'inputData' => $inputData]);
+                Log::info('Starting to process logic', ['steps' => $this->record->steps, 'inputData' => $inputData, 'userId' => $userId]);
 
                 $processedInputData = $this->processInputDataRecursively($inputData);
 
@@ -151,6 +166,7 @@ class ViewLogic extends Page implements HasForms
                     'steps' => $this->record->steps,
                     'inputData' => $processedInputData,
                     'logic_id' => $this->record->id,
+                    'user_id' => $userId, 
                 ]);
 
                 if ($response->successful()) {
